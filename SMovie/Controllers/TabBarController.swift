@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  TabBarController.swift
 //  SMovie
 //
 //  Created by Alexander Altman on 01.04.2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainViewController: UITabBarController {
+final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -15,7 +15,7 @@ final class MainViewController: UITabBarController {
     }
 }
 
-extension MainViewController {
+extension TabBarController {
     private func setupViews() {
         let searchVC = SearchViewController()
         let playVC = PlayViewController()
@@ -23,11 +23,11 @@ extension MainViewController {
         let favouriteVC = FavouriteViewController()
         let personVC = PersonViewController()
 
-        searchVC.setTabBarImage(imageName: "magnifyingglass", title: "search")
-        playVC.setTabBarImage(imageName: "play.circle", title: "play")
-        homeVC.setTabBarImage(imageName: "house", title: "home")
-        favouriteVC.setTabBarImage(imageName: "heart.fill", title: "favorite")
-        personVC.setTabBarImage(imageName: "person", title: "person")
+        searchVC.setTabBarImage(imageName: "magnifyingglass", title: "")
+        playVC.setTabBarImage(imageName: "play.circle", title: "")
+        homeVC.setTabBarImage(imageName: "house", title: "")
+        favouriteVC.setTabBarImage(imageName: "heart.fill", title: "")
+        personVC.setTabBarImage(imageName: "person", title: "")
 
         let searchNC = UINavigationController(rootViewController: searchVC)
         let playNC = UINavigationController(rootViewController: playVC)
