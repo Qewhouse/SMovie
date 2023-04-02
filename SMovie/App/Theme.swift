@@ -11,6 +11,8 @@ enum Theme {
     //MARK: - Colors
     
     static let appColor: UIColor = UIColor(named: "appColor")!
+    static let violetColor: UIColor = UIColor(named: "violetColor")!
+    static let grayColor: UIColor = UIColor(named: "grayColor")!
     static let blackColor: UIColor = .black
     
     // MARK: - Style

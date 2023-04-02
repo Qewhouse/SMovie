@@ -23,12 +23,12 @@ extension TabBarController {
         let favouriteVC = FavouriteViewController()
         let personVC = PersonViewController()
 
-        searchVC.setTabBarImage(imageName: "magnifyingglass", title: "")
-        playVC.setTabBarImage(imageName: "play.circle", title: "")
-        homeVC.setTabBarImage(imageName: "house", title: "")
-        favouriteVC.setTabBarImage(imageName: "heart.fill", title: "")
-        personVC.setTabBarImage(imageName: "person", title: "")
-
+        searchVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Search_alt"), selectedImage: UIImage(named: "Search_alt_fill"))
+        playVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Video"), selectedImage: UIImage(named: "Video_fill"))
+        homeVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Home"), selectedImage: UIImage(named: "Home"))
+        favouriteVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Favorite"), selectedImage: UIImage(named: "Favorite_fill"))
+        personVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "Profile"), selectedImage: UIImage(named: "Profile_fill"))
+        
         let searchNC = UINavigationController(rootViewController: searchVC)
         let playNC = UINavigationController(rootViewController: playVC)
         let homeNC = UINavigationController(rootViewController: homeVC)
@@ -42,9 +42,9 @@ extension TabBarController {
 
     private func setupTabBar() {
         tabBar.clipsToBounds = true
-        tabBar.tintColor = .black
-        tabBar.unselectedItemTintColor = .gray
+        tabBar.tintColor = Theme.violetColor
+        tabBar.unselectedItemTintColor = Theme.grayColor
         tabBar.isTranslucent = false
+        tabBar.backgroundColor = Theme.appColor
     }
 }
-
