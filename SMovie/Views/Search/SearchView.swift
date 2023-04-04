@@ -28,6 +28,7 @@ final class SearchView: UIView {
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: layout)
         cv.backgroundColor = .systemBackground
+        cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return cv
@@ -45,6 +46,7 @@ final class SearchView: UIView {
         let tableView = UITableView()
         tableView.rowHeight = 200
         tableView.layer.cornerRadius = 10
+        tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
