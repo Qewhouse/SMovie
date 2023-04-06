@@ -44,7 +44,7 @@ final class SearchView: UIView {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.rowHeight = 200
+        tableView.rowHeight = 180
         tableView.layer.cornerRadius = 10
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,14 +83,14 @@ final class SearchView: UIView {
             filterButton.widthAnchor.constraint(equalToConstant: 25),
             filterButton.heightAnchor.constraint(equalToConstant: 25),
             
-            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 3),
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 1),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            collectionView.heightAnchor.constraint(equalToConstant: 80),
+            collectionView.heightAnchor.constraint(equalToConstant: 60),
             
-            tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 1),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
         ])
     }

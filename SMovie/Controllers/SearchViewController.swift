@@ -5,15 +5,17 @@ final class SearchViewController: UIViewController {
     
     private let searchView = SearchView()
     
+    private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Search"
-        setDelegates()
+        setUpDelegates()
         setUpView()
     }
     
-    private func setDelegates() {
+    private func setUpDelegates() {
         searchView.delegate = self
         searchView.tableView.delegate = self
         searchView.tableView.dataSource = self
@@ -49,21 +51,23 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - CollectionView
 extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2.5,
-                      height: collectionView.frame.height/1.1)
+        let text = categoriesArray[indexPath.row]
+        let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 40.0
+        return CGSize(width: cellWidth, height: collectionView.frame.height/1.6)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return categoriesArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier,
-                                                      for: indexPath)
-        cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor.label.cgColor
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else {
+            fatalError("Unable to dequeue SearchCollectionViewCell.")
+        }
+        cell.layer.cornerRadius = 17
+        cell.layer.borderWidth = 1
         cell.backgroundColor = .secondarySystemBackground
+        cell.configure(categoryText: categoriesArray[indexPath.row])
         return cell
     }
 }

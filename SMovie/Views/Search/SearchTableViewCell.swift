@@ -74,12 +74,12 @@ final class SearchTableViewCell: UITableViewCell {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            customImageView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            customImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            customImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            customImageView.widthAnchor.constraint(equalToConstant: 170),
+            customImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            customImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22),
+            customImageView.heightAnchor.constraint(equalToConstant: 160),
+            customImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            nameLabel.topAnchor.constraint(equalTo: topAnchor),
+            nameLabel.topAnchor.constraint(equalTo: customImageView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             nameLabel.heightAnchor.constraint(equalToConstant: 50),
@@ -106,7 +106,7 @@ final class SearchTableViewCell: UITableViewCell {
             
             movieAction.topAnchor.constraint(equalTo: movieImageView.topAnchor),
             movieAction.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 3),
-            movieAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -70),
+            movieAction.widthAnchor.constraint(equalToConstant: 80),
             movieAction.bottomAnchor.constraint(equalTo: movieImageView.bottomAnchor),
             
             movieImageView.topAnchor.constraint(equalTo: dateImageView.bottomAnchor, constant: 2),
@@ -114,9 +114,9 @@ final class SearchTableViewCell: UITableViewCell {
             movieImageView.widthAnchor.constraint(equalToConstant: 30),
             movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
             
-            heartImageView.topAnchor.constraint(equalTo: topAnchor, constant: 7),
+            heartImageView.topAnchor.constraint(equalTo: customImageView.topAnchor),
             heartImageView.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -3),
+            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
             heartImageView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }

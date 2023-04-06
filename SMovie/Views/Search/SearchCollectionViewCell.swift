@@ -2,6 +2,7 @@
 import UIKit
 
 final class SearchCollectionViewCell: UICollectionViewCell {
+    
     static let identifier = "SearchCollectionViewCell"
 
     private let categoryLabel: UILabel = {
@@ -11,7 +12,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         label.text = "AAA"
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .label
         return label
     }()
     
@@ -33,5 +34,9 @@ final class SearchCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public func configure(categoryText text: String) {
+        self.categoryLabel.text = text
     }
 }
