@@ -63,8 +63,6 @@ final class SearchView: UIView {
                                     SearchCollectionViewCell.identifier)
         tableView.register(SearchTableViewCell.self,
                            forCellReuseIdentifier: SearchTableViewCell.identifier)
-        addSubviews(searchBar, collectionView, tableView)
-        searchBar.addSubview(filterButton)
         addConstraints()
     }
     
@@ -73,6 +71,8 @@ final class SearchView: UIView {
     }
     
     private func addConstraints() {
+        addSubviews(searchBar, collectionView, tableView)
+        searchBar.addSubview(filterButton)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -90,7 +90,7 @@ final class SearchView: UIView {
             
             tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 1),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
         ])
     }

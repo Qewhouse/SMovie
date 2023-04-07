@@ -4,7 +4,6 @@ import UIKit
 final class SearchViewController: UIViewController {
     
     private let searchView = SearchView()
-    
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
     
     override func viewDidLoad() {
