@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         onboardingViewController.delegate = self
         
-        guard let windiwScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windiwScene)
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
         
         window?.backgroundColor = .systemBackground
         window?.rootViewController = onboardingViewController

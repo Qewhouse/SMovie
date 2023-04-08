@@ -5,39 +5,64 @@ final class CustomTableViewCell: UIView {
 
     lazy var customImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "Movieposter")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .systemBlue
+        imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 10
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    lazy var nameLabel = UILabel(text: "Testttt", font: .systemFont(ofSize: 28))
+    
+    lazy var nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Drifting Home"
+        label.font = .boldSystemFont(ofSize: 28)
+        label.textColor = Theme.reversedAppColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let alarmImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "timer")
-        imageView.tintColor = .label
+        imageView.image = UIImage(named: "clock")
+        imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    lazy var timeLabel = UILabel(text: "148 minutes", font: .systemFont(ofSize: 18))
+    
+    lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "148 minutes"
+        label.font = .systemFont(ofSize: 18)
+        label.textColor = Theme.lightGrayText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let dateImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "calendar.badge.clock")
-        imageView.tintColor = .label
+        imageView.image = UIImage(named: "calendar")
+        imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    private let dateLabel = UILabel(text: "Sep. 17 2022", font: .systemFont(ofSize: 18))
+    
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "17 Sep 2021"
+        label.font = .systemFont(ofSize: 18)
+        label.textColor = Theme.lightGrayText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "list.bullet.clipboard")
-        imageView.tintColor = .label
+        imageView.image = UIImage(named: "film")
+        imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -46,7 +71,7 @@ final class CustomTableViewCell: UIView {
     private let movieAction: UIButton = {
         let button = UIButton()
         button.setTitle("Action", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = Theme.violetColor
         button.layer.cornerRadius = 7
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -56,7 +81,7 @@ final class CustomTableViewCell: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "Favorite")
+        imageView.image = UIImage(named: "Favorite")?.withRenderingMode(.alwaysOriginal)
         imageView.tintColor = .label
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -94,8 +119,8 @@ extension CustomTableViewCell {
             timeLabel.bottomAnchor.constraint(equalTo: alarmImageView.bottomAnchor),
             
             alarmImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-            alarmImageView.heightAnchor.constraint(equalToConstant: 30),
-            alarmImageView.widthAnchor.constraint(equalToConstant: 30),
+            alarmImageView.heightAnchor.constraint(equalToConstant: 25),
+            alarmImageView.widthAnchor.constraint(equalToConstant: 25),
             alarmImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
             
             dateLabel.topAnchor.constraint(equalTo: dateImageView.topAnchor),
@@ -104,8 +129,8 @@ extension CustomTableViewCell {
             dateLabel.bottomAnchor.constraint(equalTo: dateImageView.bottomAnchor),
             
             dateImageView.topAnchor.constraint(equalTo: alarmImageView.bottomAnchor, constant: 2),
-            dateImageView.heightAnchor.constraint(equalToConstant: 30),
-            dateImageView.widthAnchor.constraint(equalToConstant: 30),
+            dateImageView.heightAnchor.constraint(equalToConstant: 25),
+            dateImageView.widthAnchor.constraint(equalToConstant: 25),
             dateImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
             
             movieAction.topAnchor.constraint(equalTo: movieImageView.topAnchor),
@@ -114,14 +139,14 @@ extension CustomTableViewCell {
             movieAction.bottomAnchor.constraint(equalTo: movieImageView.bottomAnchor),
             
             movieImageView.topAnchor.constraint(equalTo: dateImageView.bottomAnchor, constant: 2),
-            movieImageView.heightAnchor.constraint(equalToConstant: 30),
-            movieImageView.widthAnchor.constraint(equalToConstant: 30),
+            movieImageView.heightAnchor.constraint(equalToConstant: 25),
+            movieImageView.widthAnchor.constraint(equalToConstant: 25),
             movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
             
             heartImageView.topAnchor.constraint(equalTo: customImageView.topAnchor),
             heartImageView.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
             heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
-            heartImageView.heightAnchor.constraint(equalToConstant: 40)
+            heartImageView.widthAnchor.constraint(equalToConstant: 70)
         ])
     }
 }

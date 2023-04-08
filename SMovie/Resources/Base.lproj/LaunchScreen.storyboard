@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,15 +14,42 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ObnoardingLogo" translatesAutoresizingMaskIntoConstraints="NO" id="1bL-Yr-8SD">
+                                <rect key="frame" x="105" y="284" width="204" height="138"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardingCircle" translatesAutoresizingMaskIntoConstraints="NO" id="96d-yK-lI0">
+                                <rect key="frame" x="172" y="622" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="QnZ-hr-cxA"/>
+                                    <constraint firstAttribute="height" constant="70" id="ofx-4G-4eX"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" name="violetColor"/>
+                        <constraints>
+                            <constraint firstItem="1bL-Yr-8SD" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1pr-bI-A4f"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1bL-Yr-8SD" secondAttribute="trailing" constant="105" id="86h-Aq-dR2"/>
+                            <constraint firstItem="1bL-Yr-8SD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="105" id="E2G-ks-qZ4"/>
+                            <constraint firstItem="1bL-Yr-8SD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="240" id="GKf-bx-a8G"/>
+                            <constraint firstItem="96d-yK-lI0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="SDP-Aj-MaL"/>
+                            <constraint firstItem="96d-yK-lI0" firstAttribute="top" secondItem="1bL-Yr-8SD" secondAttribute="bottom" constant="200" id="tcM-10-l3W"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ObnoardingLogo" width="165" height="138"/>
+        <image name="OnboardingCircle" width="70" height="70"/>
+        <namedColor name="violetColor">
+            <color red="0.33899998664855957" green="0.33000001311302185" blue="0.70800000429153442" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

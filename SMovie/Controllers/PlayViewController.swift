@@ -9,7 +9,7 @@ final class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Recent Watch"
+//        title = "Recent Watch"
         setUpDelegates()
         setUpView()
     }
@@ -22,6 +22,9 @@ final class PlayViewController: UIViewController {
     }
     
     private func setUpView() {
+        title = "Recent Watch"
+        tabBarItem.title = nil
+        
         view.addSubview(playView)
         NSLayoutConstraint.activate([
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
