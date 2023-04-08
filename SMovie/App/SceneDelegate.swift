@@ -48,7 +48,6 @@ extension SceneDelegate {
     
     private func prepareMainView() {
         tabBarController.setStatusBar()
-        tabBarController.setTabBar()
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().backgroundColor = Theme.appColor
     }

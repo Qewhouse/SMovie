@@ -11,9 +11,13 @@ final class SearchView: UIView {
 
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.backgroundColor = .systemBackground
-        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.backgroundColor = Theme.appColor
+        searchBar.searchTextField.backgroundColor = Theme.appColor
         searchBar.searchTextField.textColor = .label
+        searchBar.searchTextField.layer.borderWidth = 1
+        searchBar.searchTextField.layer.borderColor = Theme.violetColor.cgColor
+        searchBar.searchTextField.layer.cornerRadius = 15
+        searchBar.searchTextField.clipsToBounds = true
         searchBar.barStyle = .default
         searchBar.placeholder = "Enter movie"
         searchBar.sizeToFit()
@@ -36,7 +40,7 @@ final class SearchView: UIView {
     
     private let filterButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "line.horizontal.3.decrease.circle"),
+        button.setImage(UIImage(named: "Filter")?.withTintColor(Theme.reversedAppColor, renderingMode: .alwaysOriginal),
                         for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -55,7 +59,6 @@ final class SearchView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
-        self.backgroundColor = .red
         filterButton.addTarget(self,
                                action: #selector(filterButtonTapped),
                                for: .touchUpInside)
@@ -75,8 +78,8 @@ final class SearchView: UIView {
         searchBar.addSubview(filterButton)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             
             filterButton.centerYAnchor.constraint(equalTo: searchBar.searchTextField.centerYAnchor),
             filterButton.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor, constant: -15),

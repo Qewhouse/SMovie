@@ -19,12 +19,4 @@ extension UIViewController {
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
     }
-    
-    func setTabBar() {
-        let tabBarAppearance = UITabBarAppearance()
-//        tabBarItem.imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0)
-        tabBarAppearance.backgroundColor = Theme.appColor
-        tabBarAppearance.stackedItemPositioning = .centered
-  
-    }
 }
