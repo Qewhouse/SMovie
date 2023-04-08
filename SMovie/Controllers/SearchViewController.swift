@@ -9,7 +9,6 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Search"
         setUpDelegates()
         setUpView()
     }
@@ -23,6 +22,9 @@ final class SearchViewController: UIViewController {
     }
     
     private func setUpView() {
+        title = "Search"
+        tabBarItem.title = nil
+        
         view.addSubview(searchView)
         NSLayoutConstraint.activate([
             searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

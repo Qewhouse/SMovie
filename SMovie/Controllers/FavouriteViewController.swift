@@ -8,7 +8,7 @@ final class FavouriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Favorites"
+//        title = "Favorites"
         setUpDelegates()
         setUpView()
     }
@@ -19,6 +19,9 @@ final class FavouriteViewController: UIViewController {
     }
     
     private func setUpView() {
+        title = "Favorites"
+        tabBarItem.title = nil
+        
         view.addSubview(favoritesView)
         NSLayoutConstraint.activate([
             favoritesView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

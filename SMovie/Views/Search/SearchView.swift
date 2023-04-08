@@ -55,7 +55,7 @@ final class SearchView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .red
         filterButton.addTarget(self,
                                action: #selector(filterButtonTapped),
                                for: .touchUpInside)
@@ -84,14 +84,14 @@ final class SearchView: UIView {
             filterButton.heightAnchor.constraint(equalToConstant: 25),
             
             collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 1),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             collectionView.heightAnchor.constraint(equalToConstant: 60),
             
             tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 1),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
         ])
     }
     
