@@ -13,13 +13,10 @@ extension UIViewController {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithTransparentBackground()
         navBarAppearance.backgroundColor = Theme.appColor
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)
+            ]
         UINavigationBar.appearance().standardAppearance = navBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
-    }
-    
-    func setTabBarImage(imageName: String, title: String) {
-        let configuration = UIImage.SymbolConfiguration(scale: .large)
-        let image = UIImage(systemName: imageName, withConfiguration: configuration)
-        tabBarItem = UITabBarItem(title: title, image: image, tag: 0)
     }
 }
