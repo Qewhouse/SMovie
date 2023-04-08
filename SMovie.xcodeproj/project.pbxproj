@@ -32,6 +32,22 @@
 		6DD59DB129DC0248001D33BC /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD59DB029DC0248001D33BC /* SearchTableViewCell.swift */; };
 		6DD59DB329DC10A1001D33BC /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD59DB229DC10A1001D33BC /* UILabel.swift */; };
 		6DD59DB729DC1A3C001D33BC /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD59DB629DC1A3C001D33BC /* SearchCollectionViewCell.swift */; };
+		8020BC1B29E1F72300284430 /* UserInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0729E1F72300284430 /* UserInfoHeaderView.swift */; };
+		8020BC1C29E1F72300284430 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0829E1F72300284430 /* SettingsModel.swift */; };
+		8020BC1D29E1F72300284430 /* SettingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0929E1F72300284430 /* SettingSwitchCell.swift */; };
+		8020BC1E29E1F72300284430 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0A29E1F72300284430 /* SettingCell.swift */; };
+		8020BC1F29E1F72300284430 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0B29E1F72300284430 /* SettingsViewController.swift */; };
+		8020BC2029E1F72300284430 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0D29E1F72300284430 /* ChangePasswordViewController.swift */; };
+		8020BC2129E1F72300284430 /* ProfileGenderInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC0F29E1F72300284430 /* ProfileGenderInputView.swift */; };
+		8020BC2229E1F72300284430 /* TextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1029E1F72300284430 /* TextInputView.swift */; };
+		8020BC2329E1F72300284430 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1129E1F72300284430 /* ProfileImageView.swift */; };
+		8020BC2429E1F72300284430 /* ChangePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1329E1F72300284430 /* ChangePictureView.swift */; };
+		8020BC2529E1F72300284430 /* ChangePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1429E1F72300284430 /* ChangePictureViewController.swift */; };
+		8020BC2629E1F72300284430 /* ChangePictureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1529E1F72300284430 /* ChangePictureButton.swift */; };
+		8020BC2729E1F72300284430 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1629E1F72300284430 /* ProfileViewController.swift */; };
+		8020BC2829E1F72300284430 /* ProfileDateInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1729E1F72300284430 /* ProfileDateInputView.swift */; };
+		8020BC2929E1F72300284430 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1829E1F72300284430 /* GenderButton.swift */; };
+		8020BC2A29E1F72300284430 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1A29E1F72300284430 /* ForgotPasswordViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +78,22 @@
 		6DD59DB029DC0248001D33BC /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		6DD59DB229DC10A1001D33BC /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		6DD59DB629DC1A3C001D33BC /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		8020BC0729E1F72300284430 /* UserInfoHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoHeaderView.swift; sourceTree = "<group>"; };
+		8020BC0829E1F72300284430 /* SettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		8020BC0929E1F72300284430 /* SettingSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingSwitchCell.swift; sourceTree = "<group>"; };
+		8020BC0A29E1F72300284430 /* SettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		8020BC0B29E1F72300284430 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8020BC0D29E1F72300284430 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		8020BC0F29E1F72300284430 /* ProfileGenderInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenderInputView.swift; sourceTree = "<group>"; };
+		8020BC1029E1F72300284430 /* TextInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputView.swift; sourceTree = "<group>"; };
+		8020BC1129E1F72300284430 /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		8020BC1329E1F72300284430 /* ChangePictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePictureView.swift; sourceTree = "<group>"; };
+		8020BC1429E1F72300284430 /* ChangePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePictureViewController.swift; sourceTree = "<group>"; };
+		8020BC1529E1F72300284430 /* ChangePictureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePictureButton.swift; sourceTree = "<group>"; };
+		8020BC1629E1F72300284430 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8020BC1729E1F72300284430 /* ProfileDateInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDateInputView.swift; sourceTree = "<group>"; };
+		8020BC1829E1F72300284430 /* GenderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
+		8020BC1A29E1F72300284430 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +129,7 @@
 				37A4E2FC29D8AAB800AD2B3E /* App */,
 				6DD59DAA29DBF9B3001D33BC /* Views */,
 				37A4E30229D8ACE400AD2B3E /* Controllers */,
+				8020BC0529E1F72300284430 /* Settings */,
 				37A4E2FD29D8AACB00AD2B3E /* Resources */,
 			);
 			path = SMovie;
@@ -196,6 +229,69 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		8020BC0529E1F72300284430 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC0629E1F72300284430 /* Settings */,
+				8020BC0E29E1F72300284430 /* Profile  */,
+				8020BC0C29E1F72300284430 /* Change Password */,
+				8020BC1929E1F72300284430 /* Forgot Password */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		8020BC0629E1F72300284430 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC0729E1F72300284430 /* UserInfoHeaderView.swift */,
+				8020BC0829E1F72300284430 /* SettingsModel.swift */,
+				8020BC0929E1F72300284430 /* SettingSwitchCell.swift */,
+				8020BC0A29E1F72300284430 /* SettingCell.swift */,
+				8020BC0B29E1F72300284430 /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		8020BC0C29E1F72300284430 /* Change Password */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC0D29E1F72300284430 /* ChangePasswordViewController.swift */,
+			);
+			path = "Change Password";
+			sourceTree = "<group>";
+		};
+		8020BC0E29E1F72300284430 /* Profile  */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC1229E1F72300284430 /* Change Photo */,
+				8020BC1629E1F72300284430 /* ProfileViewController.swift */,
+				8020BC1129E1F72300284430 /* ProfileImageView.swift */,
+				8020BC1729E1F72300284430 /* ProfileDateInputView.swift */,
+				8020BC0F29E1F72300284430 /* ProfileGenderInputView.swift */,
+				8020BC1029E1F72300284430 /* TextInputView.swift */,
+				8020BC1829E1F72300284430 /* GenderButton.swift */,
+			);
+			path = "Profile ";
+			sourceTree = "<group>";
+		};
+		8020BC1229E1F72300284430 /* Change Photo */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC1329E1F72300284430 /* ChangePictureView.swift */,
+				8020BC1429E1F72300284430 /* ChangePictureViewController.swift */,
+				8020BC1529E1F72300284430 /* ChangePictureButton.swift */,
+			);
+			path = "Change Photo";
+			sourceTree = "<group>";
+		};
+		8020BC1929E1F72300284430 /* Forgot Password */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC1A29E1F72300284430 /* ForgotPasswordViewController.swift */,
+			);
+			path = "Forgot Password";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -266,29 +362,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8020BC2329E1F72300284430 /* ProfileImageView.swift in Sources */,
+				8020BC2429E1F72300284430 /* ChangePictureView.swift in Sources */,
+				8020BC2629E1F72300284430 /* ChangePictureButton.swift in Sources */,
 				6DCCD1D429E030ED0012549E /* FavoritesView.swift in Sources */,
 				6DCCD1CC29E02AC20012549E /* PlayTableViewCell.swift in Sources */,
+				8020BC1B29E1F72300284430 /* UserInfoHeaderView.swift in Sources */,
+				8020BC2929E1F72300284430 /* GenderButton.swift in Sources */,
+				8020BC2729E1F72300284430 /* ProfileViewController.swift in Sources */,
 				37A4E30829D8B71900AD2B3E /* PlayViewController.swift in Sources */,
 				37A4E30F29D8B7E500AD2B3E /* UIViewController+Utilities.swift in Sources */,
 				6DCCD1D629E031590012549E /* FavoritesTableViewCell.swift in Sources */,
+				8020BC2829E1F72300284430 /* ProfileDateInputView.swift in Sources */,
+				8020BC1C29E1F72300284430 /* SettingsModel.swift in Sources */,
 				6DCCD1D129E02B6E0012549E /* CustomTableViewCell.swift in Sources */,
 				37A4E2ED29D8A97800AD2B3E /* TabBarController.swift in Sources */,
 				6DCCD1CE29E02AD90012549E /* PlayCollectionViewCell.swift in Sources */,
+				8020BC1D29E1F72300284430 /* SettingSwitchCell.swift in Sources */,
 				37A4E30629D8B6CD00AD2B3E /* SearchViewController.swift in Sources */,
+				8020BC2029E1F72300284430 /* ChangePasswordViewController.swift in Sources */,
 				37A4E30429D8ACF800AD2B3E /* OnboardingViewController.swift in Sources */,
 				37A4E30A29D8B73700AD2B3E /* FavouriteViewController.swift in Sources */,
+				8020BC2529E1F72300284430 /* ChangePictureViewController.swift in Sources */,
 				6DCCD1CA29E028CD0012549E /* PlayView.swift in Sources */,
+				8020BC2A29E1F72300284430 /* ForgotPasswordViewController.swift in Sources */,
 				6DD59DB329DC10A1001D33BC /* UILabel.swift in Sources */,
 				37A4E30C29D8B75400AD2B3E /* PersonViewController.swift in Sources */,
+				8020BC2129E1F72300284430 /* ProfileGenderInputView.swift in Sources */,
 				37A4E2E929D8A97800AD2B3E /* AppDelegate.swift in Sources */,
 				6DD59DAC29DBF9E7001D33BC /* SearchView.swift in Sources */,
+				8020BC2229E1F72300284430 /* TextInputView.swift in Sources */,
 				6DD59DB129DC0248001D33BC /* SearchTableViewCell.swift in Sources */,
 				6DD59DB729DC1A3C001D33BC /* SearchCollectionViewCell.swift in Sources */,
 				37A4E30129D8AC4900AD2B3E /* Theme.swift in Sources */,
 				37A4E2FF29D8ABF600AD2B3E /* APIKey.swift in Sources */,
+				8020BC1F29E1F72300284430 /* SettingsViewController.swift in Sources */,
 				37A4E2EB29D8A97800AD2B3E /* SceneDelegate.swift in Sources */,
 				37A4E31129D8BFA000AD2B3E /* HomeViewController.swift in Sources */,
 				6DD59DAE29DBFBAB001D33BC /* AddSubviews.swift in Sources */,
+				8020BC1E29E1F72300284430 /* SettingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
