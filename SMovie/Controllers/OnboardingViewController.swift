@@ -13,6 +13,7 @@ protocol OnboardingViewControllerDelegate: AnyObject {
 
 final class OnboardingViewController: UIViewController {
     
+    //MARK: - Elements
     private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "OnboardingImage")
@@ -34,7 +35,7 @@ final class OnboardingViewController: UIViewController {
         pageControl.numberOfPages = 3
         pageControl.pageIndicatorTintColor = Theme.violetColor
         pageControl.currentPageIndicatorTintColor = .red
-//        pageControl.
+
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
@@ -55,14 +56,17 @@ final class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
- 
+        setLayout()
+        setConstraints()
+        setup()
+    }
+    
+    private func setLayout() {
         view.backgroundColor = Theme.violetColor
         view.addSubview(backgroundImageView)
         view.addSubview(whiteView)
         whiteView.addSubview(startButton)
         whiteView.addSubview(pageControl)
-        setConstraints()
-        setup()
     }
 }
 
