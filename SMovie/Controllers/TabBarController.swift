@@ -12,8 +12,13 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupViews()
         setupTabBar()
+        self.selectedIndex = 2
         
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.tabBarController?.selectedIndex = 2
+//    }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
