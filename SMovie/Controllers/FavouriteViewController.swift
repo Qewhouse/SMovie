@@ -8,7 +8,6 @@ final class FavouriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        title = "Favorites"
         setUpDelegates()
         setUpView()
     }
