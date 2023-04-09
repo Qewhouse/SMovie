@@ -41,6 +41,7 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         configureSections()
         configureView()
+//        overrideUserInterfaceStyle = .light
     }
     
     //MARK: - Configure methods

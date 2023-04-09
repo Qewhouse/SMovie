@@ -30,6 +30,7 @@ class SettingSwitchCell: UITableViewCell {
     let switcher: UISwitch = {
         let switcher = UISwitch()
         switcher.onTintColor = UIColor(named: "violetColor")
+        switcher.addTarget(self, action: #selector(traitChange), for: .touchUpInside)
         switcher.translatesAutoresizingMaskIntoConstraints = false
         return switcher
     }()
@@ -76,6 +77,23 @@ class SettingSwitchCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
+    
+    @objc private func traitChange(_ sender: UISwitch) {
+
+        if sender .isOn {
+            let window = UIApplication.shared.keyWindow
+            window?.overrideUserInterfaceStyle = .dark
+            print("Light")
+        } else {
+            let window = UIApplication.shared.keyWindow
+            window?.overrideUserInterfaceStyle = .light
+            print("dark")
+        }
+    }
+    
+    
+
+
     
     public func configure (with model: SettingsSwitchModel) {
         settingLabel.text = model.title
