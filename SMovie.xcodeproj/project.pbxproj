@@ -21,9 +21,10 @@
 		37A4E30C29D8B75400AD2B3E /* PersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */; };
 		37A4E30F29D8B7E500AD2B3E /* UIViewController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30E29D8B7E500AD2B3E /* UIViewController+Utilities.swift */; };
 		37A4E31129D8BFA000AD2B3E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */; };
+		37A4E31729E1697800AD2B3E /* OnboardingScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */; };
 		5109B15129DF3E2D001F090A /* CreateAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15029DF3E2D001F090A /* CreateAccountController.swift */; };
 		5109B15329DF3ED8001F090A /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15229DF3ED8001F090A /* SignUpController.swift */; };
-		37A4E31729E1697800AD2B3E /* OnboardingScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */; };
+		514AAECB29E30DE500CB21AD /* GoogleService-Info-2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 514AAECA29E30DE500CB21AD /* GoogleService-Info-2.plist */; };
 		6DCCD1CA29E028CD0012549E /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCD1C929E028CD0012549E /* PlayView.swift */; };
 		6DCCD1CC29E02AC20012549E /* PlayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCD1CB29E02AC20012549E /* PlayTableViewCell.swift */; };
 		6DCCD1CE29E02AD90012549E /* PlayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCD1CD29E02AD90012549E /* PlayCollectionViewCell.swift */; };
@@ -70,9 +71,10 @@
 		37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewController.swift; sourceTree = "<group>"; };
 		37A4E30E29D8B7E500AD2B3E /* UIViewController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utilities.swift"; sourceTree = "<group>"; };
 		37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreens.swift; sourceTree = "<group>"; };
 		5109B15029DF3E2D001F090A /* CreateAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountController.swift; sourceTree = "<group>"; };
 		5109B15229DF3ED8001F090A /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
-		37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreens.swift; sourceTree = "<group>"; };
+		514AAECA29E30DE500CB21AD /* GoogleService-Info-2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-2.plist"; sourceTree = "<group>"; };
 		6DCCD1C929E028CD0012549E /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
 		6DCCD1CB29E02AC20012549E /* PlayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayTableViewCell.swift; sourceTree = "<group>"; };
 		6DCCD1CD29E02AD90012549E /* PlayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				37A4E2F129D8A97800AD2B3E /* Assets.xcassets */,
 				37A4E2F329D8A97800AD2B3E /* LaunchScreen.storyboard */,
 				37A4E2F629D8A97800AD2B3E /* Info.plist */,
+				514AAECA29E30DE500CB21AD /* GoogleService-Info-2.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 			files = (
 				37A4E2F529D8A97800AD2B3E /* LaunchScreen.storyboard in Resources */,
 				37A4E2F229D8A97800AD2B3E /* Assets.xcassets in Resources */,
+				514AAECB29E30DE500CB21AD /* GoogleService-Info-2.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
