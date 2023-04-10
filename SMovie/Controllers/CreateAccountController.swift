@@ -6,6 +6,10 @@
 
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
+import GoogleSignIn
+
 
 class CreateAccountController: UIViewController {
     // MARK: - Объекты

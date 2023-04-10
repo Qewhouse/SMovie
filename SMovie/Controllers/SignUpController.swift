@@ -4,6 +4,8 @@
 
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 class SignUpController: UIViewController {
     
@@ -145,8 +147,11 @@ class SignUpController: UIViewController {
         button.backgroundColor = UIColor(named: "violetColor")
         button.layer.cornerRadius = 24
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         return button
     }()
+    
+    
     
     //Добавляем текст "Already have an account? Login"
     lazy var alreadyLabel: UILabel = {
@@ -244,6 +249,32 @@ class SignUpController: UIViewController {
         
     }
     
+    // При нажатии на кнопку "Sign Up", эта функция выполняет регистрацию пользователя и делает переход к другому экрану
+    @objc  func signUpButtonPressed() {
+        
+        if passwordTextField.text == confirmTextField.text {
+            if let email = emailTextFiled.text,
+               let password = passwordTextField.text {
+                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    if let e = error {
+                        let alert = UIAlertController(title: "Error", message: e.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        let searchViewController = HomeViewController()
+                        self.navigationController?.pushViewController(searchViewController, animated: true)
+                    }
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Wrong password", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     // Настраиваем переключатель видимости пароля в поле ввода
     func configurePasswordToggleButton() {
         passwordToggleButton.tintColor = .gray
@@ -308,6 +339,8 @@ class SignUpController: UIViewController {
     @objc func loginTapped() {
         // Обработчик нажатия на кнопку
     }
+    
+    
     
     
 }
