@@ -25,6 +25,9 @@
 		37A4E31A29E2C65800AD2B3E /* MainDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31929E2C65800AD2B3E /* MainDetailsView.swift */; };
 		37A4E31C29E2C67200AD2B3E /* MainDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31B29E2C67200AD2B3E /* MainDetailsTableViewCell.swift */; };
 		37A4E31E29E2C78500AD2B3E /* MainDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31D29E2C78500AD2B3E /* MainDetailsViewController.swift */; };
+		37A4E32229E4AC3300AD2B3E /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32129E4AC3300AD2B3E /* OnboardingPage.swift */; };
+		37A4E32429E4AC5500AD2B3E /* PageControlIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32329E4AC5500AD2B3E /* PageControlIndicator.swift */; };
+		37A4E32629E4AC8300AD2B3E /* OnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32529E4AC8300AD2B3E /* OnboardingButton.swift */; };
 		5109B15129DF3E2D001F090A /* CreateAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15029DF3E2D001F090A /* CreateAccountController.swift */; };
 		5109B15329DF3ED8001F090A /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15229DF3ED8001F090A /* SignUpController.swift */; };
 		6DCCD1CA29E028CD0012549E /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCD1C929E028CD0012549E /* PlayView.swift */; };
@@ -80,6 +83,9 @@
 		37A4E31929E2C65800AD2B3E /* MainDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailsView.swift; sourceTree = "<group>"; };
 		37A4E31B29E2C67200AD2B3E /* MainDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		37A4E31D29E2C78500AD2B3E /* MainDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailsViewController.swift; sourceTree = "<group>"; };
+		37A4E32129E4AC3300AD2B3E /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
+		37A4E32329E4AC5500AD2B3E /* PageControlIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlIndicator.swift; sourceTree = "<group>"; };
+		37A4E32529E4AC8300AD2B3E /* OnboardingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButton.swift; sourceTree = "<group>"; };
 		5109B15029DF3E2D001F090A /* CreateAccountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountController.swift; sourceTree = "<group>"; };
 		5109B15229DF3ED8001F090A /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		6DCCD1C929E028CD0012549E /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
@@ -180,7 +186,6 @@
 			children = (
 				F6AC3FD729E2B12D008437B0 /* DetailViewController */,
 				37A4E2EC29D8A97800AD2B3E /* TabBarController.swift */,
-				37A4E30329D8ACF800AD2B3E /* OnboardingViewController.swift */,
 				37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */,
 				37A4E30729D8B71900AD2B3E /* PlayViewController.swift */,
 				37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */,
@@ -207,7 +212,11 @@
 		37A4E31529E1694800AD2B3E /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				37A4E30329D8ACF800AD2B3E /* OnboardingViewController.swift */,
 				37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */,
+				37A4E32129E4AC3300AD2B3E /* OnboardingPage.swift */,
+				37A4E32329E4AC5500AD2B3E /* PageControlIndicator.swift */,
+				37A4E32529E4AC8300AD2B3E /* OnboardingButton.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -418,6 +427,7 @@
 				8020BC2429E1F72300284430 /* ChangePictureView.swift in Sources */,
 				8020BC2629E1F72300284430 /* ChangePictureButton.swift in Sources */,
 				6DCCD1D429E030ED0012549E /* FavoritesView.swift in Sources */,
+				37A4E32229E4AC3300AD2B3E /* OnboardingPage.swift in Sources */,
 				6DCCD1CC29E02AC20012549E /* PlayTableViewCell.swift in Sources */,
 				37A4E31C29E2C67200AD2B3E /* MainDetailsTableViewCell.swift in Sources */,
 				8020BC1B29E1F72300284430 /* UserInfoHeaderView.swift in Sources */,
@@ -442,9 +452,11 @@
 				37A4E31A29E2C65800AD2B3E /* MainDetailsView.swift in Sources */,
 				8020BC2A29E1F72300284430 /* ForgotPasswordViewController.swift in Sources */,
 				F6AC3FD929E2B14C008437B0 /* DetailViewController.swift in Sources */,
+				37A4E32429E4AC5500AD2B3E /* PageControlIndicator.swift in Sources */,
 				6DD59DB329DC10A1001D33BC /* UILabel.swift in Sources */,
 				5109B15129DF3E2D001F090A /* CreateAccountController.swift in Sources */,
 				37A4E30C29D8B75400AD2B3E /* PersonViewController.swift in Sources */,
+				37A4E32629E4AC8300AD2B3E /* OnboardingButton.swift in Sources */,
 				8020BC2129E1F72300284430 /* ProfileGenderInputView.swift in Sources */,
 				37A4E2E929D8A97800AD2B3E /* AppDelegate.swift in Sources */,
 				6DD59DAC29DBF9E7001D33BC /* SearchView.swift in Sources */,
