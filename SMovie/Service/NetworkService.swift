@@ -5,6 +5,8 @@
 //  Created by Eduard Tokarev on 11.04.2023.
 //
 
+//    private let urlImage = "https://image.tmdb.org/t/p/w500/A6uiMhZaJA6KHmzx1qTJfNMaWuf.jpg"
+
 import Foundation
 
 final class NetworkService {
@@ -13,7 +15,6 @@ final class NetworkService {
     
     private let baseURL = "https://api.themoviedb.org"
     private let apiKey = "61642e1d2f11d7fd3210b7397b95fb9c"
-    private let urlImage = "https://image.tmdb.org/t/p/w500/A6uiMhZaJA6KHmzx1qTJfNMaWuf.jpg"
     private var lastLoadedPageMovie = 1
     private var lastLoadedPageTv = 1
     
@@ -29,7 +30,10 @@ final class NetworkService {
             guard let self else { return }
             switch result {
             case .success(let discoverMovie):
-//                movies = ModelMovie(discoverMovie)
+                for movie in discoverMovie.results {
+                    movies.append(Movie(from: movie))
+                }
+                print(movies)
                 self.lastLoadedPageMovie += 1
             case .failure(let error):
                 assertionFailure("Error - \(error)")
@@ -46,7 +50,9 @@ final class NetworkService {
             guard let self else { return }
             switch result {
             case .success(let discoverTv):
-//                tv = ModelTV(discoverTv)
+                for movie in discoverTv.results {
+                tv.append(TV(from: movie))
+            }
                 self.lastLoadedPageTv += 1
             case .failure(let error):
                 assertionFailure("Error - \(error)")
