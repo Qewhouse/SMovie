@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    private let onboardingViewController = UINavigationController(rootViewController: SignUpController()) //CreateAccountController()
+    private let onboardingViewController = /*UINavigationController(rootViewController: SignUpController())*/ CreateAccountController()
     private let tabBarController = TabBarController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

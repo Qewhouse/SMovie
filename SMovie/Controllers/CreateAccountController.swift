@@ -113,7 +113,7 @@ class CreateAccountController: UIViewController {
     }()
     
     //Добавление кнопки "Continue with Google"
-    let buttonGoogle:UIButton = {
+    lazy var buttonGoogle: UIButton = {
         let button = UIButton()
         button.setTitle("Continue with Google", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -121,6 +121,9 @@ class CreateAccountController: UIViewController {
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.0
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(self, action: #selector(didTapGoogleButton), for: .touchUpInside)
+        
         return button
     }()
     
@@ -143,8 +146,7 @@ class CreateAccountController: UIViewController {
     @objc func loginTapped() {
         // Handle login tap action here
     }
-
-
+    
     
     //Добавление изображения "Icon - Google"
     let googleIconImageView: UIImageView = {
@@ -162,10 +164,13 @@ class CreateAccountController: UIViewController {
         view.backgroundColor = UIColor(named: "violetColor")
         setView()
         setConstraint()
+        
     }
+    
     
     //Добавление в представление элементов пользовательского интерфейса
     func setView() {
+        
         whiteView.addSubview(emailLabel)
         whiteView.addSubview(emailTextField)
         whiteView.addSubview(buttonContinue)
@@ -180,13 +185,58 @@ class CreateAccountController: UIViewController {
         view.addSubview(whiteView)
     }
     
+    
+    
+    //Обработка нажатия кнопки "Continue with Google"
+    @objc func didTapGoogleButton() {
+        // Создаём объект конфигурации Google Sign-In
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) {[unowned self] result, error in
+            if let error = error {
+                print("Google Sign-In error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString
+            else {
+                print("Invalid Google Sign-In authentication")
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                // Работа с результатом аутентификации Firebase
+                if error == nil {
+                    // Аутентификация успешна, выполняем переход
+                    let homeVC = HomeViewController()
+                    self.navigationController?.pushViewController(homeVC, animated: true)
+                } else {
+                    // error message
+                    print("Authentication failed: \(error!.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
 
 extension CreateAccountController {
     
     func setConstraint() {
-        NSLayoutConstraint.activate([
+        UIKit.NSLayoutConstraint.activate([
             
             //constraints для надписи "Create account"
             createAccountLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -241,6 +291,7 @@ extension CreateAccountController {
             continueLabel.centerXAnchor.constraint(equalTo: whiteView.centerXAnchor),
             
             //constraints для buttonGoogle
+            
             buttonGoogle.topAnchor.constraint(equalTo: continueLabel.bottomAnchor, constant: 32),
             buttonGoogle.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: 24),
             buttonGoogle.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -24),
@@ -252,10 +303,12 @@ extension CreateAccountController {
             alreadyLabel.centerXAnchor.constraint(equalTo: whiteView.centerXAnchor),
             
             //constraints для googleIconImageView
+            
             googleIconImageView.leadingAnchor.constraint(equalTo: buttonGoogle.leadingAnchor, constant: 58.5),
             googleIconImageView.centerYAnchor.constraint(equalTo: buttonGoogle.centerYAnchor),
             googleIconImageView.widthAnchor.constraint(equalToConstant: 24),
             googleIconImageView.heightAnchor.constraint(equalToConstant: 24)
+            
         ])
     }
 }
