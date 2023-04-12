@@ -56,6 +56,7 @@ final class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NetworkService.shared.fetchGenre()
         setLayout()
         setConstraints()
         setup()
