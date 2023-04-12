@@ -9,11 +9,11 @@ final class SearchTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(customTableViewCell)
         addConstraints()
     }
     
     private func addConstraints() {
+        contentView.addSubview(customTableViewCell)
         NSLayoutConstraint.activate([
             customTableViewCell.topAnchor.constraint(equalTo: topAnchor),
             customTableViewCell.leadingAnchor.constraint(equalTo: leadingAnchor),

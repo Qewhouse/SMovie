@@ -25,6 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = onboardingViewController
         window?.makeKeyAndVisible()
     }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
 }
 
 extension SceneDelegate {

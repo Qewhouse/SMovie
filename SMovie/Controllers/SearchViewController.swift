@@ -4,6 +4,7 @@ import UIKit
 final class SearchViewController: UIViewController {
     
     private let searchView = SearchView()
+    private let customTableViewCell = CustomTableViewCell()
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
     
     override func viewDidLoad() {
@@ -77,5 +78,14 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
 extension SearchViewController: SearchViewDelegate {
     func didTupFilterButton() {
         print("Azazaza")
+    }
+}
+
+extension SearchViewController: CustomTableViewCellDelegate {
+    func didTappedButton() {
+        MovieCoreDataManager.shared.saveRecipe(image: customTableViewCell.customImageView.image!,
+                                               name: customTableViewCell.nameLabel.text!,
+                                               time: customTableViewCell.timeLabel.text!,
+                                               date: customTableViewCell.dateLabel.text!)
     }
 }
