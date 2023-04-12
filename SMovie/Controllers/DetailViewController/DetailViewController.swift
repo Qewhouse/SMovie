@@ -14,6 +14,7 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     let rating = 4
+    
     let images = ["luck", "luck", "luck"]
     let names = ["Jon Watts", "Chris McKenna", "Some Text"]
     let vocabularys = ["Directors", "Writers", "Actor"]
@@ -247,10 +248,20 @@ extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastAndCrewCell.self), for: indexPath) as? CastAndCrewCell else { fatalError("error")}
         
-        let image = images[indexPath.row]
+        let image = UIImage()
+        let movies = NetworkService.shared.movies
+        let posterPath = movies[indexPath.row].posterPath
+        let id = movies[indexPath.row].id
         let name = names[indexPath.row]
         let vocabulary = vocabularys[indexPath.row]
-        myCell.setupCell(withImage: UIImage(named: image) ?? UIImage(), name: name, vocabulary: vocabulary)
+        NetworkService.shared.fetchImage(posterPath, id: id) { [weak self] (image) in
+                    guard let self = self, let image = image else { return }
+            myCell.setupCell(withImage: image, name: name, vocabulary: vocabulary)
+//                    ImageView.image = image
+                }
+
+        
+        
         return myCell
     }
 }

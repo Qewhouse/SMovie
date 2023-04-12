@@ -19,6 +19,7 @@ final class SearchViewController: UIViewController {
         searchView.tableView.dataSource = self
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
+        searchView.searchBar.delegate = self
     }
     
     private func setUpView() {
@@ -75,7 +76,15 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
 
 //MARK: - Filter button
 extension SearchViewController: SearchViewDelegate {
+    
     func didTupFilterButton() {
         print("Azazaza")
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        NetworkService.shared.fetchFind(text: searchText)
     }
 }
