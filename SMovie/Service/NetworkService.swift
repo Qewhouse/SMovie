@@ -5,9 +5,8 @@
 //  Created by Eduard Tokarev on 11.04.2023.
 //
 
-//    private let urlImage = "https://image.tmdb.org/t/p/w500/A6uiMhZaJA6KHmzx1qTJfNMaWuf.jpg"
-
 import Foundation
+import UIKit
 
 final class NetworkService {
     static let shared = NetworkService()
@@ -23,10 +22,13 @@ final class NetworkService {
     private(set) var detailMovie: DetailMovie?
     private(set) var detailTv: DetailTv?
     private(set) var genre = [Genre]()
+    private(set) var image = UIImage()
+    
+    private let cache = NSCache<NSNumber, UIImage>()
+    private let utilityQueue = DispatchQueue.global(qos: .utility)
     
     func fetchDiscoverMovie() {
         guard let request = makeRequest(lastLoadedPageMovie, "movie") else {return assertionFailure("Error photo request")}
-        print(request)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<MovieResult, Error>) in
             
@@ -36,7 +38,6 @@ final class NetworkService {
                 for movie in discoverMovie.results {
                     movies.append(Movie(from: movie))
                 }
-                print(movies)
                 self.lastLoadedPageMovie += 1
             case .failure(let error):
                 assertionFailure("Error - \(error)")
@@ -65,7 +66,6 @@ final class NetworkService {
     
     func fetchDetailMovie(id: Int) {
         guard let request = makeRequestMedia(id, "media") else {return assertionFailure("Error photo request")}
-        print(request)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<DetailMovieResult, Error>) in
             guard let self else { return }
@@ -81,7 +81,6 @@ final class NetworkService {
     
     func fetchDetailTv(id: Int) {
         guard let request = makeRequestMedia(id, "tv") else {return assertionFailure("Error photo request")}
-        print(request)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<DetailTvResult, Error>) in
             guard let self else { return }
@@ -95,9 +94,8 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchGenre() {
-        guard let url = URL(string: baseURL + "/3/genre/movie/list?api_key=\(apiKey)") else { return  }
-        print(url)
+    func fetchGenre(media: Media) {
+        guard let url = URL(string: baseURL + "/3/genre/\(media)/list?api_key=\(apiKey)") else { return  }
         let request = URLRequest(url: url)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<GenreResult, Error>) in
@@ -105,12 +103,30 @@ final class NetworkService {
             switch result {
             case .success(let result):
                 self.genre = result.genres
-                print(genre)
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
         }
         task.resume()
+    }
+    
+    func fetchImage(_ posterPath: String, id: Int, completion: @escaping (UIImage?) -> ()) {
+        let itemNumber = NSNumber(value: id)
+        
+        if let cachedImage = self.cache.object(forKey: itemNumber) {
+            print("Using a cached image for item: \(itemNumber)")
+            completion(cachedImage)
+        } else {
+            utilityQueue.async {
+                guard let url = URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)") else { return }
+                guard let data = try? Data(contentsOf: url) else { return }
+                let image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    completion(image)
+                    self.cache.setObject(image ?? UIImage(), forKey: itemNumber)
+                }
+            }
+        }
     }
     
     private func makeRequest(_ page: Int, _ discover: String) -> URLRequest? {
