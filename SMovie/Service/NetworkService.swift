@@ -36,8 +36,9 @@ final class NetworkService {
             switch result {
             case .success(let discoverMovie):
                 for movie in discoverMovie.results {
-                    movies.append(Movie(from: movie))
+                    self.movies.append(Movie(from: movie))
                 }
+                print(self.movies)
                 self.lastLoadedPageMovie += 1
             case .failure(let error):
                 assertionFailure("Error - \(error)")
@@ -54,7 +55,7 @@ final class NetworkService {
             switch result {
             case .success(let discoverTv):
                 for movie in discoverTv.results {
-                    tv.append(TV(from: movie))
+                    self.tv.append(TV(from: movie))
                 }
                 self.lastLoadedPageTv += 1
             case .failure(let error):
@@ -103,6 +104,7 @@ final class NetworkService {
             switch result {
             case .success(let result):
                 self.genre = result.genres
+                print(self.genre)
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
