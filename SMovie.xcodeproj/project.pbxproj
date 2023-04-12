@@ -54,6 +54,13 @@
 		8020BC2829E1F72300284430 /* ProfileDateInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1729E1F72300284430 /* ProfileDateInputView.swift */; };
 		8020BC2929E1F72300284430 /* GenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1829E1F72300284430 /* GenderButton.swift */; };
 		8020BC2A29E1F72300284430 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC1A29E1F72300284430 /* ForgotPasswordViewController.swift */; };
+		8020BC4529E7203A00284430 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC3E29E7203900284430 /* PosterCell.swift */; };
+		8020BC4629E7203A00284430 /* HomeMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC3F29E7203900284430 /* HomeMockData.swift */; };
+		8020BC4729E7203A00284430 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC4029E7203900284430 /* ListItem.swift */; };
+		8020BC4829E7203A00284430 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC4129E7203900284430 /* ListSection.swift */; };
+		8020BC4929E7203A00284430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC4229E7203900284430 /* HomeView.swift */; };
+		8020BC4A29E7203A00284430 /* HeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC4329E7203900284430 /* HeaderSupplementaryView.swift */; };
+		8020BC4B29E7203A00284430 /* ExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020BC4429E7203A00284430 /* ExampleCell.swift */; };
 		F636613C29E57D8B004A7E3C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F636613B29E57D8B004A7E3C /* NetworkService.swift */; };
 		F636613F29E587EC004A7E3C /* MovieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F636613E29E587EC004A7E3C /* MovieResult.swift */; };
 		F636614129E58B46004A7E3C /* TvResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F636614029E58B46004A7E3C /* TvResult.swift */; };
@@ -119,6 +126,13 @@
 		8020BC1729E1F72300284430 /* ProfileDateInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDateInputView.swift; sourceTree = "<group>"; };
 		8020BC1829E1F72300284430 /* GenderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderButton.swift; sourceTree = "<group>"; };
 		8020BC1A29E1F72300284430 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		8020BC3E29E7203900284430 /* PosterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
+		8020BC3F29E7203900284430 /* HomeMockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMockData.swift; sourceTree = "<group>"; };
+		8020BC4029E7203900284430 /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
+		8020BC4129E7203900284430 /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListSection.swift; sourceTree = "<group>"; };
+		8020BC4229E7203900284430 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8020BC4329E7203900284430 /* HeaderSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderSupplementaryView.swift; sourceTree = "<group>"; };
+		8020BC4429E7203A00284430 /* ExampleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleCell.swift; sourceTree = "<group>"; };
 		F636613B29E57D8B004A7E3C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		F636613E29E587EC004A7E3C /* MovieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResult.swift; sourceTree = "<group>"; };
 		F636614029E58B46004A7E3C /* TvResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvResult.swift; sourceTree = "<group>"; };
@@ -205,7 +219,7 @@
 				37A4E30329D8ACF800AD2B3E /* OnboardingViewController.swift */,
 				37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */,
 				37A4E30729D8B71900AD2B3E /* PlayViewController.swift */,
-				37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */,
+				8020BC3D29E7202000284430 /* Home */,
 				37A4E30929D8B73700AD2B3E /* FavouriteViewController.swift */,
 				37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */,
 				5109B15029DF3E2D001F090A /* CreateAccountController.swift */,
@@ -356,6 +370,21 @@
 			path = "Forgot Password";
 			sourceTree = "<group>";
 		};
+		8020BC3D29E7202000284430 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				8020BC4429E7203A00284430 /* ExampleCell.swift */,
+				8020BC4329E7203900284430 /* HeaderSupplementaryView.swift */,
+				8020BC3F29E7203900284430 /* HomeMockData.swift */,
+				8020BC4229E7203900284430 /* HomeView.swift */,
+				8020BC4029E7203900284430 /* ListItem.swift */,
+				8020BC4129E7203900284430 /* ListSection.swift */,
+				8020BC3E29E7203900284430 /* PosterCell.swift */,
+				37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		F636613A29E57D76004A7E3C /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,6 +491,7 @@
 				F636614F29E6B0AC004A7E3C /* GenreResult.swift in Sources */,
 				5109B15329DF3ED8001F090A /* SignUpController.swift in Sources */,
 				8020BC2329E1F72300284430 /* ProfileImageView.swift in Sources */,
+				8020BC4529E7203A00284430 /* PosterCell.swift in Sources */,
 				8020BC2429E1F72300284430 /* ChangePictureView.swift in Sources */,
 				F636614B29E5CBC7004A7E3C /* DetailTvResult.swift in Sources */,
 				8020BC2629E1F72300284430 /* ChangePictureButton.swift in Sources */,
@@ -470,6 +500,7 @@
 				F636614729E5B6B2004A7E3C /* DetailMovieResult.swift in Sources */,
 				37A4E31C29E2C67200AD2B3E /* MainDetailsTableViewCell.swift in Sources */,
 				8020BC1B29E1F72300284430 /* UserInfoHeaderView.swift in Sources */,
+				8020BC4729E7203A00284430 /* ListItem.swift in Sources */,
 				8020BC2929E1F72300284430 /* GenderButton.swift in Sources */,
 				8020BC2729E1F72300284430 /* ProfileViewController.swift in Sources */,
 				37A4E30829D8B71900AD2B3E /* PlayViewController.swift in Sources */,
@@ -478,6 +509,7 @@
 				F636613C29E57D8B004A7E3C /* NetworkService.swift in Sources */,
 				8020BC2829E1F72300284430 /* ProfileDateInputView.swift in Sources */,
 				8020BC1C29E1F72300284430 /* SettingsModel.swift in Sources */,
+				8020BC4A29E7203A00284430 /* HeaderSupplementaryView.swift in Sources */,
 				6DCCD1D129E02B6E0012549E /* CustomTableViewCell.swift in Sources */,
 				37A4E2ED29D8A97800AD2B3E /* TabBarController.swift in Sources */,
 				6DCCD1CE29E02AD90012549E /* PlayCollectionViewCell.swift in Sources */,
@@ -493,6 +525,7 @@
 				6DCCD1CA29E028CD0012549E /* PlayView.swift in Sources */,
 				F636614129E58B46004A7E3C /* TvResult.swift in Sources */,
 				37A4E31A29E2C65800AD2B3E /* MainDetailsView.swift in Sources */,
+				8020BC4929E7203A00284430 /* HomeView.swift in Sources */,
 				8020BC2A29E1F72300284430 /* ForgotPasswordViewController.swift in Sources */,
 				F6AC3FD929E2B14C008437B0 /* DetailViewController.swift in Sources */,
 				6DD59DB329DC10A1001D33BC /* UILabel.swift in Sources */,
@@ -512,7 +545,10 @@
 				37A4E30129D8AC4900AD2B3E /* Theme.swift in Sources */,
 				37A4E2FF29D8ABF600AD2B3E /* APIKey.swift in Sources */,
 				8020BC1F29E1F72300284430 /* SettingsViewController.swift in Sources */,
+				8020BC4829E7203A00284430 /* ListSection.swift in Sources */,
+				8020BC4629E7203A00284430 /* HomeMockData.swift in Sources */,
 				37A4E2EB29D8A97800AD2B3E /* SceneDelegate.swift in Sources */,
+				8020BC4B29E7203A00284430 /* ExampleCell.swift in Sources */,
 				37A4E31129D8BFA000AD2B3E /* HomeViewController.swift in Sources */,
 				6DD59DAE29DBFBAB001D33BC /* AddSubviews.swift in Sources */,
 				8020BC1E29E1F72300284430 /* SettingCell.swift in Sources */,
