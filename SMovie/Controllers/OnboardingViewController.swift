@@ -53,10 +53,14 @@ final class OnboardingViewController: UIViewController {
     
     weak var delegate: OnboardingViewControllerDelegate?
     
+    let networkService = NetworkService.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkService.shared.fetchGenre()
+        networkService.fetchMedia(.movie)
+        networkService.fetchMedia(.tv)
+
         setLayout()
         setConstraints()
         setup()

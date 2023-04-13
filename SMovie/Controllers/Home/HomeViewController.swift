@@ -77,7 +77,7 @@ extension HomeViewController:UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as? PosterCell else { return UICollectionViewCell()
                 
             }
-            cell.configureCell(image: UIImage(named: posters[indexPath.row].image)!,
+            cell.configureCell(image: UIImage(named: posters[indexPath.row].image) ?? UIImage(),
                                name: posters[indexPath.row].title,
                                category: posters[indexPath.row].category)
             return cell
@@ -97,7 +97,7 @@ extension HomeViewController:UICollectionViewDataSource {
             
         case .examples(let examples):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExampleCell.identifier, for: indexPath) as? ExampleCell else {return UICollectionViewCell()}
-            cell.configureCell(image: UIImage(named: examples[indexPath.row].image)!,
+            cell.configureCell(image: UIImage(named: examples[indexPath.row].image) ?? UIImage(),
                                category: examples[indexPath.row].category,
                                name: examples[indexPath.row].title,
                                time: examples[indexPath.row].time,

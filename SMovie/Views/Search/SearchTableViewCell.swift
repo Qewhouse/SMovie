@@ -22,8 +22,8 @@ final class SearchTableViewCell: UITableViewCell {
         ])
     }
     
-    public func configure(with imageName: String, name: String, time: String) {
-        customTableViewCell.customImageView.image = UIImage(named: imageName)
+    public func configure(with image: UIImage, name: String?, time: String?) {
+        customTableViewCell.customImageView.image = image
         customTableViewCell.nameLabel.text = name
         customTableViewCell.timeLabel.text = time
     }
