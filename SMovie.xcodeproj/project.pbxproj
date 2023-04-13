@@ -28,6 +28,7 @@
 		37A4E32229E4AC3300AD2B3E /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32129E4AC3300AD2B3E /* OnboardingPage.swift */; };
 		37A4E32429E4AC5500AD2B3E /* PageControlIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32329E4AC5500AD2B3E /* PageControlIndicator.swift */; };
 		37A4E32629E4AC8300AD2B3E /* OnboardingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E32529E4AC8300AD2B3E /* OnboardingButton.swift */; };
+		37A4E32929E8B3CB00AD2B3E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37A4E32829E8B3CB00AD2B3E /* SnapKit */; };
 		5109B15129DF3E2D001F090A /* CreateAccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15029DF3E2D001F090A /* CreateAccountController.swift */; };
 		5109B15329DF3ED8001F090A /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5109B15229DF3ED8001F090A /* SignUpController.swift */; };
 		6DCCD1CA29E028CD0012549E /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCCD1C929E028CD0012549E /* PlayView.swift */; };
@@ -125,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A4E32929E8B3CB00AD2B3E /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +370,9 @@
 			dependencies = (
 			);
 			name = SMovie;
+			packageProductDependencies = (
+				37A4E32829E8B3CB00AD2B3E /* SnapKit */,
+			);
 			productName = SMovie;
 			productReference = 37A4E2E529D8A97800AD2B3E /* SMovie.app */;
 			productType = "com.apple.product-type.application";
@@ -396,6 +401,9 @@
 				Base,
 			);
 			mainGroup = 37A4E2DC29D8A97800AD2B3E;
+			packageReferences = (
+				37A4E32729E8B3CB00AD2B3E /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 37A4E2E629D8A97800AD2B3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -694,6 +702,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		37A4E32729E8B3CB00AD2B3E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		37A4E32829E8B3CB00AD2B3E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37A4E32729E8B3CB00AD2B3E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 37A4E2DD29D8A97800AD2B3E /* Project object */;
 }

@@ -21,12 +21,11 @@ class CustomButton: UIButton {
     }
 
     private func setupButton() {
-        titleLabel?.font = UIFont.jakartaRomanSemiBold(size: 16)
+        titleLabel?.font = .systemFont(ofSize: 18, weight: .bold)
         setTitleColor(.white, for: .normal)
         contentMode = .center
-        backgroundColor = UIColor(named: Resources.Colors.accent)
+        backgroundColor = Theme.violetColor
         layer.cornerRadius = 26
         translatesAutoresizingMaskIntoConstraints = false
-        makeSystem(self)
     }
 }

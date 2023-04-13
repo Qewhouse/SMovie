@@ -7,23 +7,23 @@
 
 import UIKit
 
-struct OnBoardingPage {
+struct OnBoardingView {
     let title: String
     let subtitle: String
 
     static let about: Self = .init(
-        title: "Watch your favorite movie easily",
-        subtitle: "Popular movies from all over the world in your app."
+        title: "Your favorite movie or TV show is just a tap away",
+        subtitle: "Popular movies & TV shows right inside the app"
     )
 
     static let favourites: Self = .init(
-        title: "Save your favorite movies in your app",
-        subtitle: "You can create a selection of your favorite movies!"
+        title: "Best content is always with you",
+        subtitle: "Save your favorites and watch it whenever you want"
     )
 
     static let genres: Self = .init(
-        title: "Choose your favorite genres",
-        subtitle: "Do you prefer a certain genre? Choose your favorite and enjoy watching!"
+        title: "Any genre of your choice",
+        subtitle: "Action or love-story? You'll satisfy any preferences and won't argue anymore"
 
     )
 

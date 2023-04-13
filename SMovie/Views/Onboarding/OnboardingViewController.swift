@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol OnboardingViewControllerDelegate: AnyObject {
     func didFinishOnboarding()
@@ -14,12 +15,14 @@ protocol OnboardingViewControllerDelegate: AnyObject {
 class OnboardingViewController: UIViewController {
 
     lazy var onboardingImage = UIImageView()
-//    lazy var personImageView = UIImageView()
+    lazy var personImageView = UIImageView()
     lazy var pageContainerView = UIView()
     lazy var pageScrollView = UIScrollView()
-    lazy var pageChangeButton = CustomButton(title: "Continue")
-    lazy var pageIndicator = InteractivePageIndicator(pages: OnBoardingPage.all.count)
+    lazy var pageButton = CustomButton(title: "Continue")
+    lazy var pageIndicator = InteractivePageIndicator(pages: OnBoardingView.all.count)
 
+    weak var delegate: OnboardingViewControllerDelegate?
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
@@ -39,45 +42,48 @@ class OnboardingViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Theme.violetColor
         configureBackgroundImages()
-//        configurepersonImageView()
+        configurepersonImage()
         configurePageContainerView()
-        configurePages(OnBoardingPage.all)
+        configurePages(OnBoardingView.all)
     }
 
     private func configureBackgroundImages() {
         view.addSubview(onboardingImage)
-        onboardingImage.image = UIImage(named: "OnboardingImage")
+        onboardingImage.image = UIImage(named: "backgroundImages")
         onboardingImage.contentMode = .scaleAspectFill
-        
-        NSLayoutConstraint.activate([
-            onboardingImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 25),
-            onboardingImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            onboardingImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            onboardingImage.heightAnchor.constraint(equalToConstant: 240),
-        ])
-//        onboardingImage.snp.makeConstraints { make in
-//            make.topMargin.equalToSuperview().inset(25)
-//            make.left.right.equalToSuperview().inset(24)
-//            make.height.equalTo(240)
-//        }
+        onboardingImage.snp.makeConstraints { make in
+            make.topMargin.equalToSuperview().inset(25)
+            make.left.right.equalToSuperview().inset(24)
+            make.height.equalTo(240)
+        }
     }
-
-
+    
+    private func configurepersonImage() {
+        view.addSubview(personImageView)
+        personImageView.image = UIImage(named: "personImage")
+        personImageView.contentMode = .scaleAspectFill
+        personImageView.snp.makeConstraints { make in
+            make.height.equalTo(450)
+            make.top.equalToSuperview().inset(44)
+            make.centerX.equalToSuperview()
+        }
+    }
 
     private func configurePageContainerView() {
         view.addSubview(pageContainerView)
         pageContainerView.addSubview(pageScrollView)
-        pageContainerView.addSubview(pageChangeButton)
+        pageContainerView.addSubview(pageButton)
         pageContainerView.addSubview(pageIndicator)
-        pageChangeButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
-        pageChangeButton.layer.masksToBounds = true
-        pageChangeButton.layer.cornerRadius = 28
-        pageContainerView.backgroundColor = UIColor(named: Resources.Colors.backGround)
+        pageButton.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
+        pageButton.layer.masksToBounds = true
+        pageButton.layer.cornerRadius = 28
+        pageContainerView.backgroundColor = Theme.appColor
         pageContainerView.layer.masksToBounds = true
         pageContainerView.layer.cornerRadius = 16
         pageScrollView.delegate = self
         pageScrollView.isPagingEnabled = true
         pageScrollView.showsHorizontalScrollIndicator = false
+        
         pageContainerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(24)
             make.top.equalTo(personImageView.snp.bottom).inset(6)
@@ -88,7 +94,7 @@ class OnboardingViewController: UIViewController {
             make.top.equalToSuperview().inset(60)
             make.bottom.equalToSuperview().inset(108)
         }
-        pageChangeButton.snp.makeConstraints { make in
+        pageButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(56)
             make.width.equalTo(200)
@@ -100,7 +106,7 @@ class OnboardingViewController: UIViewController {
         }
     }
 
-    private func configurePages(_ pages: [OnBoardingPage]) {
+    private func configurePages(_ pages: [OnBoardingView]) {
         pageScrollView.subviews.forEach { $0.removeFromSuperview() }
         let pageViews = pages.map { page in
             let pageView = OnBoardingPageView()
@@ -109,9 +115,11 @@ class OnboardingViewController: UIViewController {
         }
         for (index, pageView) in pageViews.enumerated() {
             pageScrollView.addSubview(pageView)
+            
             pageView.snp.makeConstraints { make in
                 if index == 0 {
                     make.leading.equalTo(pageScrollView.contentLayoutGuide)
+                    pageButton.isHidden = true
                 } else {
                     make.leading.equalTo(pageViews[index - 1].snp.trailing)
                 }
@@ -119,23 +127,21 @@ class OnboardingViewController: UIViewController {
                 make.width.height.equalToSuperview()
                 if index == pageViews.count - 1 {
                     make.trailing.equalTo(pageScrollView.contentLayoutGuide)
+                    pageButton.isHidden = false
                 }
             }
         }
     }
 
-    @objc
-    private func continueButtonTapped() {
+    @objc private func continueButtonTapped() {
         let page = currentPage()
-        if page < OnBoardingPage.all.count - 1 {
+        if page < OnBoardingView.all.count - 1 {
             setPage(page + 1)
         } else {
-            print("Show VC")
+            delegate?.didFinishOnboarding()
         }
     }
 }
-
-
 
 extension OnboardingViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
