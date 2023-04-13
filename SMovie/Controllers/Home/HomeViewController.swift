@@ -153,7 +153,7 @@ extension HomeViewController {
                                                             heightDimension: .fractionalHeight(1)))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.55),
-                                                                         heightDimension: .fractionalHeight(0.45)),
+                                                                         heightDimension: .fractionalHeight(0.5)),
                                                        subitems: [item])
         
         let section = createLayoutSection(group: group,
@@ -203,10 +203,10 @@ extension HomeViewController {
     private func createExampleSection() -> NSCollectionLayoutSection {
 
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(0.18)))
+                                                            heightDimension: .fractionalHeight(0.17)))
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.85),
-                                                                       heightDimension: .fractionalHeight(0.36)),
+                                                                       heightDimension: .fractionalHeight(0.33)),
                                                                        subitem: item,
                                                                        count: 2)
 
@@ -223,7 +223,7 @@ extension HomeViewController {
 
     private func supplementaryHeaderItem () -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                heightDimension: .estimated(40)),
+                                heightDimension: .estimated(20)),
               elementKind: UICollectionView.elementKindSectionHeader,
               alignment: .top)
     }
@@ -260,3 +260,28 @@ extension HomeViewController {
     
 }
 
+import SwiftUI
+struct ListProvider: PreviewProvider {
+    static var previews: some View {
+        ContainterView().edgesIgnoringSafeArea(.all)
+            .previewDevice("iPhone 12 Pro Max")
+            .previewDisplayName("iPhone 12 Pro Max")
+        
+        ContainterView().edgesIgnoringSafeArea(.all)
+            .previewDevice("iPhone SE (3rd generation)")
+            .previewDisplayName("iPhone SE (3rd generation)")
+    }
+    
+    struct ContainterView: UIViewControllerRepresentable {
+        let listVC = HomeViewController()
+        func makeUIViewController(context:
+                                  UIViewControllerRepresentableContext<ListProvider.ContainterView>) -> HomeViewController {
+            return listVC
+        }
+        
+        func updateUIViewController(_ uiViewController:
+                                    ListProvider.ContainterView.UIViewControllerType, context:
+                                    UIViewControllerRepresentableContext<ListProvider.ContainterView>) {
+        }
+    }
+}
