@@ -13,40 +13,46 @@ protocol OnboardingViewControllerDelegate: AnyObject {
 }
 
 class OnboardingViewController: UIViewController {
-
+    
     lazy var onboardingImage = UIImageView()
     lazy var personImageView = UIImageView()
     lazy var pageContainerView = UIView()
     lazy var pageScrollView = UIScrollView()
     lazy var pageButton = CustomButton(title: "Continue")
     lazy var pageIndicator = InteractivePageIndicator(pages: OnBoardingView.all.count)
-
-    weak var delegate: OnboardingViewControllerDelegate?
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
     }
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
-
+    
     private func commonInit() {
         modalPresentationStyle = .fullScreen
         modalTransitionStyle = .flipHorizontal
     }
-
+    
+    weak var delegate: OnboardingViewControllerDelegate?
+    
+    let networkService = NetworkService.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        networkService.fetchMedia(.movie)
+                networkService.fetchMedia(.tv)
+        
         view.backgroundColor = Theme.violetColor
         configureBackgroundImages()
         configurepersonImage()
         configurePageContainerView()
         configurePages(OnBoardingView.all)
     }
-
+    
     private func configureBackgroundImages() {
         view.addSubview(onboardingImage)
         onboardingImage.image = UIImage(named: "backgroundImages")
@@ -68,7 +74,7 @@ class OnboardingViewController: UIViewController {
             make.centerX.equalToSuperview()
         }
     }
-
+    
     private func configurePageContainerView() {
         view.addSubview(pageContainerView)
         pageContainerView.addSubview(pageScrollView)
@@ -105,7 +111,7 @@ class OnboardingViewController: UIViewController {
             make.top.equalToSuperview().inset(28)
         }
     }
-
+    
     private func configurePages(_ pages: [OnBoardingView]) {
         pageScrollView.subviews.forEach { $0.removeFromSuperview() }
         let pageViews = pages.map { page in
@@ -132,7 +138,7 @@ class OnboardingViewController: UIViewController {
             }
         }
     }
-
+    
     @objc private func continueButtonTapped() {
         let page = currentPage()
         if page < OnBoardingView.all.count - 1 {
@@ -148,16 +154,16 @@ extension OnboardingViewController: UIScrollViewDelegate {
         let page = calculateScrollProgress()
         pageIndicator.setPage(page)
     }
-
+    
     func currentPage() -> Int {
         Int(calculateScrollProgress())
     }
-
+    
     func setPage(_ page: Int) {
         let pageWidth = pageScrollView.frame.width
         pageScrollView.setContentOffset(.init(x: pageWidth * CGFloat(page), y: 0), animated: true)
     }
-
+    
     private func calculateScrollProgress() -> Float {
         let offset = pageScrollView.contentOffset.x
         let pageWidth = pageScrollView.frame.width
