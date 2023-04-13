@@ -46,24 +46,6 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchDiscoverTv() {
-        guard let request = makeRequest(lastLoadedPageTv, "tv") else {return assertionFailure("Error photo request")}
-        let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<TvResult, Error>) in
-            guard let self else { return }
-            switch result {
-            case .success(let discoverTv):
-                for movie in discoverTv.results {
-                    self.tv.append(TV(from: movie))
-                }
-                self.lastLoadedPage += 1
-            case .failure(let error):
-                assertionFailure("Error - \(error)")
-            }
-        }
-        task.resume()
-    }
-    
     func fetchDetailTv(id: Int) {
         guard let request = makeRequestMedia(id, "tv") else {return assertionFailure("Error photo request")}
         let session = URLSession.shared
