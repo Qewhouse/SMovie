@@ -14,64 +14,31 @@ final class NetworkService {
     
     private let baseURL = "https://api.themoviedb.org"
     private let apiKey = "61642e1d2f11d7fd3210b7397b95fb9c"
-    private var lastLoadedPageMovie = 1
-    private var lastLoadedPageTv = 1
-    
-    private(set) var movies = [Movie]()
-    private(set) var tv = [TV]()
+    private var lastLoadedPage = 1
+
     private(set) var detailMovie: DetailMovie?
     private(set) var detailTv: DetailTv?
     private(set) var genre = [Genre]()
     private(set) var image = UIImage()
+    private(set) var media = [Media]()
     
     private let cache = NSCache<NSNumber, UIImage>()
     private let utilityQueue = DispatchQueue.global(qos: .utility)
     
-    func fetchDiscoverMovie() {
-        guard let request = makeRequest(lastLoadedPageMovie, "movie") else {return assertionFailure("Error photo request")}
+    func fetchMedia(_ mediaType: MediaType) {
+        guard let request = makeRequest(lastLoadedPage, mediaType.rawValue) else {return assertionFailure("Error photo request")}
         let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<MovieResult, Error>) in
+        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<MediaResult, Error>) in
             
             guard let self else { return }
             switch result {
-            case .success(let discoverMovie):
-                for movie in discoverMovie.results {
-                    movies.append(Movie(from: movie))
+            case .success(var media):
+                for result in media.results {
+                    var media = result
+                    media.mediaType = mediaType
+                    self.media.append(Media(from: media))
                 }
-                self.lastLoadedPageMovie += 1
-            case .failure(let error):
-                assertionFailure("Error - \(error)")
-            }
-        }
-        task.resume()
-    }
-    
-    func fetchDiscoverTv() {
-        guard let request = makeRequest(lastLoadedPageTv, "tv") else {return assertionFailure("Error photo request")}
-        let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<TvResult, Error>) in
-            guard let self else { return }
-            switch result {
-            case .success(let discoverTv):
-                for movie in discoverTv.results {
-                    tv.append(TV(from: movie))
-                }
-                self.lastLoadedPageTv += 1
-            case .failure(let error):
-                assertionFailure("Error - \(error)")
-            }
-        }
-        task.resume()
-    }
-    
-    func fetchDetailMovie(id: Int) {
-        guard let request = makeRequestMedia(id, "media") else {return assertionFailure("Error photo request")}
-        let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<DetailMovieResult, Error>) in
-            guard let self else { return }
-            switch result {
-            case .success(let result):
-                self.detailMovie = DetailMovie(from: result)
+                self.lastLoadedPage += 1
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
@@ -110,7 +77,8 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchImage(_ posterPath: String, id: Int, completion: @escaping (UIImage?) -> ()) {
+    func fetchImage(_ posterPath: String?, id: Int?, completion: @escaping (UIImage?) -> ()) {
+        guard let posterPath, let id else { return }
         let itemNumber = NSNumber(value: id)
         
         if let cachedImage = self.cache.object(forKey: itemNumber) {
@@ -129,44 +97,14 @@ final class NetworkService {
         }
     }
     
-    func fetchFind(text: String) {
-//        let query = "Terminator+second"
-//        guard let url = URL(string: "https://api.themoviedb.org/3/search/keyword?api_key=\(apiKey)&query=\(query)") else {return}
-//        print(url)
-//        var request = URLRequest(url: url)
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: request) { data, response, error in
-//            if let response = response, let data = data {
-//
-//            print(response)
-//
-//            //DO THIS
-//                print(String(data: data, encoding: String.Encoding(rawValue: NSUTF8StringEncoding)))
-//
-//            //OR THIS
-////                if let o = JSONSerialization.jsonObject(with: data) as? NSDictionary {
-//////                print(dict)
-////            } else {
-////                print("Could not read JSON dictionary")
-////            }
-//        } else {
-//            print(error)
-//        }
-//        }
-//
-//        task.resume()
-        
-        
+    func fetchFind(text: String, completion: @escaping (MediaResult?) -> ()) {
         guard let request = makeRequestSearch(text: text) else {return assertionFailure("Error photo request")}
 
         let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<SearchResult, Error>) in
-            guard let self else { return }
+        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<MediaResult, Error>) in
             switch result {
             case .success(let result):
-                print(result)
+                completion(result)
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
@@ -175,6 +113,7 @@ final class NetworkService {
     }
     
     private func makeRequest(_ page: Int, _ discover: String) -> URLRequest? {
+        
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.path = "/3/discover/\(discover)"
         urlComponents?.queryItems = [
@@ -215,7 +154,6 @@ final class NetworkService {
             assertionFailure("Failed to create URL")
             return nil
         }
-        print(url)
         let request = URLRequest(url: url)
         return request
     }

@@ -58,8 +58,8 @@ final class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        networkService.fetchDiscoverMovie()
-        networkService.fetchDiscoverTv()
+        networkService.fetchMedia(.movie)
+        networkService.fetchMedia(.tv)
 
         setLayout()
         setConstraints()

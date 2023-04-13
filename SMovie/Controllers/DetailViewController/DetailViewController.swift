@@ -249,7 +249,7 @@ extension DetailViewController: UICollectionViewDataSource {
         guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastAndCrewCell.self), for: indexPath) as? CastAndCrewCell else { fatalError("error")}
         
         let image = UIImage()
-        let movies = NetworkService.shared.movies
+        let movies = NetworkService.shared.media
         let posterPath = movies[indexPath.row].posterPath
         let id = movies[indexPath.row].id
         let name = names[indexPath.row]
