@@ -3,6 +3,13 @@ import UIKit
 
 final class SearchCollectionViewCell: UICollectionViewCell {
     
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = self.isSelected ? Theme.violetColor : Theme.appColor
+            categoryLabel.textColor = self.isSelected ? .white : Theme.grayColor
+        }
+    }
+    
     static let identifier = "SearchCollectionViewCell"
 
     private let categoryLabel: UILabel = {
@@ -12,15 +19,19 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         label.text = "AAA"
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.textColor = .label
+        label.textColor = Theme.grayColor
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         addSubview(categoryLabel)
         setupConstraints()
+        self.layer.cornerRadius = 22
+        self.layer.borderWidth = 1
+        self.layer.borderColor = Theme.grayColor.cgColor
+        self.backgroundColor = Theme.appColor
+
     }
     
     private func setupConstraints() {
