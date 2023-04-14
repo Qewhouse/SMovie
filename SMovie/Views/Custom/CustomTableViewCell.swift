@@ -1,8 +1,15 @@
 
 import UIKit
 
-final class CustomTableViewCell: UIView {
+protocol CustomTableViewCellDelegate: AnyObject {
+    func didTappedHeartButton(index indexPath: IndexPath)
+}
 
+final class CustomTableViewCell: UIView {
+    
+    public var index: IndexPath?
+    public weak var delegate: CustomTableViewCellDelegate?
+    
     lazy var customImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Movieposter")
@@ -50,7 +57,7 @@ final class CustomTableViewCell: UIView {
         return imageView
     }()
     
-    private let dateLabel: UILabel = {
+    let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "17 Sep 2021"
         label.font = .systemFont(ofSize: 18)
@@ -83,6 +90,7 @@ final class CustomTableViewCell: UIView {
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "Favorite")?.withRenderingMode(.alwaysOriginal)
         imageView.tintColor = .label
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -91,8 +99,18 @@ final class CustomTableViewCell: UIView {
         super .init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(heartTapped))
+        heartImageView.addGestureRecognizer(tapGesture)
+        
         addSubviews(customImageView, nameLabel, alarmImageView, timeLabel, dateLabel, dateImageView, movieImageView, movieAction, heartImageView)
         addConstraints()
+    }
+    
+    @objc
+    private func heartTapped(_ sender: UITapGestureRecognizer) {
+        guard let index = index else { return }
+        delegate?.didTappedHeartButton(index: index)
     }
     
     required init?(coder: NSCoder) {

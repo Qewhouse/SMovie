@@ -4,16 +4,16 @@ import UIKit
 final class SearchTableViewCell: UITableViewCell {
     
     static let identifier = "SearchTableViewCell"
-    private let customTableViewCell = CustomTableViewCell()
+    let customTableViewCell = CustomTableViewCell()
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(customTableViewCell)
         addConstraints()
     }
     
     private func addConstraints() {
+        contentView.addSubview(customTableViewCell)
         NSLayoutConstraint.activate([
             customTableViewCell.topAnchor.constraint(equalTo: topAnchor),
             customTableViewCell.leadingAnchor.constraint(equalTo: leadingAnchor),
