@@ -19,6 +19,11 @@ final class DetailViewController: UIViewController {
     let names = ["Jon Watts", "Chris McKenna", "Some Text"]
     let vocabularys = ["Directors", "Writers", "Actor"]
     
+    private let networkService = NetworkService.shared
+    private let idMedia: Int
+    private let mediaType: MediaType
+    private var credits = [Cast]()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "luck")
@@ -68,13 +73,11 @@ final class DetailViewController: UIViewController {
     
     lazy var castAndCrewViews: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: 150, height: 45)
+        layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero,
                                               collectionViewLayout: layout)
         collectionView.register(CastAndCrewCell.self, forCellWithReuseIdentifier: String(describing: CastAndCrewCell.self))
-        
-        layout.scrollDirection = .horizontal
         collectionView.dataSource = self
         return collectionView
     }()
@@ -90,13 +93,25 @@ final class DetailViewController: UIViewController {
         return button
     }()
     
+    init(id: Int, mediaType: MediaType) {
+        self.idMedia = id.self
+        self.mediaType = mediaType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createViews()
         setupViews()
         addSubviews()
         addViewConstraints()
         setupNavigationBar()
+        fetchCredits()
     }
     
     @objc private func addTappedLeftNavButton() {
@@ -117,23 +132,7 @@ final class DetailViewController: UIViewController {
         
         ratingStack.spacing = 6
         
-        applyStyleLabel(
-            releaseDateLabel,
-            text: "17 Sep 2021",
-            image: "calendar"
-        )
-        
-        applyStyleLabel(
-            timeLabel,
-            text: "148 Minutes",
-            image: "clock"
-        )
-        
-        applyStyleLabel(
-            genreLabel,
-            text: "Action",
-            image: "film"
-        )
+        styleForLabel()
         
         for _ in 0 ..< rating {
             let star = UIImageView()
@@ -146,6 +145,30 @@ final class DetailViewController: UIViewController {
             star.image = UIImage(named: "star_grey")
             stars.append(star)
         }
+    }
+    
+    private func styleForLabel(
+        releaseDate: String = "17 Sep 2021",
+        timeInt: Int = 148,
+        genreText: String = "Action"
+    ) {
+        applyStyleLabel(
+            releaseDateLabel,
+            text: releaseDate,
+            image: "calendar"
+        )
+        
+        applyStyleLabel(
+            timeLabel,
+            text: "\(timeInt) Minutes",
+            image: "clock"
+        )
+        
+        applyStyleLabel(
+            genreLabel,
+            text: genreText,
+            image: "film"
+        )
     }
     
     private func applyStyleLabel(
@@ -179,6 +202,45 @@ final class DetailViewController: UIViewController {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Arrow Back"), style: .plain, target: self, action: #selector(addTappedLeftNavButton))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Favorite"), style: .done, target: self, action: #selector(addTappedFavorite))
+    }
+    
+    private func createViews() {
+        networkService.fetchDetail(id: idMedia, mediaType: mediaType) { data in
+            var name = ""
+            var date = ""
+            var minutes = 0
+            
+            if let title = data?.name {
+                name = title
+            } else if let title = data?.title {
+                name = title
+            }
+            
+            if let time = data?.firstAirDate {
+                date = time
+            } else if let time = data?.releaseDate {
+                date = time
+            }
+            
+            if let minute = data?.runtime {
+                minutes = minute
+            } else if let minute = data?.episodeRunTime {
+                var sum = minute.reduce(0, +)
+                minutes = sum
+            }
+
+            self.labelMovie.text = name
+            self.releaseDateLabel.text = date
+            let genreText = data?.genres?[0].name
+            self.styleForLabel(releaseDate: date, timeInt: minutes, genreText: genreText ?? "")
+            
+            let posterPath = data?.posterPath
+            let id = data?.id
+            self.networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
+                guard let self = self, let image = image else { return }
+                imageView.image = image
+            }
+        }
     }
     
     private func addSubviews() {
@@ -242,27 +304,43 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        print(credits.count)
+        return credits.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastAndCrewCell.self), for: indexPath) as? CastAndCrewCell else { fatalError("error")}
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CastAndCrewCell.self), for: indexPath)
         
-        let image = UIImage()
-        let movies = NetworkService.shared.media
-        let posterPath = movies[indexPath.row].posterPath
-        let id = movies[indexPath.row].id
-        let name = names[indexPath.row]
-        let vocabulary = vocabularys[indexPath.row]
-        NetworkService.shared.fetchImage(posterPath, id: id) { [weak self] (image) in
-                    guard let self = self, let image = image else { return }
-            myCell.setupCell(withImage: image, name: name, vocabulary: vocabulary)
-//                    ImageView.image = image
-                }
-
+        guard let myCell = cell as? CastAndCrewCell else { return UICollectionViewCell() }
         
-        
+        configCellCollectionView(for: myCell, with: indexPath)
         return myCell
     }
-}
+    
+    private func configCellCollectionView(for cell: CastAndCrewCell, with indexPath: IndexPath) {
+        let profilePath = self.credits[indexPath.row].profilePath
+        let id = self.credits[indexPath.row].id
+        let name = self.credits[indexPath.row].name
+        var jobs = ""
 
+        if let job = self.credits[indexPath.row].character {
+            jobs = job
+        } else if let job = self.credits[indexPath.row].job {
+            jobs = job
+        }
+        
+        networkService.fetchImage(profilePath, id: id) { [weak self] (image) in
+            guard let self = self, let image = image else { return }
+            cell.setupCell(withImage: image, name: name, vocabulary: jobs)
+        }
+    }
+    
+    private func fetchCredits() {
+        networkService.fetchCredits(id: idMedia, mediaType: mediaType) { [weak self] credits in
+            guard let self = self else { return }
+            self.credits = credits.cast + credits.cast
+            self.castAndCrewViews.reloadData()
+        }
+        
+    }
+}

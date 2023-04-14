@@ -8,6 +8,20 @@
 import UIKit
 
 final class CastAndCrewCell: UICollectionViewCell {
+    private let stackViewHorizontal: UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    private let stackViewVertical: UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
     private let imageCell: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -41,13 +55,7 @@ final class CastAndCrewCell: UICollectionViewCell {
         addViewConstraints()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        
-    }
-    
-    func setupCell(withImage image: UIImage, name: String, vocabulary: String) {
+    func setupCell(withImage image: UIImage, name: String?, vocabulary: String) {
         imageCell.image = image
         nameLabel.text = name
         vocabularyLabel.text = vocabulary
@@ -55,24 +63,31 @@ final class CastAndCrewCell: UICollectionViewCell {
     }
     
     private func addSubviews() {
-        [imageCell, nameLabel, vocabularyLabel].forEach { item in
+        [stackViewHorizontal].forEach { item in
             item.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(item)
+        }
+        
+        [imageCell, stackViewVertical].forEach { item in
+            item.translatesAutoresizingMaskIntoConstraints = false
+            stackViewHorizontal.addArrangedSubview(item)
+        }
+        
+        [nameLabel, vocabularyLabel].forEach { item in
+            item.translatesAutoresizingMaskIntoConstraints = false
+            stackViewVertical.addArrangedSubview(item)
         }
     }
     
     private func addViewConstraints() {
         NSLayoutConstraint.activate([
-            imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageCell.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackViewHorizontal.topAnchor.constraint(equalTo: topAnchor,constant: 5),
+            stackViewHorizontal.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+            stackViewHorizontal.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackViewHorizontal.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
             imageCell.heightAnchor.constraint(equalToConstant: 40),
-            imageCell.widthAnchor.constraint(equalToConstant: 40),
-            
-            nameLabel.leadingAnchor.constraint(equalTo: imageCell.trailingAnchor, constant: 8),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            
-            vocabularyLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-            vocabularyLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor)
+            imageCell.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
