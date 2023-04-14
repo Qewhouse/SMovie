@@ -2,11 +2,12 @@
 import UIKit
 
 protocol CustomTableViewCellDelegate: AnyObject {
-    func didTappedButton()
+    func didTappedHeartButton(index indexPath: IndexPath)
 }
 
 final class CustomTableViewCell: UIView {
     
+    public var index: IndexPath?
     public weak var delegate: CustomTableViewCellDelegate?
     
     lazy var customImageView: UIImageView = {
@@ -108,7 +109,8 @@ final class CustomTableViewCell: UIView {
     
     @objc
     private func heartTapped(_ sender: UITapGestureRecognizer) {
-        delegate?.didTappedButton()
+        guard let index = index else { return }
+        delegate?.didTappedHeartButton(index: index)
     }
     
     required init?(coder: NSCoder) {

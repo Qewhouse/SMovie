@@ -4,7 +4,7 @@ import UIKit
 final class SearchTableViewCell: UITableViewCell {
     
     static let identifier = "SearchTableViewCell"
-    private let customTableViewCell = CustomTableViewCell()
+    let customTableViewCell = CustomTableViewCell()
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -47,6 +47,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier,
                                                  for: indexPath) as! SearchTableViewCell
         cell.selectionStyle = .none
+        cell.customTableViewCell.delegate = self
+        cell.customTableViewCell.index = indexPath
         
         var name = ""
         var date = ""
@@ -100,7 +102,6 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
 
 //MARK: - Filter button
 extension SearchViewController: SearchViewDelegate {
-    
     func didTupFilterButton() {
         print("Azazaza")
     }
@@ -111,12 +112,22 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text else { return }
         networkService.fetchFind(text: searchText) { [weak self] (result) in
             guard let self = self, let result = result else { return }
-            media.removeAll()
+            self.media.removeAll()
             for media in result.results {
                 self.media.append(Media(from: media))
             }
-            searchView.tableView.reloadData()
+            self.searchView.tableView.reloadData()
         }
 
+    }
+}
+
+//MARK: - FavoriteButton
+extension SearchViewController: CustomTableViewCellDelegate {
+    func didTappedHeartButton(index indexPath: IndexPath) {
+        print("FF")
+        MovieCoreDataModel.shared.saveMovie(name: media[indexPath.row].name ?? "",
+                                            date: "17 sep",
+                                            time: media[indexPath.row].releaseDate ?? "")
     }
 }

@@ -4,7 +4,13 @@ import UIKit
 final class FavouriteViewController: UIViewController {
     
     private let favoritesView = FavoritesView()
-    private let dataArray: [Movie] = []
+    var moviesArray: [MoviesCR] = []
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        moviesArray = MovieCoreDataModel.shared.getAllMovies()
+        favoritesView.tableView.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +41,7 @@ final class FavouriteViewController: UIViewController {
 //MARK: - TableView
 extension FavouriteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataArray.count
+        return moviesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
