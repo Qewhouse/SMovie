@@ -9,7 +9,7 @@ final class SearchView: UIView {
     
     public weak var delegate: SearchViewDelegate?
 
-    private let searchBar: UISearchBar = {
+    let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.backgroundColor = Theme.appColor
         searchBar.searchTextField.backgroundColor = Theme.appColor

@@ -47,6 +47,13 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vc = DetailViewController()
+
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 //MARK: - CollectionView

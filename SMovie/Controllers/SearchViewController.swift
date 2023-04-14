@@ -2,14 +2,14 @@
 import UIKit
 
 final class SearchViewController: UIViewController {
-    
+    private let networkService = NetworkService.shared
     private let searchView = SearchView()
-    private let customTableViewCell = CustomTableViewCell()
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    private var media = [Media]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        media = networkService.media
         setUpDelegates()
         setUpView()
     }
@@ -20,6 +20,7 @@ final class SearchViewController: UIViewController {
         searchView.tableView.dataSource = self
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
+        searchView.searchBar.delegate = self
     }
     
     private func setUpView() {
@@ -39,13 +40,36 @@ final class SearchViewController: UIViewController {
 //MARK: - TableView
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return media.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier,
                                                  for: indexPath) as! SearchTableViewCell
         cell.selectionStyle = .none
+        
+        var name = ""
+        var date = ""
+        
+        if let title = media[indexPath.row].name {
+            name = title
+        } else if let title = media[indexPath.row].title {
+            name = title
+        }
+        
+        if let time = media[indexPath.row].firstAirDate {
+            date = time
+        } else if let time = media[indexPath.row].releaseDate {
+            date = time
+        }
+        
+        let posterPath = media[indexPath.row].posterPath
+        let id = media[indexPath.row].id
+        networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
+                guard let self = self, let image = image else { return }
+            
+                cell.configure(with: image, name: name, time: date)
+            }
         return cell
     }
 }
@@ -76,16 +100,23 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
 
 //MARK: - Filter button
 extension SearchViewController: SearchViewDelegate {
+    
     func didTupFilterButton() {
         print("Azazaza")
     }
 }
 
-extension SearchViewController: CustomTableViewCellDelegate {
-    func didTappedButton() {
-        MovieCoreDataManager.shared.saveRecipe(image: customTableViewCell.customImageView.image!,
-                                               name: customTableViewCell.nameLabel.text!,
-                                               time: customTableViewCell.timeLabel.text!,
-                                               date: customTableViewCell.dateLabel.text!)
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        networkService.fetchFind(text: searchText) { [weak self] (result) in
+            guard let self = self, let result = result else { return }
+            media.removeAll()
+            for media in result.results {
+                self.media.append(Media(from: media))
+            }
+            searchView.tableView.reloadData()
+        }
+
     }
 }
