@@ -61,8 +61,8 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchGenre(media: Media) {
-        guard let url = URL(string: baseURL + "/3/genre/\(media)/list?api_key=\(apiKey)") else { return  }
+    func fetchGenre(_ mediaType: MediaType) {
+        guard let url = URL(string: baseURL + "/3/genre/\(mediaType)/list?api_key=\(apiKey)") else { return  }
         let request = URLRequest(url: url)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<GenreResult, Error>) in

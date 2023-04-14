@@ -44,7 +44,9 @@ class OnboardingViewController: UIViewController {
         super.viewDidLoad()
         
         networkService.fetchMedia(.movie)
-                networkService.fetchMedia(.tv)
+        networkService.fetchMedia(.tv)
+        networkService.fetchGenre(.movie)
+        networkService.fetchMedia(.tv)
         
         view.backgroundColor = Theme.violetColor
         configureBackgroundImages()
