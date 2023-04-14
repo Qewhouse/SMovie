@@ -50,9 +50,9 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let vc = DetailViewController()
+//        let vc = DetailViewController(id: 502356, mediaType: .movie)
 
-        navigationController?.pushViewController(vc, animated: true)
+//        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

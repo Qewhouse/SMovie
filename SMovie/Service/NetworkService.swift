@@ -15,11 +15,8 @@ final class NetworkService {
     private let baseURL = "https://api.themoviedb.org"
     private let apiKey = "61642e1d2f11d7fd3210b7397b95fb9c"
     private var lastLoadedPage = 1
-
-    private(set) var detailMovie: DetailMovie?
-    private(set) var detailTv: DetailTv?
+    
     private(set) var genre = [Genre]()
-    private(set) var image = UIImage()
     private(set) var media = [Media]()
     
     private let cache = NSCache<NSNumber, UIImage>()
@@ -46,14 +43,14 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchDetailTv(id: Int) {
-        guard let request = makeRequestMedia(id, "tv") else {return assertionFailure("Error photo request")}
+    func fetchDetail(id: Int, mediaType: MediaType, completion: @escaping (DetailMedia?) -> ()) {
+        guard let request = makeRequestMedia(id, mediaType.rawValue) else {return assertionFailure("Error photo request")}
         let session = URLSession.shared
-        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<DetailTvResult, Error>) in
+        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<DetailMediaResult, Error>) in
             guard let self else { return }
             switch result {
             case .success(let result):
-                self.detailTv = DetailTv(from: result)
+                completion(DetailMedia(from: result))
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
@@ -61,8 +58,8 @@ final class NetworkService {
         task.resume()
     }
     
-    func fetchGenre(media: Media) {
-        guard let url = URL(string: baseURL + "/3/genre/\(media)/list?api_key=\(apiKey)") else { return  }
+    func fetchGenre(_ mediaType: MediaType) {
+        guard let url = URL(string: baseURL + "/3/genre/\(mediaType)/list?api_key=\(apiKey)") else { return  }
         let request = URLRequest(url: url)
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<GenreResult, Error>) in
@@ -70,7 +67,22 @@ final class NetworkService {
             switch result {
             case .success(let result):
                 self.genre = result.genres
-                print(self.genre)
+            case .failure(let error):
+                assertionFailure("Error - \(error)")
+            }
+        }
+        task.resume()
+    }
+    
+    func fetchCredits(id: Int, mediaType: MediaType, completion: @escaping(Credits) -> ()) {
+        guard let url = URL(string: baseURL + "/3/\(mediaType)/\(id)/credits?api_key=\(apiKey)") else { return  }
+        let request = URLRequest(url: url)
+        let session = URLSession.shared
+        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<Credits, Error>) in
+            guard let self else { return }
+            switch result {
+            case .success(let result):
+                completion(result)
             case .failure(let error):
                 assertionFailure("Error - \(error)")
             }
@@ -100,7 +112,7 @@ final class NetworkService {
     
     func fetchFind(text: String, completion: @escaping (MediaResult?) -> ()) {
         guard let request = makeRequestSearch(text: text) else {return assertionFailure("Error photo request")}
-
+        
         let session = URLSession.shared
         let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<MediaResult, Error>) in
             switch result {
@@ -114,7 +126,6 @@ final class NetworkService {
     }
     
     private func makeRequest(_ page: Int, _ discover: String) -> URLRequest? {
-        
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.path = "/3/discover/\(discover)"
         urlComponents?.queryItems = [
