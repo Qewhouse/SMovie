@@ -8,6 +8,7 @@ protocol SearchViewDelegate: AnyObject {
 final class SearchView: UIView {
     
     public weak var delegate: SearchViewDelegate?
+    lazy var customTVC = CustomTableViewCell()
 
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
