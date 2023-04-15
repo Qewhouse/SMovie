@@ -120,6 +120,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
             guard let self = self, let image = image else { return }
+            
             let movie = PlayCoreDataModel.shared .saveMovie(name: name,
                                                           date: date,
                                                           time: date,
