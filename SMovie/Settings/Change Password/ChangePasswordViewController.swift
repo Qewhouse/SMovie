@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     
@@ -124,13 +125,64 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Objc Functions
     
     @objc func saveButtonPressed() {
+        update()
         print ("save password pressed")
     }
     
     @objc func goBack() {
     navigationController?.popViewController(animated: true)
     }
-}
+    
+    //Обновлени пароля
+    func update() {
+        let oldPassword = currentPasswordView.textField.text
+        let newPassword = newPasswordView.textField.text
+        let confirmPassword = confirmPasswordView.textField.text
+        
+        if oldPassword != newPassword {
+            if newPassword == confirmPassword {
+                updatePassword(newPassword ?? "")
+            } else {
+                // Handle password confirmation error
+                showAlert(title: "Error", message: "Passwords do not match.")
+            }
+        } else {
+            // Handle old and new password match error
+            showAlert(title: "Erorr", message: "New password must be different from the old password.")
+        }
+    }
+    //Функция для отправки запроса в FireBase для изменения пароля
+    func updatePassword(_ newPassword: String) {
+        guard let user = Auth.auth().currentUser else {
+            // User is not authenticated
+            return
+        }
+        
+        user.updatePassword(to: newPassword) { error in
+            if let error = error {
+                // Handle password update error
+                self.showAlert(title: "Super", message: error.localizedDescription)
+                
+            } else {
+                // Handle password update success
+                self.showAlert(title: "Super", message: "Your password has been successfully updated")
+                print("Password updated successfully")
+            }
+        }
+    }
+    
+    //Уведомление
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+
+        
+        
+    }
+
 
 //MARK: - Set Constraints
 

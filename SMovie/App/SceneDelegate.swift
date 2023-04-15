@@ -11,7 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    private let onboardingViewController = /*UINavigationController(rootViewController: SignUpController())*/ CreateAccountController()
+    private let entryViewController = UINavigationController(rootViewController:SignController())
+
     private let tabBarController = TabBarController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -20,9 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = onboardingViewController
+       // window?.rootViewController = passwordRecovery
+        window?.rootViewController = entryViewController
+        
+        
         window?.makeKeyAndVisible()
     }
 }

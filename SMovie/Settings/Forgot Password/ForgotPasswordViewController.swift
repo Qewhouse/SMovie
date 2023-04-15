@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import GoogleSignIn
 
 class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,7 +20,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-
+    
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Enter your email for the verification process, we will send you a code"
@@ -85,7 +87,7 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - TextField Delegate Methods
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return emailInputView.textField.resignFirstResponder()
     }
@@ -99,11 +101,14 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Objc Functions
     
     @objc func saveButtonPressed() {
+        passwordReset()
         print ("Continue pressed")
     }
     
+    
+    
     @objc func goBack() {
-    navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func textDidChange() {
@@ -117,7 +122,34 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
             continueButton.layer.borderColor  = UIColor(named: "violetColor")?.cgColor
         }
     }
+    
+    //Cброс пароля 
+     func passwordReset() {
+        guard let email = emailInputView.textField.text else { return }
+    
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                // Обработка ошибок
+                let alertController = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alertController, animated: true)
+            } else {
+    
+                let nextVC = EntryViewController()
+                self.navigationController?.pushViewController(nextVC, animated: true)
+    
+                // Успешно отправлено письмо со ссылкой на сброс пароля
+                let alertController = UIAlertController(title: "Успех", message: "Письмо со ссылкой на сброс пароля было отправлено на \(email)", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alertController, animated: true)
+    
+            }
+        }
+    }
+    
 }
+
+
 
 //MARK: - Set Constraints
 

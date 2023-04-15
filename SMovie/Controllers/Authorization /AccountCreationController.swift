@@ -6,8 +6,9 @@
 import UIKit
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
-class SignUpController: UIViewController {
+class AccountCreationController: UIViewController {
     
     // Создаем кнопки типа 'system' для переключения видимости пароля
     let passwordToggleButton = UIButton(type: .system)
@@ -69,6 +70,7 @@ class SignUpController: UIViewController {
     
     // Создаем текстовое поле для ввода email
     let emailTextFiled: UITextField = {
+        
         let emailTextFiled = UITextField()
         emailTextFiled.placeholder = "Enter your email"
         emailTextFiled.backgroundColor = UIColor(named: "grayColor")
@@ -152,22 +154,6 @@ class SignUpController: UIViewController {
     }()
     
     
-    
-    //Добавляем текст "Already have an account? Login"
-    lazy var alreadyLabel: UILabel = {
-        let alreadyLabel = UILabel()
-        let string = "Already have an account? Login"
-        let attributedString = NSMutableAttributedString(string: string)
-        let range = (string as NSString).range(of: "Login")
-        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: range)
-        alreadyLabel.attributedText = attributedString
-        alreadyLabel.textAlignment = .center
-        alreadyLabel.translatesAutoresizingMaskIntoConstraints = false
-        alreadyLabel.isUserInteractionEnabled = true
-        alreadyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginTapped)))
-        return alreadyLabel
-    }()
-    
     //Создаем Label "Complet your account"
     let completLabel: UILabel = {
         let label = UILabel()
@@ -179,10 +165,10 @@ class SignUpController: UIViewController {
         return label
     }()
     
-    //Создаем Label "Lorem ipsum dolor sit amet"
-    let loremLabel: UILabel = {
-        let label = UILabel()  //(frame: CGRect(x: 0, y: 180, width: view.frame.width, height: 22))
-        label.text = "Lorem ipsum dolor sit amet"
+    //Создаем Label "Сomplete all fields"
+    let сompleteLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Сomplete all fields"
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
@@ -212,46 +198,51 @@ class SignUpController: UIViewController {
         configurePasswordToggleButton()
         confirmPasswordToggleButton()
         setConstraint()
-        configureNavigationBar() 
+        configureNavigationBar()
+        
+        
         
     }
+    
     
     
     //Добавление в представление элементов пользовательского интерфейса
     func setView() {
         view.addSubview(nameTextFiled)
-        
         view.addSubview(lastNameLabel)
-        
         view.addSubview(lastNameTextFiled)
-        
         view.addSubview(emailLabel)
-        
         view.addSubview(emailTextFiled)
-        
         view.addSubview(passwordNameLabel)
-        
         view.addSubview(passwordTextField)
-        
         view.addSubview(confirmLabel)
-        
         view.addSubview(confirmTextField)
-        
         view.addSubview(button)
-        
-        view.addSubview(alreadyLabel)
-        
-        view.addSubview(loremLabel)
-        
+        view.addSubview(сompleteLabel)
         view.addSubview(firstNameLabel)
-        
         view.addSubview(completLabel)
         
     }
     
+    
+    
     // При нажатии на кнопку "Sign Up", эта функция выполняет регистрацию пользователя и делает переход к другому экрану
     @objc  func signUpButtonPressed() {
         
+        //Создаем обьект для сохранения в базуданных FireBase
+        let db = Firestore.firestore()
+
+        // Добавление данных в коллекцию "users"
+        let user = ["firstName": nameTextFiled.text, "lastName": lastNameTextFiled.text]
+        db.collection("users").addDocument(data: user) { error in
+            if let error = error {
+                print("Error adding user: \(error.localizedDescription)")
+            } else {
+                print("User added successfully")
+            }
+        }
+        
+        //Сравниваем введеные пароли, что бы они были одинаковые
         if passwordTextField.text == confirmTextField.text {
             if let email = emailTextFiled.text,
                let password = passwordTextField.text {
@@ -261,7 +252,7 @@ class SignUpController: UIViewController {
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     } else {
-                        let searchViewController = HomeViewController()
+                        let searchViewController = TabBarController()
                         self.navigationController?.pushViewController(searchViewController, animated: true)
                     }
                 }
@@ -334,18 +325,9 @@ class SignUpController: UIViewController {
         confirmTextField.isSecureTextEntry.toggle()
     }
     
-    
-    // Обработчик нажатия на кликабельный текст "Login"
-    @objc func loginTapped() {
-        // Обработчик нажатия на кнопку
-    }
-    
-    
-    
-    
 }
 
-extension SignUpController {
+extension AccountCreationController {
     
     func setConstraint() {
         NSLayoutConstraint.activate ([
@@ -358,17 +340,17 @@ extension SignUpController {
             lastNameLabel.topAnchor.constraint(equalTo: nameTextFiled.bottomAnchor, constant: 16),
             lastNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             
-            loremLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loremLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
-            loremLabel.widthAnchor.constraint(equalToConstant: 209),
-            loremLabel.heightAnchor.constraint(equalToConstant: 24),
+            сompleteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            сompleteLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 180),
+            сompleteLabel.widthAnchor.constraint(equalToConstant: 209),
+            сompleteLabel.heightAnchor.constraint(equalToConstant: 24),
             
             completLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             completLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 140),
             completLabel.widthAnchor.constraint(equalToConstant: 264),
             completLabel.heightAnchor.constraint(equalToConstant: 32),
             
-            firstNameLabel.topAnchor.constraint(equalTo: loremLabel.bottomAnchor, constant: 32),
+            firstNameLabel.topAnchor.constraint(equalTo: сompleteLabel.bottomAnchor, constant: 32),
             firstNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             
             lastNameTextFiled.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: 8),
@@ -406,8 +388,6 @@ extension SignUpController {
             button.widthAnchor.constraint(equalToConstant: 327),
             button.heightAnchor.constraint(equalToConstant: 56),
             
-            alreadyLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 24),
-            alreadyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
