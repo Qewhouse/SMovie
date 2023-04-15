@@ -12,7 +12,7 @@ final class CustomTableViewCell: UIView {
     
     lazy var customImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Movieposter")
+        imageView.image = UIImage(named: "Movie-grad-blur")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .red
