@@ -55,4 +55,10 @@ extension FavouriteViewController: UITableViewDelegate, UITableViewDataSource {
                        time: movie.time ?? "")
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController(id: Int(moviesArray[indexPath.row].id),
+                                      mediaType: .movie)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
