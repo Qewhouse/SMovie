@@ -118,7 +118,6 @@ extension SearchViewController: UISearchBarDelegate {
             }
             self.searchView.tableView.reloadData()
         }
-
     }
 }
 
@@ -126,10 +125,32 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: CustomTableViewCellDelegate {
     func didTappedHeartButton(index indexPath: IndexPath) {
         let favVC = FavouriteViewController()
-        let name = media[indexPath.row].name ?? ""
-        let date = media[indexPath.row].releaseDate ?? ""
-        let time = media[indexPath.row].firstAirDate ?? ""
-        let movie = movieCoreDataModel.saveMovie(name: name, date: date, time: time)
-        favVC.moviesArray.append(movie)
+        
+        var name = ""
+        var date = ""
+
+        if let title = media[indexPath.row].name {
+            name = title
+        } else if let title = media[indexPath.row].title {
+            name = title
+        }
+        if let time = media[indexPath.row].firstAirDate {
+            date = time
+        } else if let time = media[indexPath.row].releaseDate {
+            date = time
+        }
+        
+        let posterPath = media[indexPath.row].posterPath
+        let id = media[indexPath.row].id
+        
+        networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
+            guard let self = self, let image = image else { return }
+            let movie = self.movieCoreDataModel.saveMovie(name: name,
+                                                          date: date,
+                                                          time: date,
+                                                          image: image)
+            favVC.moviesArray.append(movie)
+        }
     }
 }
+ 

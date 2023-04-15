@@ -47,7 +47,10 @@ extension FavouriteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier,
                                                  for: indexPath) as! FavoritesTableViewCell
-        
+        let movie = self.moviesArray[indexPath.row]
+        cell.configure(with: movie.image!,
+                       name: movie.name ?? "",
+                       time: movie.time ?? "")
         return cell
     }
 }
