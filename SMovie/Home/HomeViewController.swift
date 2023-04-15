@@ -13,7 +13,9 @@ final class HomeViewController: UIViewController {
     
     var networkService = NetworkService.shared
     
-    let isMovie = Bool()
+    private var isMovie = true
+    
+    private var genreId: Int?
     
     var genres = [Genre]()
     
@@ -74,20 +76,32 @@ final class HomeViewController: UIViewController {
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
-        
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0 : print ("poster at \(indexPath.item) place")
         case 1 : print ("category at \(indexPath) place - \(categoriesArray[indexPath.row])")
             
             switch categoriesArray[indexPath.row] {
-//            case "TV-series":
                 
-//                tableView.reloadData()
+            case "All":
+                isMovie = true
+                homeView.collectionView.reloadData()
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+            case "TV-series":
+                isMovie = false
+                homeView.collectionView.reloadData()
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+            case "Action":
+                isMovie = true
+                genreId = 28
+                homeView.collectionView.reloadData()
+                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
             default:
                 print("default")
             }
-        case 2 : print ("example at \(indexPath.item) place")
+        case 2 :
+            print ("example at \(indexPath.item) place")
         default: break
             
         }
@@ -96,11 +110,11 @@ extension HomeViewController: UICollectionViewDelegate {
         let selectedPoster = IndexPath(item: 1, section: 0)
         let selectedCategory = IndexPath(item: 0, section: 1)
         
-        homeView.collectionView.scrollToItem(at: selectedPoster, at: .centeredVertically, animated: true)
-        collectionView.selectItem(at: selectedCategory, animated: false, scrollPosition: [])
+        //        homeView.collectionView.scrollToItem(at: selectedPoster, at: .centeredVertically, animated: true)
+        //        collectionView.selectItem(at: selectedCategory, animated: false, scrollPosition: [])
         
     }
-
+    
 }
 
 //MARK: - UICollectionViewDataSource
@@ -124,7 +138,7 @@ extension HomeViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch sections[indexPath.section] {
             
-        //posters
+            //posters
             
         case .posters(let posters):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as? PosterCell else { return UICollectionViewCell()
@@ -135,17 +149,17 @@ extension HomeViewController:UICollectionViewDataSource {
             let posterPath = media[indexPath.row].posterPath
             let id = media[indexPath.row].id
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
-                    guard let self = self, let image = image else { return }
+                guard let self = self, let image = image else { return }
                 
                 cell.configureCell(id: id!,
                                    image: image,
                                    name: name,
                                    category: self.getGenre(indexPath))
-                }
+            }
             
             return cell
             
-        //categories
+            //categories
             
         case .categories(let category):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else {
@@ -153,24 +167,54 @@ extension HomeViewController:UICollectionViewDataSource {
             }
             
             cell.configure(categoryText: categoriesArray[indexPath.row])
-        
+            
             return cell
             
-        //examples
+            //examples
             
         case .examples(let examples):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExampleCell.identifier, for: indexPath) as? ExampleCell else {return UICollectionViewCell()}
+            //
+            //            let movies = media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil }
+            //            print (movies)
+            var data = isMovie ? media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil } : media.compactMap { $0.mediaType == MediaType.tv ? $0 : nil }
             
-            let movies = media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil }
+            var sorted = [Media]()
             
-            let name = movies[indexPath.row].title!
-            let posterPath = media[indexPath.row].posterPath
-            let id = media[indexPath.row].id!
-            let date = media[indexPath.row].releaseDate
-            let rank  = media[indexPath.row].popularity!/1000
+            if genreId != nil {
+                
+                for item in data {
+                    
+                    if item.genreIds![0] == genreId {
+                        
+                        sorted.append(item)
+                        
+                        //                    for genre in item.genreIds! {
+                        //
+                        //                        if genreId == genre {
+                        //                            sorted.append(item)
+                        //                        }
+                        //
+                        //                    }
+                        
+                    }
+                    
+                }
+                data.removeAll()
+                data = sorted
+            }
+            
+            print("=======\(data)")
+            
+            
+            let name = isMovie ? data[indexPath.row].title! : data[indexPath.row].name!
+            let posterPath = data[indexPath.row].posterPath
+            let id = data[indexPath.row].id!
+            let date = isMovie ? data[indexPath.row].releaseDate : data[indexPath.row].firstAirDate
+            let rank  = data[indexPath.row].popularity!/1000
             
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
-                    guard let self = self, let image = image else { return }
+                guard let self = self, let image = image else { return }
                 
                 cell.configureCell(id: id,
                                    image: image,
@@ -178,7 +222,7 @@ extension HomeViewController:UICollectionViewDataSource {
                                    name: name,
                                    releaseDate: date!,
                                    rank: rank)
-                }
+            }
             
             return cell
         }
@@ -211,7 +255,7 @@ extension HomeViewController {
         
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             guard let self = self else {return nil}
-
+            
             switch sectionIndex {
             case 0:
                 return self.createPosterSection()
@@ -240,7 +284,7 @@ extension HomeViewController {
                                           interGroupSpacing: 10,
                                           supplementaryItems: [],
                                           contentInsets: false)
-         
+        
         section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         section.visibleItemsInvalidationHandler = { (items, offset, environment) in
             items.forEach { item in
@@ -259,7 +303,7 @@ extension HomeViewController {
     
     private func createCategorySection() -> NSCollectionLayoutSection {
         
-
+        
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .estimated(100),
                                                             heightDimension: .fractionalHeight(1)))
         
@@ -272,7 +316,7 @@ extension HomeViewController {
                                           interGroupSpacing: 20,
                                           supplementaryItems: [supplementaryHeaderItem()],
                                           contentInsets: false)
-         
+        
         section.contentInsets = .init(top: 5, leading: 30, bottom: 5, trailing: 10)
         return section
     }
@@ -280,26 +324,26 @@ extension HomeViewController {
     //Example Section
     
     private func createExampleSection() -> NSCollectionLayoutSection {
-
+        
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                             heightDimension: .fractionalHeight(0.17)))
         
         let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(0.85),
                                                                        heightDimension: .fractionalHeight(0.33)),
-                                                                       subitem: item,
-                                                                       count: 2)
-
+                                                     subitem: item,
+                                                     count: 2)
+        
         
         let section = createLayoutSection(group: group,
                                           behavior: .groupPaging,
                                           interGroupSpacing: 0,
                                           supplementaryItems: [supplementaryHeaderItem()],
                                           contentInsets: false)
-         
+        
         section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         return section
     }
-
+    
     private func supplementaryHeaderItem () -> NSCollectionLayoutBoundarySupplementaryItem {
         .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                 heightDimension: .estimated(40)),
