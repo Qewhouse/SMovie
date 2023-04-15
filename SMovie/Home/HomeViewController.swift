@@ -13,8 +13,6 @@ final class HomeViewController: UIViewController {
     
     var networkService = NetworkService.shared
     
-    private var genreId: Int?
-    
     var genres = [Genre]()
     
     var media = [Media]()
@@ -22,7 +20,13 @@ final class HomeViewController: UIViewController {
     var localMedia = [Media]()
     
     
-    private let categoriesArray = ["All", "TV-series", "Action", "Horror", "Drama", "Thriller", "Others"]
+    private let categoriesArray : [(name:String, id: Int?)] = [("All", nil),
+                                                               ("TV-series", nil),
+                                                               ("Action", 28),
+                                                               ("Horror",27),
+                                                               ("Drama",18) ,
+                                                               ("Thriller", 53) ,
+                                                               ("Others", nil) ]
     
     let homeView: HomeView = {
         let view = HomeView()
@@ -37,10 +41,8 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         media = networkService.media
-        
-        localMedia = media
-        
         genres = networkService.genre
+        localMedia = media
         
         setupViews()
         setDelegates()
@@ -76,6 +78,7 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         switch indexPath.section {
         case 0 :
             print ("poster at \(indexPath.item) place")
@@ -83,41 +86,44 @@ extension HomeViewController: UICollectionViewDelegate {
             
         case 1 : print ("category at \(indexPath) place - \(categoriesArray[indexPath.row])")
             
-            switch categoriesArray[indexPath.row] {
+            switch categoriesArray[indexPath.row].name {
                 
-            case "All":
+            case categoriesArray[0].name:
 
                 localMedia = media
-                homeView.collectionView.reloadData()
-                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-            case "TV-series":
+                
+                reloadCollection(collectionView, indexPath)
+                
+            case categoriesArray[1].name:
 
                 localMedia = media.filter { $0.mediaType == .tv }
                 
-                homeView.collectionView.reloadData()
+                reloadCollection(collectionView, indexPath)
                 
-                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+            case categoriesArray[2].name:
                 
-            case "Action":
+                filterMedia(id: categoriesArray[3].id!, collection: collectionView, indexPath: indexPath)
                 
-                filterMedia(id: 28, collection: collectionView, indexPath: indexPath)
+            case categoriesArray[3].name:
                 
-            case "Horror":
+                filterMedia(id: categoriesArray[3].id!, collection: collectionView, indexPath: indexPath)
                 
-                filterMedia(id: 27, collection: collectionView, indexPath: indexPath)
+            case categoriesArray[4].name:
                 
-            case "Drama":
-                
-                filterMedia(id: 18, collection: collectionView, indexPath: indexPath)
+                filterMedia(id: categoriesArray[4].id!, collection: collectionView, indexPath: indexPath)
                 
                 
-            case "Thriller":
+            case categoriesArray[5].name:
                 
-                filterMedia(id: 53, collection: collectionView, indexPath: indexPath)
+                filterMedia(id: categoriesArray[5].id!, collection: collectionView, indexPath: indexPath)
                 
-            default:
-                print("default")
+            case categoriesArray[6].name:
+                print ("others")
+                
+            default: break
+                
             }
+            
         case 2 :
             print ("example at \(indexPath.item) place")
             print(localMedia[indexPath.item].id!)
@@ -129,13 +135,14 @@ extension HomeViewController: UICollectionViewDelegate {
     
     func filterMedia (id: Int, collection : UICollectionView, indexPath: IndexPath) {
         
-        
         localMedia = media.filter { $0.genreIds?.first == id && $0.mediaType == .movie }
+        reloadCollection(collection, indexPath)
         
-        print(localMedia)
+    }
+    
+    func reloadCollection (_ collection: UICollectionView, _ indexPath: IndexPath) {
         
         homeView.collectionView.reloadData()
-        
         collection.selectItem(at: indexPath, animated: false, scrollPosition: [])
     }
     
@@ -203,7 +210,7 @@ extension HomeViewController:UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             
-            cell.configure(categoryText: categoriesArray[indexPath.row])
+            cell.configure(categoryText: categoriesArray[indexPath.row].name)
             
             return cell
             
