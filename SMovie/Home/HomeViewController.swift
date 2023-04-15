@@ -22,7 +22,7 @@ final class HomeViewController: UIViewController {
     var localMedia = [Media]()
     
     
-    private let categoriesArray = ["All", "TV-series", "Action", "Horror", "Comedy", "Thriller", "Others"]
+    private let categoriesArray = ["All", "TV-series", "Action", "Horror", "Drama", "Thriller", "Others"]
     
     let homeView: HomeView = {
         let view = HomeView()
@@ -106,16 +106,15 @@ extension HomeViewController: UICollectionViewDelegate {
                 
                 filterMedia(id: 27, collection: collectionView, indexPath: indexPath)
                 
-            case "Comedy":
+            case "Drama":
                 
-                filterMedia(id: 35, collection: collectionView, indexPath: indexPath)
+                filterMedia(id: 18, collection: collectionView, indexPath: indexPath)
                 
                 
             case "Thriller":
                 
                 filterMedia(id: 53, collection: collectionView, indexPath: indexPath)
                 
-
             default:
                 print("default")
             }
@@ -130,9 +129,8 @@ extension HomeViewController: UICollectionViewDelegate {
     
     func filterMedia (id: Int, collection : UICollectionView, indexPath: IndexPath) {
         
-        localMedia = media
         
-        localMedia = localMedia.filter { $0.genreIds?.first == id && $0.mediaType == .movie }
+        localMedia = media.filter { $0.genreIds?.first == id && $0.mediaType == .movie }
         
         print(localMedia)
         
@@ -177,11 +175,12 @@ extension HomeViewController:UICollectionViewDataSource {
             
             //posters
             
-        case .posters(let posters):
+        case .posters(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as? PosterCell else { return UICollectionViewCell()
             }
             
             let movies = media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil }
+        
             
             let name = movies[indexPath.row].title!
             let posterPath = media[indexPath.row].posterPath
@@ -199,7 +198,7 @@ extension HomeViewController:UICollectionViewDataSource {
             
             //categories
             
-        case .categories(let category):
+        case .categories(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else {
                 return UICollectionViewCell()
             }
