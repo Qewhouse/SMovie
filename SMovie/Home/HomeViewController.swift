@@ -102,7 +102,7 @@ extension HomeViewController: UICollectionViewDelegate {
                 
             case categoriesArray[2].name:
                 
-                filterMedia(id: categoriesArray[3].id!, collection: collectionView, indexPath: indexPath)
+                filterMedia(id: categoriesArray[2].id!, collection: collectionView, indexPath: indexPath)
                 
             case categoriesArray[3].name:
                 
