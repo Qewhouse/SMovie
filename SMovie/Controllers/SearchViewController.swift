@@ -6,6 +6,7 @@ final class SearchViewController: UIViewController {
     private let searchView = SearchView()
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
     private var media = [Media]()
+    private let movieCoreDataModel = MovieCoreDataModel.shared // создаем экземпляр класса
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +70,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let id = media[indexPath.row].id
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
-            
                 cell.configure(with: image, name: name, time: date)
             }
         return cell
@@ -125,9 +125,11 @@ extension SearchViewController: UISearchBarDelegate {
 //MARK: - FavoriteButton
 extension SearchViewController: CustomTableViewCellDelegate {
     func didTappedHeartButton(index indexPath: IndexPath) {
-        print("FF")
-        MovieCoreDataModel.shared.saveMovie(name: media[indexPath.row].name ?? "",
-                                            date: "17 sep",
-                                            time: media[indexPath.row].releaseDate ?? "")
+        let favVC = FavouriteViewController()
+        let name = media[indexPath.row].name ?? ""
+        let date = media[indexPath.row].releaseDate ?? ""
+        let time = media[indexPath.row].firstAirDate ?? ""
+        let movie = movieCoreDataModel.saveMovie(name: name, date: date, time: time)
+        favVC.moviesArray.append(movie)
     }
 }
