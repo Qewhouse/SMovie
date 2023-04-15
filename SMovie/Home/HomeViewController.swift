@@ -13,15 +13,16 @@ final class HomeViewController: UIViewController {
     
     var networkService = NetworkService.shared
     
-    private var isMovie = true
-    
     private var genreId: Int?
     
     var genres = [Genre]()
     
     var media = [Media]()
     
-    private let categoriesArray = ["All", "TV-series", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    var localMedia = [Media]()
+    
+    
+    private let categoriesArray = ["All", "TV-series", "Action", "Horror", "Comedy", "Thriller", "Others"]
     
     let homeView: HomeView = {
         let view = HomeView()
@@ -34,11 +35,17 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        media = networkService.media
+        
+        localMedia = media
+        
+        genres = networkService.genre
+        
         setupViews()
         setDelegates()
         setConstraints()
-        media = networkService.media
-        genres = networkService.genre
+        
         
     }
     
@@ -60,15 +67,6 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.dataSource = self
     }
     
-    func getGenre(_ indexPath: IndexPath) -> String {
-        var name = String()
-        for genre in genres {
-            if media[indexPath.row].genreIds![0] == genre.id {
-                name = genre.name
-            }
-        }
-        return name
-    }
     
 }
 
@@ -79,42 +77,81 @@ extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-        case 0 : print ("poster at \(indexPath.item) place")
+        case 0 :
+            print ("poster at \(indexPath.item) place")
+            print (media[indexPath.item].id!)
+            
         case 1 : print ("category at \(indexPath) place - \(categoriesArray[indexPath.row])")
             
             switch categoriesArray[indexPath.row] {
                 
             case "All":
-                isMovie = true
+
+                localMedia = media
                 homeView.collectionView.reloadData()
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
             case "TV-series":
-                isMovie = false
+
+                localMedia = media.filter { $0.mediaType == .tv }
+                
                 homeView.collectionView.reloadData()
+                
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                
             case "Action":
-                isMovie = true
-                genreId = 28
-                homeView.collectionView.reloadData()
-                collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                
+                filterMedia(id: 28, collection: collectionView, indexPath: indexPath)
+                
+            case "Horror":
+                
+                filterMedia(id: 27, collection: collectionView, indexPath: indexPath)
+                
+            case "Comedy":
+                
+                filterMedia(id: 35, collection: collectionView, indexPath: indexPath)
+                
+                
+            case "Thriller":
+                
+                filterMedia(id: 53, collection: collectionView, indexPath: indexPath)
+                
+
             default:
                 print("default")
             }
         case 2 :
             print ("example at \(indexPath.item) place")
+            print(localMedia[indexPath.item].id!)
+            
         default: break
             
         }
     }
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let selectedPoster = IndexPath(item: 1, section: 0)
-        let selectedCategory = IndexPath(item: 0, section: 1)
+    
+    func filterMedia (id: Int, collection : UICollectionView, indexPath: IndexPath) {
         
-        //        homeView.collectionView.scrollToItem(at: selectedPoster, at: .centeredVertically, animated: true)
-        //        collectionView.selectItem(at: selectedCategory, animated: false, scrollPosition: [])
+        localMedia = media
         
+        localMedia = localMedia.filter { $0.genreIds?.first == id && $0.mediaType == .movie }
+        
+        print(localMedia)
+        
+        homeView.collectionView.reloadData()
+        
+        collection.selectItem(at: indexPath, animated: false, scrollPosition: [])
     }
     
+    func getGenre(_ indexPath: IndexPath, data: [Media]) -> String {
+        
+        var name = String()
+        for genre in genres {
+            if data[indexPath.row].genreIds!.first == genre.id {
+                name = genre.name
+            }
+        }
+        return name
+    }
+
 }
 
 //MARK: - UICollectionViewDataSource
@@ -129,7 +166,7 @@ extension HomeViewController:UICollectionViewDataSource {
         switch section {
         case 0: return 3
         case 1: return categoriesArray.count
-        case 2: return 10
+        case 2: return localMedia.count
         default: return 0
             
         }
@@ -145,6 +182,7 @@ extension HomeViewController:UICollectionViewDataSource {
             }
             
             let movies = media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil }
+            
             let name = movies[indexPath.row].title!
             let posterPath = media[indexPath.row].posterPath
             let id = media[indexPath.row].id
@@ -154,7 +192,7 @@ extension HomeViewController:UICollectionViewDataSource {
                 cell.configureCell(id: id!,
                                    image: image,
                                    name: name,
-                                   category: self.getGenre(indexPath))
+                                   category: self.getGenre(indexPath, data: movies))
             }
             
             return cell
@@ -172,53 +210,21 @@ extension HomeViewController:UICollectionViewDataSource {
             
             //examples
             
-        case .examples(let examples):
+        case .examples(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExampleCell.identifier, for: indexPath) as? ExampleCell else {return UICollectionViewCell()}
-            //
-            //            let movies = media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil }
-            //            print (movies)
-            var data = isMovie ? media.compactMap { $0.mediaType == MediaType.movie ? $0 : nil } : media.compactMap { $0.mediaType == MediaType.tv ? $0 : nil }
             
-            var sorted = [Media]()
-            
-            if genreId != nil {
-                
-                for item in data {
-                    
-                    if item.genreIds![0] == genreId {
-                        
-                        sorted.append(item)
-                        
-                        //                    for genre in item.genreIds! {
-                        //
-                        //                        if genreId == genre {
-                        //                            sorted.append(item)
-                        //                        }
-                        //
-                        //                    }
-                        
-                    }
-                    
-                }
-                data.removeAll()
-                data = sorted
-            }
-            
-            print("=======\(data)")
-            
-            
-            let name = isMovie ? data[indexPath.row].title! : data[indexPath.row].name!
-            let posterPath = data[indexPath.row].posterPath
-            let id = data[indexPath.row].id!
-            let date = isMovie ? data[indexPath.row].releaseDate : data[indexPath.row].firstAirDate
-            let rank  = data[indexPath.row].popularity!/1000
+            let name = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].title! : localMedia[indexPath.row].name!
+            let posterPath = localMedia[indexPath.row].posterPath
+            let id = localMedia[indexPath.row].id!
+            let date = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].releaseDate : localMedia[indexPath.row].firstAirDate
+            let rank  = localMedia[indexPath.row].popularity!/1000
             
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
                 
                 cell.configureCell(id: id,
                                    image: image,
-                                   category: self.getGenre(indexPath),
+                                   category: self.getGenre(indexPath, data: self.localMedia),
                                    name: name,
                                    releaseDate: date!,
                                    rank: rank)
