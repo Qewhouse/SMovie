@@ -22,8 +22,8 @@ final class FavoritesTableViewCell: UITableViewCell {
         ])
     }
 
-    public func configure(with imageName: String, name: String, time: String) {
-        customTableViewCell.customImageView.image = UIImage(named: imageName)
+    public func configure(with imageName: Data, name: String, time: String) {
+        customTableViewCell.customImageView.image = UIImage(data: imageName)
         customTableViewCell.nameLabel.text = name
         customTableViewCell.timeLabel.text = time
     }

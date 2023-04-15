@@ -9,7 +9,7 @@ final class MovieCoreDataModel {
     private let favVC = FavouriteViewController()
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func saveMovie(name: String, date: String, time: String) -> MoviesCR {
+    func saveMovie(name: String, date: String, time: String, image: UIImage) -> MoviesCR {
         
         let entity = NSEntityDescription.entity(forEntityName: "MoviesCR", in: context)!
         let movie = NSManagedObject(entity: entity, insertInto: context) as! MoviesCR
@@ -17,6 +17,7 @@ final class MovieCoreDataModel {
         movie.name = name
         movie.time = time
         movie.date = date
+        movie.image = image.pngData()
         
         do {
             try context.save()
