@@ -5,11 +5,17 @@ final class PlayViewController: UIViewController {
     
     private let playView = PlayView()
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
+    var moviesArray: [PlayesCR] = []
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        moviesArray = PlayCoreDataModel.shared.getAllMovies()
+        playView.tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        title = "Recent Watch"
         setUpDelegates()
         setUpView()
     }
@@ -38,13 +44,16 @@ final class PlayViewController: UIViewController {
 //MARK: - TableView
 extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return moviesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlayTableViewCell.identifier,
                                                  for: indexPath) as! PlayTableViewCell
-        
+        let movie = self.moviesArray[indexPath.row]
+        cell.configure(with: movie.image!,
+                       name: movie.name ?? "",
+                       time: movie.time ?? "")
         return cell
     }
     

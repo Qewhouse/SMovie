@@ -21,7 +21,6 @@ final class MovieCoreDataModel {
         
         do {
             try context.save()
-            favVC.moviesArray.append(movie)
             return movie
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
@@ -35,6 +34,43 @@ final class MovieCoreDataModel {
         do {
             let result = try context.fetch(request)
             return result as! [MoviesCR]
+        } catch {
+            print("Error getting movies: \(error.localizedDescription)")
+            return []
+        }
+    }
+}
+
+final class PlayCoreDataModel {
+    static let shared = PlayCoreDataModel()
+    
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    func saveMovie(name: String, date: String, time: String, image: UIImage) -> PlayesCR {
+        
+        let entity = NSEntityDescription.entity(forEntityName: "PlayesCR", in: context)!
+        let movie = NSManagedObject(entity: entity, insertInto: context) as! PlayesCR
+        
+        movie.name = name
+        movie.time = time
+        movie.date = date
+        movie.image = image.pngData()
+        
+        do {
+            try context.save()
+            return movie
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+            fatalError("Failed to save movie")
+        }
+    }
+    
+    func getAllMovies() -> [PlayesCR] {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlayesCR")
+        
+        do {
+            let result = try context.fetch(request)
+            return result as! [PlayesCR]
         } catch {
             print("Error getting movies: \(error.localizedDescription)")
             return []

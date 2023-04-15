@@ -220,11 +220,11 @@
 		37A4E30229D8ACE400AD2B3E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8020BC3D29E7202000284430 /* Home */,
 				F6AC3FD729E2B12D008437B0 /* DetailViewController */,
 				37A4E2EC29D8A97800AD2B3E /* TabBarController.swift */,
 				37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */,
 				37A4E30729D8B71900AD2B3E /* PlayViewController.swift */,
-				8020BC3D29E7202000284430 /* Home */,
 				37A4E30929D8B73700AD2B3E /* FavouriteViewController.swift */,
 				37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */,
 				5109B15029DF3E2D001F090A /* CreateAccountController.swift */,

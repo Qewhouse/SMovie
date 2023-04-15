@@ -6,7 +6,6 @@ final class SearchViewController: UIViewController {
     private let searchView = SearchView()
     private let categoriesArray = ["All", "Action", "Adventure", "Mystery", "Fantasy", "Others"]
     private var media = [Media]()
-    private let movieCoreDataModel = MovieCoreDataModel.shared // создаем экземпляр класса
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +97,35 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         cell.configure(categoryText: categoriesArray[indexPath.row])
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let playVC = PlayViewController()
+        
+        var name = ""
+        var date = ""
+
+        if let title = media[indexPath.row].name {
+            name = title
+        } else if let title = media[indexPath.row].title {
+            name = title
+        }
+        if let time = media[indexPath.row].firstAirDate {
+            date = time
+        } else if let time = media[indexPath.row].releaseDate {
+            date = time
+        }
+        
+        let posterPath = media[indexPath.row].posterPath
+        let id = media[indexPath.row].id
+        
+        networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
+            guard let self = self, let image = image else { return }
+            let movie = PlayCoreDataModel.shared .saveMovie(name: name,
+                                                          date: date,
+                                                          time: date,
+                                                          image: image)
+        }
+    }
 }
 
 //MARK: - Filter button
@@ -145,11 +173,10 @@ extension SearchViewController: CustomTableViewCellDelegate {
         
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
             guard let self = self, let image = image else { return }
-            let movie = self.movieCoreDataModel.saveMovie(name: name,
+            let movie = MovieCoreDataModel.shared.saveMovie(name: name,
                                                           date: date,
                                                           time: date,
                                                           image: image)
-            favVC.moviesArray.append(movie)
         }
     }
 }
