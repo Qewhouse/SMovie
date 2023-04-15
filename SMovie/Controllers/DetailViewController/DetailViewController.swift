@@ -238,7 +238,7 @@ final class DetailViewController: UIViewController {
             let id = data?.id
             self.networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
-                imageView.image = image
+                self.imageView.image = image
             }
         }
     }

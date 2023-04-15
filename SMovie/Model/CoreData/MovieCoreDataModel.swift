@@ -24,7 +24,7 @@ final class MovieCoreDataModel {
             return movie
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
-            fatalError("Failed to save recipe")
+            fatalError("Failed to save movie")
         }
     }
     
@@ -35,7 +35,7 @@ final class MovieCoreDataModel {
             let result = try context.fetch(request)
             return result as! [MoviesCR]
         } catch {
-            print("Error getting recipes: \(error.localizedDescription)")
+            print("Error getting movies: \(error.localizedDescription)")
             return []
         }
     }
