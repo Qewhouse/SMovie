@@ -11,6 +11,8 @@ class PosterCell: UICollectionViewCell {
     
     static let identifier = "PosterCell"
     
+    var id = Int()
+    
     lazy var posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -77,7 +79,8 @@ class PosterCell: UICollectionViewCell {
         setConstraints()
     }
     
-    func configureCell (image: UIImage, name: String, category: String) {
+    func configureCell (id: Int, image: UIImage, name: String, category: String) {
+        self.id = id
         posterImageView.image = image
         nameLabel.text = name
         categoryLabel.text = category

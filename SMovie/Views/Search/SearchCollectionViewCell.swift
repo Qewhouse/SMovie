@@ -34,6 +34,18 @@ final class SearchCollectionViewCell: UICollectionViewCell {
 
     }
     
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        let newAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+        let contentSize = contentView.systemLayoutSizeFitting(
+            CGSize(width: layoutAttributes.size.width, height: UIView.layoutFittingExpandedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+        newAttributes.size.height = layoutAttributes.size.height
+        newAttributes.size.width = contentSize.width
+        return newAttributes
+    }
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             categoryLabel.topAnchor.constraint(equalTo: topAnchor),

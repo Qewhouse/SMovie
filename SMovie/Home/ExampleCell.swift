@@ -11,6 +11,8 @@ class ExampleCell: UICollectionViewCell {
     
     static let identifier = "ExampleCell"
     
+    var id = Int()
+    
     let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Movieposter")
@@ -38,18 +40,17 @@ class ExampleCell: UICollectionViewCell {
         return label
     }()
     
-    private let alarmImageView: UIImageView = {
+    private let calendarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "clock")
+        imageView.image = UIImage(named: "calendar")
         imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var timeLabel: UILabel = {
+    lazy var releaseLabel: UILabel = {
         let label = UILabel()
-        label.text = "148 minutes"
         label.textColor = Theme.lightGrayText
         label.font = UIFont.systemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -102,19 +103,20 @@ class ExampleCell: UICollectionViewCell {
         addSubview(posterImageView)
         addSubview(categoryLabel)
         addSubview(nameLabel)
-        addSubview(alarmImageView)
-        addSubview(timeLabel)
+        addSubview(calendarImageView)
+        addSubview(releaseLabel)
         addSubview(heartImageView)
         addSubview(rankLabel)
         addSubview(starImageView)
 
     }
     
-    func configureCell (image: UIImage, category: String, name: String, time: Int, rank: Double) {
+    func configureCell (id: Int, image: UIImage, category: String, name: String, releaseDate: String, rank: Double) {
+        self.id = id
         posterImageView.image = image
         categoryLabel.text = category
         nameLabel.text = name
-        timeLabel.text = String(time) + " Minutes"
+        releaseLabel.text = releaseDate
         rankLabel.text = String(format: "%.1f", rank)
         
     }
@@ -140,13 +142,13 @@ class ExampleCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            alarmImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            alarmImageView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
+            calendarImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            calendarImageView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
         ])
         
         NSLayoutConstraint.activate([
-            timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            timeLabel.leadingAnchor.constraint(equalTo: alarmImageView.trailingAnchor, constant: 10),
+            releaseLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            releaseLabel.leadingAnchor.constraint(equalTo: calendarImageView.trailingAnchor, constant: 10),
         ])
         
         NSLayoutConstraint.activate([
@@ -156,7 +158,7 @@ class ExampleCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            rankLabel.bottomAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0),
+            rankLabel.bottomAnchor.constraint(equalTo: releaseLabel.bottomAnchor, constant: 0),
             rankLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
         ])
         

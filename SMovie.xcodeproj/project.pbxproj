@@ -189,6 +189,7 @@
 				37A4E2FC29D8AAB800AD2B3E /* App */,
 				6DD59DAA29DBF9B3001D33BC /* Views */,
 				37A4E30229D8ACE400AD2B3E /* Controllers */,
+				8020BC3D29E7202000284430 /* Home */,
 				8020BC0529E1F72300284430 /* Settings */,
 				37A4E2FD29D8AACB00AD2B3E /* Resources */,
 			);
@@ -391,14 +392,14 @@
 		8020BC3D29E7202000284430 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */,
+				8020BC4229E7203900284430 /* HomeView.swift */,
 				8020BC4429E7203A00284430 /* ExampleCell.swift */,
+				8020BC3E29E7203900284430 /* PosterCell.swift */,
 				8020BC4329E7203900284430 /* HeaderSupplementaryView.swift */,
 				8020BC3F29E7203900284430 /* HomeMockData.swift */,
-				8020BC4229E7203900284430 /* HomeView.swift */,
 				8020BC4029E7203900284430 /* ListItem.swift */,
 				8020BC4129E7203900284430 /* ListSection.swift */,
-				8020BC3E29E7203900284430 /* PosterCell.swift */,
-				37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
