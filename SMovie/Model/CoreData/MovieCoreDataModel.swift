@@ -9,7 +9,7 @@ final class MovieCoreDataModel {
     private let favVC = FavouriteViewController()
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func saveMovie(name: String, date: String, time: String, image: UIImage) -> MoviesCR {
+    func saveMovie(name: String, date: String, time: String, image: UIImage, id: Int) -> MoviesCR {
         
         let entity = NSEntityDescription.entity(forEntityName: "MoviesCR", in: context)!
         let movie = NSManagedObject(entity: entity, insertInto: context) as! MoviesCR
@@ -18,6 +18,7 @@ final class MovieCoreDataModel {
         movie.time = time
         movie.date = date
         movie.image = image.pngData()
+        movie.id = Int32(id)
         
         do {
             try context.save()
@@ -46,7 +47,7 @@ final class PlayCoreDataModel {
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    func saveMovie(name: String, date: String, time: String, image: UIImage) -> PlayesCR {
+    func saveMovie(name: String, date: String, time: String, image: UIImage, id: Int) -> PlayesCR {
         
         let entity = NSEntityDescription.entity(forEntityName: "PlayesCR", in: context)!
         let movie = NSManagedObject(entity: entity, insertInto: context) as! PlayesCR
@@ -55,6 +56,7 @@ final class PlayCoreDataModel {
         movie.time = time
         movie.date = date
         movie.image = image.pngData()
+        movie.id = Int32(id)
         
         do {
             try context.save()

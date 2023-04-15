@@ -120,11 +120,17 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
             guard let self = self, let image = image else { return }
+            
             let movie = PlayCoreDataModel.shared .saveMovie(name: name,
                                                           date: date,
                                                           time: date,
-                                                          image: image)
+                                                          image: image,
+                                                          id: id!)
         }
+        
+        let vc = DetailViewController(id: media[indexPath.row].id!,
+                                      mediaType: .movie)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -170,13 +176,15 @@ extension SearchViewController: CustomTableViewCellDelegate {
         
         let posterPath = media[indexPath.row].posterPath
         let id = media[indexPath.row].id
+        print(id)
         
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
             guard let self = self, let image = image else { return }
             let movie = MovieCoreDataModel.shared.saveMovie(name: name,
                                                           date: date,
                                                           time: date,
-                                                          image: image)
+                                                          image: image,
+                                                          id: id!)
         }
     }
 }
