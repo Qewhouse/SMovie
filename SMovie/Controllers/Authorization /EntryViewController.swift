@@ -6,6 +6,8 @@ import GoogleSignIn
 
 class EntryViewController: UIViewController {
     
+    let user = User()
+    
     let passwordToggleButton = UIButton(type: .system)
     
     // Установка надписи "Create account"
@@ -59,6 +61,7 @@ class EntryViewController: UIViewController {
     
     // Добавление поля ввода email
     let emailTextField: UITextField = {
+        
         let textField = UITextField()
         textField.placeholder = "Enter your email"
         textField.backgroundColor = UIColor(named: "grayColor")

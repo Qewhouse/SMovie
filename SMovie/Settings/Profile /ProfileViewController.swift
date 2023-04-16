@@ -9,6 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    let user = User()
     //MARK: - Properties
     
     private var contentSize : CGSize {
@@ -32,23 +33,27 @@ class ProfileViewController: UIViewController {
     var profileImageView = ProfileImageView()
     
     let nameInputView: TextInputView = {
+        let defaults = UserDefaults.standard
         let input = TextInputView()
-        input.label.text            = "First Name"
+        input.textField.text            = defaults.string(forKey: "firstName")
         input.textField.placeholder = "Enter first name"
         return input
     }()
     
     let surnameInputView: TextInputView = {
+        let defaults = UserDefaults.standard
         let input = TextInputView()
-        input.label.text            = "Last Name"
+        input.textField.text            = defaults.string(forKey: "lastName")
         input.textField.placeholder = "Enter last name"
         return input
     }()
     
     let emailInputView: TextInputView = {
+        let defaults = UserDefaults.standard
         let input = TextInputView()
         input.label.text            = "Email"
-        input.textField.placeholder = "Enter email"
+        input.textField.text = defaults.string(forKey: "Email")
+        input.textField.placeholder = "Enter you email"
         input.textField.keyboardType = .emailAddress
         return input
     }()
@@ -88,8 +93,12 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        nameUser()
         configureView()
     }
+    
+   
+    
     
     //MARK: - Configure Methods
     
@@ -127,7 +136,27 @@ class ProfileViewController: UIViewController {
     //MARK: - Objc Functions
     
     @objc func saveButtonPressed() {
+        
+        user.firstName = nameInputView.textField.text
+        user.lastName = surnameInputView.textField.text
+        let defaults = UserDefaults.standard
+        defaults.set(user.firstName, forKey: "firstName")
+        defaults.set(user.lastName, forKey: "lastName")
+
         print ("save changes pressed")
+    }
+    
+    func nameUser() {
+        let defaults = UserDefaults.standard
+        let firstName = defaults.string(forKey: "firstName")
+        let lastName = defaults.string(forKey: "lastName")
+
+        if let firstName = firstName, let lastName = lastName {
+            // Используйте имя и фамилию в приложении
+            nameInputView.textField.text = firstName
+            surnameInputView.textField.text = lastName
+        }
+
     }
     
     @objc func goBack() {

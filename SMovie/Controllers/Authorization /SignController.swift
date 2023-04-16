@@ -13,6 +13,8 @@ import GoogleSignIn
 
 class SignController: UIViewController {
     
+    
+    
 
     // MARK: - Объекты
     // Установка надписи "Create account"
@@ -174,7 +176,7 @@ class SignController: UIViewController {
     // Функция для проверки пользователя, входил он в приложение ранее или нет
     func checkCurrentUser() {
         if Auth.auth().currentUser != nil {
-            let nextVC = HomeViewController()
+            let nextVC = SearchViewController()
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
 
@@ -208,6 +210,12 @@ class SignController: UIViewController {
             present(alert, animated: true, completion: nil)
             return
         }
+        
+        //Запоминаем емайл
+        let user = User()
+        user.email = emailTextField.text
+        let defaults = UserDefaults.standard
+        defaults.set(user.email, forKey: "Email")
         
         // Если email корректный, то переходим на экран для создания аккаунта
         let nextVC = AccountCreationController()

@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileGenderInputView: UIView {
     
+    var user = User()
+    
     //MARK: - Properties
     
     let label: UILabel = {
@@ -23,6 +25,7 @@ class ProfileGenderInputView: UIView {
         let button = GenderButton()
         button.setTitle("Male", for: .normal)
         button.addTarget(self, action: #selector(tappedOnMaleButton), for: .touchUpInside)
+        
         return button
     }()
     
@@ -43,6 +46,7 @@ class ProfileGenderInputView: UIView {
             maleButton.setImage(UIImage(named: maleButton.flag ? "checked" : "unchecked"), for: .normal)
             femaleButton.setImage(UIImage(named: femaleButton.flag ? "checked" : "unchecked"), for: .normal)
         }
+        
     }
     
     @objc func tappedOnFemaleButton () {

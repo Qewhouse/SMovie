@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 class AccountCreationController: UIViewController {
     
+    
     // Создаем кнопки типа 'system' для переключения видимости пароля
     let passwordToggleButton = UIButton(type: .system)
     let confirmToggleButton = UIButton(type: .system)
@@ -18,7 +19,7 @@ class AccountCreationController: UIViewController {
     // Создаем текстовое поле для ввода имени
     let nameTextFiled: UITextField = {
         let nameTextFiled = UITextField()
-        nameTextFiled.placeholder = "Enter your email address"
+        nameTextFiled.placeholder = "Enter your name"
         nameTextFiled.backgroundColor = UIColor(named: "grayColor")
         nameTextFiled.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         nameTextFiled.layer.cornerRadius = 24
@@ -44,7 +45,7 @@ class AccountCreationController: UIViewController {
     // Создаем текстовое поле для ввода фамилии
     let lastNameTextFiled: UITextField = {
         let lastNameTextFiled = UITextField()
-        lastNameTextFiled.placeholder = "Enter your name"
+        lastNameTextFiled.placeholder = "Enter your last name"
         lastNameTextFiled.backgroundColor = UIColor(named: "grayColor")
         lastNameTextFiled.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         lastNameTextFiled.layer.cornerRadius = 24
@@ -70,9 +71,10 @@ class AccountCreationController: UIViewController {
     
     // Создаем текстовое поле для ввода email
     let emailTextFiled: UITextField = {
-        
+        let defaults = UserDefaults.standard
         let emailTextFiled = UITextField()
-        emailTextFiled.placeholder = "Enter your email"
+        emailTextFiled.placeholder = defaults.string(forKey: "Email")
+        emailTextFiled.isEnabled = false
         emailTextFiled.backgroundColor = UIColor(named: "grayColor")
         emailTextFiled.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         emailTextFiled.layer.cornerRadius = 24
@@ -229,22 +231,30 @@ class AccountCreationController: UIViewController {
     // При нажатии на кнопку "Sign Up", эта функция выполняет регистрацию пользователя и делает переход к другому экрану
     @objc  func signUpButtonPressed() {
         
-        //Создаем обьект для сохранения в базуданных FireBase
-        let db = Firestore.firestore()
+        let user = User()
+        user.firstName = nameTextFiled.text
+        user.firstName = lastNameTextFiled.text
+        let defaults = UserDefaults.standard
+        defaults.set(user.firstName, forKey: "firstName")
+        defaults.set(user.lastName, forKey: "lastName")
 
-        // Добавление данных в коллекцию "users"
-        let user = ["firstName": nameTextFiled.text, "lastName": lastNameTextFiled.text]
-        db.collection("users").addDocument(data: user) { error in
-            if let error = error {
-                print("Error adding user: \(error.localizedDescription)")
-            } else {
-                print("User added successfully")
-            }
-        }
+        
+//        //Создаем обьект для сохранения в базуданных FireBase
+//        let db = Firestore.firestore()
+//
+//        // Добавление данных в коллекцию "users"
+//        let user = ["firstName": nameTextFiled.text, "lastName": lastNameTextFiled.text]
+//        db.collection("users").addDocument(data: user) { error in
+//            if let error = error {
+//                print("Error adding user: \(error.localizedDescription)")
+//            } else {
+//                print("User added successfully")
+//            }
+//        }
         
         //Сравниваем введеные пароли, что бы они были одинаковые
         if passwordTextField.text == confirmTextField.text {
-            if let email = emailTextFiled.text,
+            if let email = defaults.string(forKey: "Email"),
                let password = passwordTextField.text {
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                     if let e = error {
