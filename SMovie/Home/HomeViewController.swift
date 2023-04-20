@@ -139,6 +139,10 @@ extension HomeViewController: UICollectionViewDelegate {
             print ("example at \(indexPath.item) place")
             print(localMedia[indexPath.item].id!)
             
+            let vc = DetailViewController(id: localMedia[indexPath.row].id!,
+                                          mediaType: localMedia[indexPath.row].mediaType!)
+            navigationController?.pushViewController(vc, animated: true)
+            
         default: break
             
         }

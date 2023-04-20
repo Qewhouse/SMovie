@@ -201,7 +201,7 @@ final class DetailViewController: UIViewController {
     
     private func setupNavigationBar() {
         self.navigationItem.title = "Movie Detail"
-        
+        navigationController?.isNavigationBarHidden = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Arrow Back"), style: .plain, target: self, action: #selector(addTappedLeftNavButton))
         
         let backButtonImage = UIImage(named: "backArrow")
