@@ -24,7 +24,7 @@ final class CustomTableViewCell: UIView {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Drifting Home"
-        label.font = .boldSystemFont(ofSize: 28)
+        label.font = .boldSystemFont(ofSize: 25)
         label.textColor = Theme.reversedAppColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

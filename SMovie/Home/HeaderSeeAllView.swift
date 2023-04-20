@@ -9,6 +9,8 @@ import UIKit
 
 class HeaderSeeAllView: UICollectionReusableView {
     
+    var delegate: GoToSeeAllProtocol?
+    
     static var identifier = "headerSeeAll"
     
     private let headerLabel: UILabel = {
@@ -23,10 +25,16 @@ class HeaderSeeAllView: UICollectionReusableView {
     private let seeAllButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("See All", for: .normal)
-        button.setTitleColor(Theme.reversedAppColor, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(Theme.violetColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(seeAllTapped), for: .touchUpInside)
         return button
     }()
+    
+    @objc func seeAllTapped () {
+        delegate?.goToSeeAll()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,9 +47,9 @@ class HeaderSeeAllView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureHeader(categoryName: String) {
+    func configureHeader(categoryName: String, delegate: UIViewController) {
         headerLabel.text = categoryName
-        
+        self.delegate = delegate as? GoToSeeAllProtocol
     }
     
     private func setConstraints() {
