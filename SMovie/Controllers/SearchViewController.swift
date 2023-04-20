@@ -129,7 +129,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         }
         
         let vc = DetailViewController(id: media[indexPath.row].id!,
-                                      mediaType: .movie)
+                                      mediaType: media[indexPath.row].mediaType!)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

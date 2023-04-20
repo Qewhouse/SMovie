@@ -84,6 +84,10 @@ extension HomeViewController: UICollectionViewDelegate {
             print ("poster at \(indexPath.item) place")
             print (media[indexPath.item].id!)
             
+            let detailVC: DetailViewController = DetailViewController(id: media[indexPath.item].id!,
+                                                                      mediaType: media[indexPath.item].mediaType!)
+            self.navigationController?.pushViewController(detailVC, animated: true)
+            
         case 1 : print ("category at \(indexPath) place - \(categoriesArray[indexPath.row])")
             
             switch categoriesArray[indexPath.row].name {
@@ -250,13 +254,15 @@ extension HomeViewController:UICollectionViewDataSource {
                 ofKind: kind,
                 withReuseIdentifier: HeaderSupplementaryView.identifier,
                 for: indexPath) as! HeaderSupplementaryView
-            
+            print ("======\(sections[indexPath.section].title)")
             header.configureHeader(categoryName: sections[indexPath.section].title)
             return header
         default:
             return UICollectionReusableView()
         }
     }
+    
+
     
 }
 

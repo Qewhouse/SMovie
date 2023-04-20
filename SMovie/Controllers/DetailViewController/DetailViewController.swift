@@ -115,7 +115,7 @@ final class DetailViewController: UIViewController {
     }
     
     @objc private func addTappedLeftNavButton() {
-        print("Back")
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func addTappedFavorite() {
@@ -127,6 +127,8 @@ final class DetailViewController: UIViewController {
     }
     
     private func setupViews() {
+        self.view.backgroundColor = Theme.appColor
+        
         aboutStack.distribution = .fillEqually
         aboutStack.spacing = 24
         
@@ -201,6 +203,15 @@ final class DetailViewController: UIViewController {
         self.navigationItem.title = "Movie Detail"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Arrow Back"), style: .plain, target: self, action: #selector(addTappedLeftNavButton))
+        
+        let backButtonImage = UIImage(named: "backArrow")
+        let backButton = UIBarButtonItem(image: backButtonImage,
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(addTappedLeftNavButton))
+        backButton.tintColor = .black
+        navigationItem.leftBarButtonItem = backButton
+        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Favorite"), style: .done, target: self, action: #selector(addTappedFavorite))
     }
     
