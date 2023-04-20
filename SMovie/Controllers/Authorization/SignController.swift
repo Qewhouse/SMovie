@@ -1,9 +1,4 @@
-//
-//  SignController.swift
-//  SMovie
-//
-//  Created by Batman 👀 on 17.04.2023.
-//
+
 
 //
 //  CreateAccount.swift
@@ -173,7 +168,7 @@ class SignController: UIViewController {
         view.backgroundColor = UIColor(named: "violetColor")
         
         //Функция для проверки пользователя
-        //checkCurrentUser()
+        checkCurrentUser()
         
         setView()
         setConstraint()
@@ -183,7 +178,7 @@ class SignController: UIViewController {
     // Функция для проверки пользователя, входил он в приложение ранее или нет
     func checkCurrentUser() {
         if Auth.auth().currentUser != nil {
-            let nextVC = SearchViewController()
+            let nextVC = TabBarController()
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
 
@@ -236,7 +231,7 @@ class SignController: UIViewController {
         // Создаем NSPredicate на основе регулярного выражения
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
         
-        // Возвращаем результат проверки
+        
         return emailPredicate.evaluate(with: email)
     }
 
@@ -282,6 +277,7 @@ class SignController: UIViewController {
     @objc func loginTapped() {
         let nextVC = EntryViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
+        
     }
     
     

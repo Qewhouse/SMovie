@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         
         window?.backgroundColor = .systemBackground
         window?.rootViewController = onboardingViewController
+        //window?.rootViewController = entryViewController
         window?.makeKeyAndVisible()
         
     }
@@ -63,6 +64,7 @@ extension SceneDelegate {
 extension SceneDelegate: OnboardingViewControllerDelegate {
     func didFinishOnboarding() {
         prepareMainView()
-        setRootViewController(tabBarController)
+        //setRootViewController(tabBarController)
+        setRootViewController(entryViewController)
     }
 }

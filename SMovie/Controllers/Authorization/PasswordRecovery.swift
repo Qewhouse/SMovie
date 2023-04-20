@@ -2,7 +2,6 @@
 
 
 import UIKit
-//import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 
@@ -14,13 +13,13 @@ class PasswordRecovery : UIViewController {
     // Установка надписи "Create account"
     let resetPasswordLabel: UILabel = {
         let createAccount = UILabel()
-        createAccount.text = "Reset password" // измените текст на две строки
+        createAccount.text = "Reset password"
         createAccount.textAlignment = .center
         createAccount.backgroundColor = .clear
         createAccount.layer.cornerRadius = 0
         createAccount.textColor = .white
         createAccount.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        createAccount.numberOfLines = 2 // установите количество строк на 2
+        createAccount.numberOfLines = 2 
         createAccount.translatesAutoresizingMaskIntoConstraints = false
        
 
@@ -242,31 +241,7 @@ extension PasswordRecovery {
 
 
 
-//@objc func tappedButton() {
-//    guard let email = emailTextField.text else { return }
-//
-//    Auth.auth().sendPasswordReset(withEmail: email) { error in
-//        if let error = error {
-//            // Обработка ошибок
-//            let alertController = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-//            self.present(alertController, animated: true)
-//        } else {
-//
-//            let nextVC = EntryViewController()
-//            self.navigationController?.pushViewController(nextVC, animated: true)
-//
-//            // Успешно отправлено письмо со ссылкой на сброс пароля
-//            let alertController = UIAlertController(title: "Успех", message: "Письмо со ссылкой на сброс пароля было отправлено на \(email)", preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "OK", style: .default))
-//            self.present(alertController, animated: true)
-//
-//
-//
-//        }
-//    }
-//}
-//
+
 
 
 

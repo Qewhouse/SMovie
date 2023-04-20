@@ -4,7 +4,6 @@
 
 
 import UIKit
-//import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
@@ -233,24 +232,11 @@ class AccountCreationController: UIViewController {
         
         let user = User()
         user.firstName = nameTextFiled.text
-        user.firstName = lastNameTextFiled.text
+        user.lastName = lastNameTextFiled.text
         let defaults = UserDefaults.standard
         defaults.set(user.firstName, forKey: "firstName")
         defaults.set(user.lastName, forKey: "lastName")
 
-        
-//        //Создаем обьект для сохранения в базуданных FireBase
-//        let db = Firestore.firestore()
-//
-//        // Добавление данных в коллекцию "users"
-//        let user = ["firstName": nameTextFiled.text, "lastName": lastNameTextFiled.text]
-//        db.collection("users").addDocument(data: user) { error in
-//            if let error = error {
-//                print("Error adding user: \(error.localizedDescription)")
-//            } else {
-//                print("User added successfully")
-//            }
-//        }
         
         //Сравниваем введеные пароли, что бы они были одинаковые
         if passwordTextField.text == confirmTextField.text {

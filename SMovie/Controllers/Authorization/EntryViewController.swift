@@ -2,7 +2,6 @@
 //  EntryViewController.swift
 //  SMovie
 import UIKit
-//import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 
