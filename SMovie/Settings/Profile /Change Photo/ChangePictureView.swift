@@ -15,7 +15,7 @@ class ChangePictureView: UIView {
         let label = UILabel()
         label.textAlignment = .center
         label.text = "Change your picture"
-        label.textColor = .black
+        label.textColor = Theme.reversedAppColor
         label.font = UIFont.boldSystemFont(ofSize: 20.0)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -33,8 +33,8 @@ class ChangePictureView: UIView {
         let button = ChangePictureButton()
         button.setTitle("Take a photo", for: .normal)
         button.setImage(UIImage(named: "cameraIcon"), for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        
+        button.setTitleColor(Theme.reversedAppColor, for: .normal)
+        button.backgroundColor = Theme.appColor
         return button
     }()
     
@@ -42,7 +42,8 @@ class ChangePictureView: UIView {
         let button = ChangePictureButton()
         button.setTitle("Choose from your file", for: .normal)
         button.setImage(UIImage(named: "fileIcon"), for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(Theme.reversedAppColor, for: .normal)
+        button.backgroundColor = Theme.appColor
         button.imageEdgeInsets.left = -100
         button.titleEdgeInsets.left = -90
         return button
@@ -52,6 +53,7 @@ class ChangePictureView: UIView {
         let button = ChangePictureButton()
         button.setTitle("Delete photo", for: .normal)
         button.setImage(UIImage(named: "trashIcon"), for: .normal)
+        button.backgroundColor = Theme.appColor
         button.setTitleColor(.red, for: .normal)
         return button
     }()
@@ -71,7 +73,7 @@ class ChangePictureView: UIView {
     //MARK: - Setup Views
 
     func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(topLabel)
         addSubview(lineImageView)
         addSubview(takePhotoButton)

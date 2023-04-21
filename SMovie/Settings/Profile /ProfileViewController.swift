@@ -86,7 +86,7 @@ class ProfileViewController: UIViewController {
         button.setTitle("Save Changes", for: .normal)
         button.setTitleColor(Theme.grayColor, for: .normal)
         button.layer.cornerRadius = 25
-        button.backgroundColor    = #colorLiteral(red: 0.9258332849, green: 0.9457512498, blue: 0.9668992162, alpha: 1)
+        button.backgroundColor    = Theme.grayAndViolet
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.appColor
         nameUser()
         configureView()
     }
@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController {
                                          style: .plain,
                                          target: self,
                                          action: #selector(goBack))
-        backButton.tintColor = .black
+        backButton.tintColor = Theme.reversedAppColor
         navigationItem.leftBarButtonItem = backButton
         navigationItem.leftItemsSupplementBackButton = true
         navigationItem.hidesBackButton = true

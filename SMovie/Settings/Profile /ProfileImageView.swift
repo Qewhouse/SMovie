@@ -93,7 +93,7 @@ class ProfileImageView: UIView, ChangePhotoProtocol {
     //MARK: - Setup Views
     
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(profileImageView)
         addSubview(pickerButton)
         translatesAutoresizingMaskIntoConstraints = false
