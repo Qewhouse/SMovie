@@ -67,15 +67,23 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let posterPath = media[indexPath.row].posterPath
-        let id = media[indexPath.row].id
+        let id = media[indexPath.row].id!
         let rank = media[indexPath.row].popularity!/1000
+        let mediaType = media[indexPath.row].mediaType!
+        
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
-                guard let image = image else { return }
+            guard let self = self, let image = image else { return }
+            
+            self.networkService.fetchDetail(id: id, mediaType: mediaType) { detailData in
+                
+                let minutes = mediaType == .movie ? detailData?.runtime ?? 120 : (detailData?.episodeRunTime?.first ?? 40)
+                
                 cell.configure(with: image,
                                name: name,
-                               rank: rank,
+                               minutes: minutes,
                                date: date)
             }
+        }
         return cell
     }
 }

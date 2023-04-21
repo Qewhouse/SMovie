@@ -40,7 +40,7 @@ final class CustomTableViewCell: UIView {
         return imageView
     }()
     
-    lazy var rankLabel: UILabel = {
+    lazy var minutesLabel: UILabel = {
         let label = UILabel()
         label.text = "10.0"
         label.font = .systemFont(ofSize: 18)
@@ -107,7 +107,7 @@ final class CustomTableViewCell: UIView {
         addSubviews(customImageView,
                     nameLabel,
                     clockImageView,
-                    rankLabel,
+                    minutesLabel,
                     dateLabel,
                     dateImageView,
                     movieImageView,
@@ -140,10 +140,10 @@ extension CustomTableViewCell {
             nameLabel.trailingAnchor.constraint(equalTo: heartImageView.leadingAnchor, constant: -10),
 //            nameLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            rankLabel.topAnchor.constraint(equalTo: clockImageView.topAnchor),
-            rankLabel.leadingAnchor.constraint(equalTo: clockImageView.trailingAnchor, constant: 3),
-            rankLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            rankLabel.bottomAnchor.constraint(equalTo: clockImageView.bottomAnchor),
+            minutesLabel.topAnchor.constraint(equalTo: clockImageView.topAnchor),
+            minutesLabel.leadingAnchor.constraint(equalTo: clockImageView.trailingAnchor, constant: 3),
+            minutesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            minutesLabel.bottomAnchor.constraint(equalTo: clockImageView.bottomAnchor),
             
             clockImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             clockImageView.heightAnchor.constraint(equalToConstant: 20),
@@ -171,7 +171,7 @@ extension CustomTableViewCell {
             movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
             heartImageView.topAnchor.constraint(equalTo: topAnchor),
-            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             heartImageView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }

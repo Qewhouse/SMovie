@@ -81,24 +81,31 @@ extension SeeAllViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PlayTableViewCell.identifier,
-                                                 for: indexPath) as! PlayTableViewCell
-        let movie = self.media[indexPath.row]
-        let id = movie.id!
-        let name = movie.mediaType == .movie ? movie.title! : movie.name!
-        let time = movie.mediaType == .movie ? movie.releaseDate! : movie.firstAirDate!
-        let posterPath = movie.posterPath
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier,
+                                                 for: indexPath) as! SearchTableViewCell
+        let item = media[indexPath.row]
+        
+        let mediaType = item.mediaType!
+        let name = mediaType == .movie ? item.title : item.name
+        let date = mediaType == .movie ? item.releaseDate : item.firstAirDate
+        let posterPath = item.posterPath
+        let id = item.id!
+        let rank = item.popularity!/1000
+   
         
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
+            guard let self = self, let image = image else { return }
             
-            guard let image = image else { return }
-            
-            cell.configure(with: image.pngData()!,
-                           name: name,
-                           time: time)
+            self.networkService.fetchDetail(id: id, mediaType: mediaType) { detailData in
+                
+                let minutes = mediaType == .movie ? detailData?.runtime ?? 120 : (detailData?.episodeRunTime?.first ?? 40)
+                
+                cell.configure(with: image,
+                               name: name,
+                               minutes: minutes,
+                               date: date)
+            }
         }
-        
-
         return cell
     }
     

@@ -24,7 +24,6 @@ final class HomeViewController: UIViewController {
     
     var localMedia = [Media]()
     
-    
     private let categoriesArray : [(name:String, id: Int?)] = [("All", nil),
                                                                ("TV-series", nil),
                                                                ("Action", 28),
