@@ -249,7 +249,11 @@ class AccountCreationController: UIViewController {
                         self.present(alert, animated: true, completion: nil)
                     } else {
                         let searchViewController = TabBarController()
-                        self.navigationController?.pushViewController(searchViewController, animated: true)
+//                        self.navigationController?.pushViewController(searchViewController, animated: true)
+                        self.dismiss(animated: true)
+                        searchViewController.modalPresentationStyle = .fullScreen
+                        self.present(searchViewController, animated: true)
+                        
                     }
                 }
             }

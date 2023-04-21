@@ -58,6 +58,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationController?.isNavigationBarHidden = true
 
     }
     
@@ -216,6 +217,7 @@ extension HomeViewController:UICollectionViewDataSource {
                                    category: self.getGenre(indexPath, data: movies))
             }
             
+            
             return cell
             
             //categories
@@ -234,21 +236,30 @@ extension HomeViewController:UICollectionViewDataSource {
         case .examples(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExampleCell.identifier, for: indexPath) as? ExampleCell else {return UICollectionViewCell()}
             
-            let name = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].title! : localMedia[indexPath.row].name!
-            let posterPath = localMedia[indexPath.row].posterPath
-            let id = localMedia[indexPath.row].id!
-            let date = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].releaseDate : localMedia[indexPath.row].firstAirDate
-            let rank  = localMedia[indexPath.row].popularity!/1000
+            let item = localMedia[indexPath.row]
+            let mediaType = item.mediaType!
+            
+            let name = mediaType == .movie ? item.title! : item.name!
+            let posterPath = item.posterPath
+            let id = item.id!
+            let rank  = item.popularity!/1000
+            
             
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
+                self.networkService.fetchDetail(id: id, mediaType: mediaType) { data in
+                    
+                    let minutes = mediaType == .movie ? data?.runtime ?? 120 : (data?.episodeRunTime?.first ?? 40)
+
+                    
+                    cell.configureCell(id: id,
+                                       image: image,
+                                       category: self.getGenre(indexPath, data: self.localMedia),
+                                       name: name,
+                                       minutes: minutes,
+                                       rank: rank)
+                }
                 
-                cell.configureCell(id: id,
-                                   image: image,
-                                   category: self.getGenre(indexPath, data: self.localMedia),
-                                   name: name,
-                                   releaseDate: date!,
-                                   rank: rank)
             }
             
             return cell

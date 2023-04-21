@@ -217,6 +217,7 @@ final class DetailViewController: UIViewController {
     
     private func createViews() {
         networkService.fetchDetail(id: idMedia, mediaType: mediaType) { data in
+            
             var name = ""
             var date = ""
             var minutes = 0
