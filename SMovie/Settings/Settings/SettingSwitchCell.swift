@@ -15,15 +15,13 @@ class SettingSwitchCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     let settingLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Theme.reversedAppColor
         return label
     }()
     
@@ -31,12 +29,12 @@ class SettingSwitchCell: UITableViewCell {
         let switcher = UISwitch()
         switcher.onTintColor = UIColor(named: "violetColor")
         switcher.addTarget(self, action: #selector(traitChange), for: .touchUpInside)
-        switcher.translatesAutoresizingMaskIntoConstraints = false
         return switcher
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = Theme.appColor
         contentView.addSubview(settingLabel)
         contentView.addSubview(iconImageView)
         contentView.addSubview(switcher)
