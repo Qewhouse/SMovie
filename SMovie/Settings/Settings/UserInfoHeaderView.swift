@@ -23,7 +23,7 @@ class UserInfoHeaderView : UIView {
     let userNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Andy Lexsian"
-        label.textColor = .black
+        label.textColor = Theme.reversedAppColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -50,7 +50,7 @@ class UserInfoHeaderView : UIView {
     //MARK: - Setup Views
 
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(profileImageView)
         addSubview(userNameLabel)
         addSubview(userMailLabel)

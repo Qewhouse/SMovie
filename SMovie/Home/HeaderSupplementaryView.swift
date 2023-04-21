@@ -8,8 +8,6 @@ import UIKit
 
 class HeaderSupplementaryView: UICollectionReusableView {
     
-    var isSeeAll = false
-    
     static var identifier = "header"
     
     private let headerLabel: UILabel = {

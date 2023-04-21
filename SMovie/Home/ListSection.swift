@@ -33,7 +33,7 @@ enum ListSection {
         case .categories(_):
             return "Category"
         case .examples(_):
-            return "Films"
+            return "Box Office"
         }
     }
 }

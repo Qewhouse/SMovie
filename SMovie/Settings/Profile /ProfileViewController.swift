@@ -84,7 +84,7 @@ class ProfileViewController: UIViewController {
     var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save Changes", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.5411760807, green: 0.5411768556, blue: 0.5583735108, alpha: 1), for: .normal)
+        button.setTitleColor(Theme.grayColor, for: .normal)
         button.layer.cornerRadius = 25
         button.backgroundColor    = #colorLiteral(red: 0.9258332849, green: 0.9457512498, blue: 0.9668992162, alpha: 1)
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
