@@ -31,16 +31,16 @@ final class CustomTableViewCell: UIView {
         return label
     }()
     
-    private let starImageView: UIImageView = {
+    private let clockImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "star")
+        imageView.image = UIImage(named: "clock")
         imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var rankLabel: UILabel = {
+    lazy var minutesLabel: UILabel = {
         let label = UILabel()
         label.text = "10.0"
         label.font = .systemFont(ofSize: 18)
@@ -106,8 +106,8 @@ final class CustomTableViewCell: UIView {
         
         addSubviews(customImageView,
                     nameLabel,
-                    starImageView,
-                    rankLabel,
+                    clockImageView,
+                    minutesLabel,
                     dateLabel,
                     dateImageView,
                     movieImageView,
@@ -140,22 +140,22 @@ extension CustomTableViewCell {
             nameLabel.trailingAnchor.constraint(equalTo: heartImageView.leadingAnchor, constant: -10),
 //            nameLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            rankLabel.topAnchor.constraint(equalTo: starImageView.topAnchor),
-            rankLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 3),
-            rankLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            rankLabel.bottomAnchor.constraint(equalTo: starImageView.bottomAnchor),
+            minutesLabel.topAnchor.constraint(equalTo: clockImageView.topAnchor),
+            minutesLabel.leadingAnchor.constraint(equalTo: clockImageView.trailingAnchor, constant: 3),
+            minutesLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            minutesLabel.bottomAnchor.constraint(equalTo: clockImageView.bottomAnchor),
             
-            starImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            starImageView.heightAnchor.constraint(equalToConstant: 20),
-            starImageView.widthAnchor.constraint(equalToConstant: 20),
-            starImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
+            clockImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            clockImageView.heightAnchor.constraint(equalToConstant: 20),
+            clockImageView.widthAnchor.constraint(equalToConstant: 20),
+            clockImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
             dateLabel.topAnchor.constraint(equalTo: dateImageView.topAnchor),
             dateLabel.leadingAnchor.constraint(equalTo: dateImageView.trailingAnchor, constant: 3),
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             dateLabel.bottomAnchor.constraint(equalTo: dateImageView.bottomAnchor),
             
-            dateImageView.topAnchor.constraint(equalTo: starImageView.bottomAnchor, constant: 10),
+            dateImageView.topAnchor.constraint(equalTo: clockImageView.bottomAnchor, constant: 10),
             dateImageView.heightAnchor.constraint(equalToConstant: 20),
             dateImageView.widthAnchor.constraint(equalToConstant: 20),
             dateImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
@@ -171,7 +171,7 @@ extension CustomTableViewCell {
             movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
             heartImageView.topAnchor.constraint(equalTo: topAnchor),
-            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             heartImageView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }

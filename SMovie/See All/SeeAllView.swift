@@ -23,8 +23,8 @@ final class SeeAllView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         
         self.backgroundColor = Theme.appColor
-        tableView.register(PlayTableViewCell.self,
-                           forCellReuseIdentifier: PlayTableViewCell.identifier)
+        tableView.register(SearchTableViewCell.self,
+                           forCellReuseIdentifier: SearchTableViewCell.identifier)
         addConstraints()
     }
     
