@@ -4,12 +4,11 @@
 //
 //  Created by Alexander Altman on 01.04.2023.
 //
+
 protocol GoToSeeAllProtocol {
     
    func goToSeeAll ()
 }
-
-
 
 import UIKit
 
@@ -45,6 +44,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         media = networkService.media
         genres = networkService.genre
         localMedia = media
@@ -52,8 +52,6 @@ final class HomeViewController: UIViewController {
         setupViews()
         setDelegates()
         setConstraints()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -430,6 +428,9 @@ extension HomeViewController {
     
     
 }
+
+//MARK: - GoToSeeAllProtocol
+
 
 extension HomeViewController: GoToSeeAllProtocol {
     func goToSeeAll() {
