@@ -11,7 +11,7 @@ final class SeeAllView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = 180
-        tableView.layer.cornerRadius = 10
+        tableView.backgroundColor = Theme.appColor
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false

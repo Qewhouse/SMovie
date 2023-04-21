@@ -16,7 +16,7 @@ final class CustomTableViewCell: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .red
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = 15
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -24,24 +24,25 @@ final class CustomTableViewCell: UIView {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Drifting Home"
-        label.font = .boldSystemFont(ofSize: 25)
+        label.font = .boldSystemFont(ofSize: 20)
+        label.numberOfLines = 0
         label.textColor = Theme.reversedAppColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let alarmImageView: UIImageView = {
+    private let starImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "clock")
+        imageView.image = UIImage(named: "star")
         imageView.tintColor = Theme.grayColor
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    lazy var timeLabel: UILabel = {
+    lazy var rankLabel: UILabel = {
         let label = UILabel()
-        label.text = "148 minutes"
+        label.text = "10.0"
         label.font = .systemFont(ofSize: 18)
         label.textColor = Theme.lightGrayText
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -98,12 +99,20 @@ final class CustomTableViewCell: UIView {
     override init(frame: CGRect) {
         super .init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        
+        self.backgroundColor = Theme.appColor
         let tapGesture = UITapGestureRecognizer(target: self,
                                                 action: #selector(heartTapped))
         heartImageView.addGestureRecognizer(tapGesture)
         
-        addSubviews(customImageView, nameLabel, alarmImageView, timeLabel, dateLabel, dateImageView, movieImageView, movieAction, heartImageView)
+        addSubviews(customImageView,
+                    nameLabel,
+                    starImageView,
+                    rankLabel,
+                    dateLabel,
+                    dateImageView,
+                    movieImageView,
+                    movieAction,
+                    heartImageView)
         addConstraints()
     }
     
@@ -127,44 +136,43 @@ extension CustomTableViewCell {
             customImageView.widthAnchor.constraint(equalToConstant: 120),
             
             nameLabel.topAnchor.constraint(equalTo: customImageView.topAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-            nameLabel.heightAnchor.constraint(equalToConstant: 50),
+            nameLabel.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
+            nameLabel.trailingAnchor.constraint(equalTo: heartImageView.leadingAnchor, constant: -10),
+//            nameLabel.heightAnchor.constraint(equalToConstant: 50),
             
-            timeLabel.topAnchor.constraint(equalTo: alarmImageView.topAnchor),
-            timeLabel.leadingAnchor.constraint(equalTo: alarmImageView.trailingAnchor, constant: 3),
-            timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            timeLabel.bottomAnchor.constraint(equalTo: alarmImageView.bottomAnchor),
+            rankLabel.topAnchor.constraint(equalTo: starImageView.topAnchor),
+            rankLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 3),
+            rankLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            rankLabel.bottomAnchor.constraint(equalTo: starImageView.bottomAnchor),
             
-            alarmImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-            alarmImageView.heightAnchor.constraint(equalToConstant: 25),
-            alarmImageView.widthAnchor.constraint(equalToConstant: 25),
-            alarmImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
+            starImageView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            starImageView.heightAnchor.constraint(equalToConstant: 20),
+            starImageView.widthAnchor.constraint(equalToConstant: 20),
+            starImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
             dateLabel.topAnchor.constraint(equalTo: dateImageView.topAnchor),
             dateLabel.leadingAnchor.constraint(equalTo: dateImageView.trailingAnchor, constant: 3),
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             dateLabel.bottomAnchor.constraint(equalTo: dateImageView.bottomAnchor),
             
-            dateImageView.topAnchor.constraint(equalTo: alarmImageView.bottomAnchor, constant: 2),
-            dateImageView.heightAnchor.constraint(equalToConstant: 25),
-            dateImageView.widthAnchor.constraint(equalToConstant: 25),
-            dateImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
+            dateImageView.topAnchor.constraint(equalTo: starImageView.bottomAnchor, constant: 10),
+            dateImageView.heightAnchor.constraint(equalToConstant: 20),
+            dateImageView.widthAnchor.constraint(equalToConstant: 20),
+            dateImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
             movieAction.topAnchor.constraint(equalTo: movieImageView.topAnchor),
             movieAction.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 3),
             movieAction.widthAnchor.constraint(equalToConstant: 80),
             movieAction.bottomAnchor.constraint(equalTo: movieImageView.bottomAnchor),
             
-            movieImageView.topAnchor.constraint(equalTo: dateImageView.bottomAnchor, constant: 2),
-            movieImageView.heightAnchor.constraint(equalToConstant: 25),
-            movieImageView.widthAnchor.constraint(equalToConstant: 25),
-            movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 7),
+            movieImageView.topAnchor.constraint(equalTo: dateImageView.bottomAnchor, constant: 10),
+            movieImageView.heightAnchor.constraint(equalToConstant: 20),
+            movieImageView.widthAnchor.constraint(equalToConstant: 20),
+            movieImageView.leadingAnchor.constraint(equalTo: customImageView.trailingAnchor, constant: 15),
             
-            heartImageView.topAnchor.constraint(equalTo: customImageView.topAnchor),
-            heartImageView.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -7),
-            heartImageView.widthAnchor.constraint(equalToConstant: 70)
+            heartImageView.topAnchor.constraint(equalTo: topAnchor),
+            heartImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            heartImageView.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

@@ -101,7 +101,9 @@ final class SettingsViewController: UIViewController {
         sections.append(Section(title: "App Theme",
                                 options: [.switchCell(model: SettingsSwitchModel(title: "Dark Mode",
                                                                                  icon: UIImage(named: "darkmodeIcon")!,
-                                                                                 handler: {},
+                                                                                 handler: {
+        
+        },
                                                                                  isOn: false))]))
     }
     

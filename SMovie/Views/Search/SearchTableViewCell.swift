@@ -22,10 +22,11 @@ final class SearchTableViewCell: UITableViewCell {
         ])
     }
     
-    public func configure(with image: UIImage, name: String?, time: String?) {
+    public func configure(with image: UIImage, name: String?, rank: Double, date: String?) {
         customTableViewCell.customImageView.image = image
         customTableViewCell.nameLabel.text = name
-        customTableViewCell.timeLabel.text = time
+        customTableViewCell.rankLabel.text = String(format: "%.1f", rank)
+        customTableViewCell.dateLabel.text = date
     }
     
     required init?(coder: NSCoder) {

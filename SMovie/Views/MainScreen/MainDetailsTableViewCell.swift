@@ -31,7 +31,7 @@ final class MainDetailsTableViewCell: UITableViewCell {
     public func configure(with imageName: String, name: String, time: String) {
         customTableViewCell.customImageView.image = UIImage(named: imageName)
         customTableViewCell.nameLabel.text = name
-        customTableViewCell.timeLabel.text = time
+        customTableViewCell.rankLabel.text = time
     }
     
     required init?(coder: NSCoder) {

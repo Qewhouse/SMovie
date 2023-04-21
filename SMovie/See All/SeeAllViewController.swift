@@ -40,7 +40,7 @@ final class SeeAllViewController: UIViewController {
     private func setUpView() {
         
         configureNavigationBar()
-
+        self.view.backgroundColor = Theme.appColor
         view.addSubview(seeAllView)
         NSLayoutConstraint.activate([
             seeAllView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
