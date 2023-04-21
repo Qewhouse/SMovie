@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class SettingsViewController: UIViewController {
     
@@ -31,6 +32,19 @@ final class SettingsViewController: UIViewController {
     }()
     
     @objc func logOutButtonPressed() {
+        
+        let auth = Auth.auth()
+                
+                do {
+                    try auth.signOut()
+                    // пользователь вышел из учетной записи успешно
+                    let nextVC = SignController()
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                } catch let signOutError as NSError {
+                    // обработка ошибки
+                    print("Ошибка выхода из учетной записи: %@", signOutError)
+                }
+
         print ("log out pressed")
     
     }

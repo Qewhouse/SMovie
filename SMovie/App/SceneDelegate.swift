@@ -11,7 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
     
     var window: UIWindow?
     
-    private let onboardingViewController = OnboardingViewController()//UINavigationController(rootViewController: SignUpController())
+    private let onboardingViewController = OnboardingViewController()
+    private let entryViewController = UINavigationController(rootViewController:SignController())
     private let tabBarController = TabBarController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,7 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         
         window?.backgroundColor = .systemBackground
         window?.rootViewController = onboardingViewController
+        //window?.rootViewController = entryViewController
         window?.makeKeyAndVisible()
+        
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -61,6 +64,7 @@ extension SceneDelegate {
 extension SceneDelegate: OnboardingViewControllerDelegate {
     func didFinishOnboarding() {
         prepareMainView()
-        setRootViewController(tabBarController)
+        //setRootViewController(tabBarController)
+        setRootViewController(entryViewController)
     }
 }
