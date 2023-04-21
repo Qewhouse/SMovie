@@ -20,7 +20,7 @@ class UserInfoHeaderView : UIView {
         return imageView
     }()
     
-    let userNameLabel: UILabel = {
+    var userNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Andy Lexsian"
         label.textColor = Theme.reversedAppColor
@@ -28,7 +28,7 @@ class UserInfoHeaderView : UIView {
         return label
     }()
     
-    let userMailLabel: UILabel = {
+    var userMailLabel: UILabel = {
         let label = UILabel()
         label.text = "andylexsian@ios.com"
         label.textColor = #colorLiteral(red: 0.4746692777, green: 0.514767766, blue: 0.5520746112, alpha: 1)

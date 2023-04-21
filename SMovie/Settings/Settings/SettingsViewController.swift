@@ -11,6 +11,8 @@ import FirebaseAuth
 final class SettingsViewController: UIViewController {
     
     //MARK: - Properties
+    
+    let defaults = UserDefaults.standard
 
     var sections  = [Section]()
     
@@ -44,8 +46,6 @@ final class SettingsViewController: UIViewController {
                     // обработка ошибки
                     print("Ошибка выхода из учетной записи: %@", signOutError)
                 }
-
-        print ("log out pressed")
     
     }
     
@@ -55,6 +55,8 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         configureSections()
         configureView()
+        userInfoHeader.userNameLabel.text = defaults.string(forKey: "firstName")! + " " + defaults.string(forKey: "lastName")!
+        userInfoHeader.userMailLabel.text = defaults.string(forKey: "Email")
     }
     
     //MARK: - Configure methods
