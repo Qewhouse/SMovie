@@ -20,7 +20,7 @@ class UserInfoHeaderView : UIView {
         return imageView
     }()
     
-    let userNameLabel: UILabel = {
+    var userNameLabel: UILabel = {
         let label = UILabel()
         
         if let firstName = UserDefaults.standard.string(forKey: "firstName"),

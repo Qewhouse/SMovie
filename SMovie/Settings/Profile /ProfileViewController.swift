@@ -13,7 +13,7 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     
     private var contentSize : CGSize {
-        CGSize(width: view.frame.width, height: view.frame.height+250)
+        CGSize(width: view.frame.width, height: view.frame.height*1.2)
     }
     
     lazy var scrollView: UIScrollView = {
@@ -53,9 +53,9 @@ class ProfileViewController: UIViewController {
     let emailInputView: TextInputView = {
         let defaults = UserDefaults.standard
         let input = TextInputView()
-        input.label.text            = "Email"
-        input.textField.text        = defaults.string(forKey: "Email")
-        input.textField.placeholder = "Enter email"
+        input.label.text             = "Email"
+        input.textField.text         = defaults.string(forKey: "Email")
+        input.textField.placeholder  = "Enter email"
         input.textField.keyboardType = .emailAddress
         return input
     }()
@@ -64,7 +64,7 @@ class ProfileViewController: UIViewController {
         let defaults = UserDefaults.standard
         let input = ProfileDateInputView()
         input.label.text             = "Date of Birth"
-        input.textField.text        = defaults.string(forKey: "dateOfBrith")
+        input.textField.text         = defaults.string(forKey: "dateOfBrith")
         input.textField.placeholder  = "Enter date of birth"
         return input
     }()
@@ -86,7 +86,7 @@ class ProfileViewController: UIViewController {
         button.setTitle("Save Changes", for: .normal)
         button.setTitleColor(Theme.grayColor, for: .normal)
         button.layer.cornerRadius = 25
-        button.backgroundColor    = #colorLiteral(red: 0.9258332849, green: 0.9457512498, blue: 0.9668992162, alpha: 1)
+        button.backgroundColor    = Theme.grayAndViolet
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.appColor
         nameUser()
         configureView()
     }
@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController {
                                          style: .plain,
                                          target: self,
                                          action: #selector(goBack))
-        backButton.tintColor = .black
+        backButton.tintColor = Theme.reversedAppColor
         navigationItem.leftBarButtonItem = backButton
         navigationItem.leftItemsSupplementBackButton = true
         navigationItem.hidesBackButton = true

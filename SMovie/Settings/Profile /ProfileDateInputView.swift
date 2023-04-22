@@ -55,7 +55,7 @@ class ProfileDateInputView: UIView {
     //MARK: - Setup Views
     
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(label)
         addSubview(textField)
         addSubview(calendarImageView)

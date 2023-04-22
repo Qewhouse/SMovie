@@ -73,7 +73,7 @@ class ProfileGenderInputView: UIView {
     //MARK: - Setup Views
     
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(label)
         addSubview(maleButton)
         addSubview(femaleButton)

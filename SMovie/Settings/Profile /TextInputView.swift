@@ -23,6 +23,7 @@ class TextInputView: UIView {
         textField.layer.borderColor = UIColor(named: "violetColor")?.cgColor
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 30
+        textField.textColor = Theme.reversedAppColor
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 60))
         textField.leftViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +46,7 @@ class TextInputView: UIView {
     //MARK: - Setup Views
     
     private func setupViews() {
-        backgroundColor = .white
+        backgroundColor = Theme.appColor
         addSubview(label)
         addSubview(textField)
     }

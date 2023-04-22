@@ -7,6 +7,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         didSet {
             backgroundColor = self.isSelected ? Theme.violetColor : Theme.appColor
             categoryLabel.textColor = self.isSelected ? .white : Theme.grayColor
+            self.layer.borderColor = Theme.grayColor.cgColor
         }
     }
     
@@ -16,7 +17,6 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.text = "AAA"
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
         label.textColor = Theme.grayColor

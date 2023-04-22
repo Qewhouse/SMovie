@@ -21,7 +21,7 @@ class GenderButton : UIButton {
     }
     
     private func setButton () {
-        backgroundColor = UIColor(named: "appColor")
+        backgroundColor = Theme.appColor
         setTitleColor(UIColor(named: "violetColor"), for: .normal)
         layer.cornerRadius = 30
         layer.borderWidth = 2.0

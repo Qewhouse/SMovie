@@ -11,6 +11,8 @@ import FirebaseAuth
 final class SettingsViewController: UIViewController {
     
     //MARK: - Properties
+    
+    let defaults = UserDefaults.standard
 
     var sections  = [Section]()
     
@@ -45,7 +47,6 @@ final class SettingsViewController: UIViewController {
                     // обработка ошибки
                     print("Ошибка выхода из учетной записи: %@", signOutError)
                 }
-
     }
     
     //MARK: - Init
@@ -54,6 +55,9 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         configureSections()
         configureView()
+        userInfoHeader.userNameLabel.text = (defaults.string(forKey: "firstName") ?? "User") + " " + (defaults.string(forKey: "lastName") ?? "")
+        userInfoHeader.userMailLabel.text = defaults.string(forKey: "Email")
+        print(UIScreen.main.bounds.width)
     }
     
     //MARK: - Configure methods
@@ -189,7 +193,7 @@ extension SettingsViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logOutButton.bottomAnchor.constraint    (equalTo: safeArea.bottomAnchor, constant: -60),
+            logOutButton.bottomAnchor.constraint    (equalTo: safeArea.bottomAnchor, constant: -20),
             logOutButton.leadingAnchor.constraint   (equalTo: safeArea.leadingAnchor, constant: 50),
             logOutButton.trailingAnchor.constraint  (equalTo: safeArea.trailingAnchor, constant: -50),
             logOutButton.heightAnchor.constraint    (equalToConstant: screenHeight/18)

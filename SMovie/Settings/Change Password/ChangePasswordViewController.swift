@@ -24,7 +24,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "Your new password must be different from the previous one"
         label.numberOfLines = 0
-        label.textColor = #colorLiteral(red: 0.5411760807, green: 0.5411768556, blue: 0.5583735108, alpha: 1)
+        label.textColor = Theme.fieldGrey
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -58,9 +58,9 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     var saveButton: UIButton = {
         let button = UIButton()
         button.setTitle("Save Changes", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.5411760807, green: 0.5411768556, blue: 0.5583735108, alpha: 1), for: .normal)
+        button.setTitleColor(Theme.grayColor, for: .normal)
         button.layer.cornerRadius = 25
-        button.backgroundColor    = #colorLiteral(red: 0.9258332849, green: 0.9457512498, blue: 0.9668992162, alpha: 1)
+        button.backgroundColor    = Theme.grayAndViolet
         button.addTarget(self, action: #selector(saveButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -77,7 +77,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Configure Methods
     
     func configureView () {
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.appColor
         configureNavigationBar()
         view.addSubview(iconImageView)
         view.addSubview(descriptionLabel)
@@ -104,7 +104,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
                                          style: .plain,
                                          target: self,
                                          action: #selector(goBack))
-        backButton.tintColor = .black
+        backButton.tintColor = Theme.reversedAppColor
         navigationItem.leftBarButtonItem = backButton
         navigationItem.leftItemsSupplementBackButton = true
         navigationItem.hidesBackButton = true
