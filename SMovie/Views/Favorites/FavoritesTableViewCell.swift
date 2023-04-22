@@ -25,7 +25,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     public func configure(with imageName: Data, name: String, time: String) {
         customTableViewCell.customImageView.image = UIImage(data: imageName)
         customTableViewCell.nameLabel.text = name
-        customTableViewCell.timeLabel.text = time
+        customTableViewCell.minutesLabel.text = time
     }
     
     required init?(coder: NSCoder) {

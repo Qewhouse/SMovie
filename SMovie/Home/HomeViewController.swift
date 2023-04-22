@@ -5,6 +5,11 @@
 //  Created by Alexander Altman on 01.04.2023.
 //
 
+protocol GoToSeeAllProtocol {
+    
+   func goToSeeAll ()
+}
+
 import UIKit
 
 final class HomeViewController: UIViewController {
@@ -18,7 +23,6 @@ final class HomeViewController: UIViewController {
     var media = [Media]()
     
     var localMedia = [Media]()
-    
     
     private let categoriesArray : [(name:String, id: Int?)] = [("All", nil),
                                                                ("TV-series", nil),
@@ -47,18 +51,23 @@ final class HomeViewController: UIViewController {
         setupViews()
         setDelegates()
         setConstraints()
-        
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationController?.isNavigationBarHidden = true
+
     }
     
     private func setupViews() {
         view.backgroundColor = UIColor(named: "appColor")
-        self.navigationController?.isNavigationBarHidden = true
         view.addSubview(homeView)
         homeView.collectionView.register(ExampleCell.self, forCellWithReuseIdentifier: ExampleCell.identifier)
         homeView.collectionView.register(PosterCell.self, forCellWithReuseIdentifier: PosterCell.identifier)
         homeView.collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         homeView.collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderSupplementaryView.identifier)
+        homeView.collectionView.register(HeaderSeeAllView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderSeeAllView.identifier)
+
         homeView.collectionView.collectionViewLayout = createLayout()
         
         
@@ -68,11 +77,7 @@ final class HomeViewController: UIViewController {
         homeView.collectionView.delegate = self
         homeView.collectionView.dataSource = self
     }
-    
-    
 }
-
-
 
 //MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
@@ -83,6 +88,10 @@ extension HomeViewController: UICollectionViewDelegate {
         case 0 :
             print ("poster at \(indexPath.item) place")
             print (media[indexPath.item].id!)
+            
+            let detailVC: DetailViewController = DetailViewController(id: media[indexPath.item].id!,
+                                                                      mediaType: media[indexPath.item].mediaType!)
+            self.navigationController?.pushViewController(detailVC, animated: true)
             
         case 1 : print ("category at \(indexPath) place - \(categoriesArray[indexPath.row])")
             
@@ -127,6 +136,10 @@ extension HomeViewController: UICollectionViewDelegate {
         case 2 :
             print ("example at \(indexPath.item) place")
             print(localMedia[indexPath.item].id!)
+            
+            let vc = DetailViewController(id: localMedia[indexPath.row].id!,
+                                          mediaType: localMedia[indexPath.row].mediaType!)
+            navigationController?.pushViewController(vc, animated: true)
             
         default: break
             
@@ -201,6 +214,7 @@ extension HomeViewController:UICollectionViewDataSource {
                                    category: self.getGenre(indexPath, data: movies))
             }
             
+            
             return cell
             
             //categories
@@ -219,21 +233,30 @@ extension HomeViewController:UICollectionViewDataSource {
         case .examples(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ExampleCell.identifier, for: indexPath) as? ExampleCell else {return UICollectionViewCell()}
             
-            let name = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].title! : localMedia[indexPath.row].name!
-            let posterPath = localMedia[indexPath.row].posterPath
-            let id = localMedia[indexPath.row].id!
-            let date = localMedia[indexPath.row].mediaType == .movie ? localMedia[indexPath.row].releaseDate : localMedia[indexPath.row].firstAirDate
-            let rank  = localMedia[indexPath.row].popularity!/1000
+            let item = localMedia[indexPath.row]
+            let mediaType = item.mediaType!
+            
+            let name = mediaType == .movie ? item.title! : item.name!
+            let posterPath = item.posterPath
+            let id = item.id!
+            let rank  = item.popularity!/1000
+            
             
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
+                self.networkService.fetchDetail(id: id, mediaType: mediaType) { data in
+                    
+                    let minutes = mediaType == .movie ? data?.runtime ?? 120 : (data?.episodeRunTime?.first ?? 40)
+
+                    
+                    cell.configureCell(id: id,
+                                       image: image,
+                                       category: self.getGenre(indexPath, data: self.localMedia),
+                                       name: name,
+                                       minutes: minutes,
+                                       rank: rank)
+                }
                 
-                cell.configureCell(id: id,
-                                   image: image,
-                                   category: self.getGenre(indexPath, data: self.localMedia),
-                                   name: name,
-                                   releaseDate: date!,
-                                   rank: rank)
             }
             
             return cell
@@ -242,22 +265,32 @@ extension HomeViewController:UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-            
-        case UICollectionView.elementKindSectionHeader:
-            
+        
+        print(indexPath)
+        
+        
+        switch indexPath.section {
+        case 1:
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: HeaderSupplementaryView.identifier,
                 for: indexPath) as! HeaderSupplementaryView
-            
+    
             header.configureHeader(categoryName: sections[indexPath.section].title)
+            return header
+        case 2:
+            
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: HeaderSeeAllView.identifier,
+                for: indexPath) as! HeaderSeeAllView
+    
+            header.configureHeader(categoryName: sections[indexPath.section].title, delegate: self)
             return header
         default:
             return UICollectionReusableView()
         }
     }
-    
 }
 
 //MARK: - Create Layout
@@ -393,4 +426,15 @@ extension HomeViewController {
     }
     
     
+}
+
+//MARK: - GoToSeeAllProtocol
+
+
+extension HomeViewController: GoToSeeAllProtocol {
+    func goToSeeAll() {
+        let seeAllVC : SeeAllViewController = SeeAllViewController()
+        seeAllVC.configureSeeAll(with: localMedia)
+        navigationController?.pushViewController(seeAllVC, animated: true)
+    }
 }

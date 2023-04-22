@@ -44,6 +44,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier,
                                                  for: indexPath) as! SearchTableViewCell
         cell.selectionStyle = .none
@@ -66,11 +67,23 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let posterPath = media[indexPath.row].posterPath
-        let id = media[indexPath.row].id
+        let id = media[indexPath.row].id!
+        let rank = media[indexPath.row].popularity!/1000
+        let mediaType = media[indexPath.row].mediaType!
+        
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
-                guard let self = self, let image = image else { return }
-                cell.configure(with: image, name: name, time: date)
+            guard let self = self, let image = image else { return }
+            
+            self.networkService.fetchDetail(id: id, mediaType: mediaType) { detailData in
+                
+                let minutes = mediaType == .movie ? detailData?.runtime ?? 120 : (detailData?.episodeRunTime?.first ?? 40)
+                
+                cell.configure(with: image,
+                               name: name,
+                               minutes: minutes,
+                               date: date)
             }
+        }
         return cell
     }
 }
@@ -121,7 +134,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
             guard let self = self, let image = image else { return }
             
-            let movie = PlayCoreDataModel.shared .saveMovie(name: name,
+            let movie = PlayCoreDataModel.shared.saveMovie(name: name,
                                                           date: date,
                                                           time: date,
                                                           image: image,
@@ -129,7 +142,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         }
         
         let vc = DetailViewController(id: media[indexPath.row].id!,
-                                      mediaType: .movie)
+                                      mediaType: media[indexPath.row].mediaType!)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

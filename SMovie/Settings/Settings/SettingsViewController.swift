@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class SettingsViewController: UIViewController {
     
@@ -31,8 +32,20 @@ final class SettingsViewController: UIViewController {
     }()
     
     @objc func logOutButtonPressed() {
-        print ("log out pressed")
-    
+        
+        
+        let auth = Auth.auth()
+                
+                do {
+                    try auth.signOut()
+                    // пользователь вышел из учетной записи успешно
+                    let nextVC = SignController()
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                } catch let signOutError as NSError {
+                    // обработка ошибки
+                    print("Ошибка выхода из учетной записи: %@", signOutError)
+                }
+
     }
     
     //MARK: - Init
@@ -46,6 +59,7 @@ final class SettingsViewController: UIViewController {
     //MARK: - Configure methods
 
     func configureView() {
+        view.backgroundColor = Theme.appColor
         view.addSubview(tableView)
         view.addSubview(userInfoHeader)
         view.addSubview(logOutButton)
@@ -57,6 +71,7 @@ final class SettingsViewController: UIViewController {
     }
     
     func configureTableView () {
+        tableView.backgroundColor = Theme.appColor
         tableView.delegate   = self
         tableView.dataSource = self
         tableView.rowHeight  = 60
@@ -101,7 +116,9 @@ final class SettingsViewController: UIViewController {
         sections.append(Section(title: "App Theme",
                                 options: [.switchCell(model: SettingsSwitchModel(title: "Dark Mode",
                                                                                  icon: UIImage(named: "darkmodeIcon")!,
-                                                                                 handler: {},
+                                                                                 handler: {
+        
+        },
                                                                                  isOn: false))]))
     }
     

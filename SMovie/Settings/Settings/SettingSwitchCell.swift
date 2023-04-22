@@ -15,27 +15,26 @@ class SettingSwitchCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     let settingLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = Theme.reversedAppColor
         return label
     }()
     
     let switcher: UISwitch = {
         let switcher = UISwitch()
         switcher.onTintColor = UIColor(named: "violetColor")
-        switcher.translatesAutoresizingMaskIntoConstraints = false
+        switcher.addTarget(self, action: #selector(traitChange), for: .touchUpInside)
         return switcher
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = Theme.appColor
         contentView.addSubview(settingLabel)
         contentView.addSubview(iconImageView)
         contentView.addSubview(switcher)
@@ -75,6 +74,19 @@ class SettingSwitchCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+    }
+    
+    @objc private func traitChange(_ sender: UISwitch) {
+
+        if sender .isOn {
+            let window = UIApplication.shared.keyWindow
+            window?.overrideUserInterfaceStyle = .dark
+            print("Light")
+        } else {
+            let window = UIApplication.shared.keyWindow
+            window?.overrideUserInterfaceStyle = .light
+            print("dark")
+        }
     }
     
     public func configure (with model: SettingsSwitchModel) {

@@ -22,10 +22,11 @@ final class SearchTableViewCell: UITableViewCell {
         ])
     }
     
-    public func configure(with image: UIImage, name: String?, time: String?) {
+    public func configure(with image: UIImage, name: String?, minutes: Int, date: String?) {
         customTableViewCell.customImageView.image = image
         customTableViewCell.nameLabel.text = name
-        customTableViewCell.timeLabel.text = time
+        customTableViewCell.minutesLabel.text = "\(minutes) Minutes"
+        customTableViewCell.dateLabel.text = date
     }
     
     required init?(coder: NSCoder) {

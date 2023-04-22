@@ -1,3 +1,5 @@
+
+
 //
 //  CreateAccount.swift
 //  SMovie
@@ -6,8 +8,16 @@
 
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
+import GoogleSignIn
 
-class CreateAccountController: UIViewController {
+
+class SignController: UIViewController {
+    
+    
+    
+
     // MARK: - Объекты
     // Установка надписи "Create account"
     let createAccountLabel: UILabel = {
@@ -79,6 +89,7 @@ class CreateAccountController: UIViewController {
         button.backgroundColor = UIColor(named: "violetColor")
         button.layer.cornerRadius = 24
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(tappedContinue), for: .touchUpInside)
         return button
     }()
     
@@ -109,7 +120,7 @@ class CreateAccountController: UIViewController {
     }()
     
     //Добавление кнопки "Continue with Google"
-    let buttonGoogle:UIButton = {
+    lazy var buttonGoogle: UIButton = {
         let button = UIButton()
         button.setTitle("Continue with Google", for: .normal)
         button.setTitleColor(.black, for: .normal)
@@ -117,6 +128,9 @@ class CreateAccountController: UIViewController {
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1.0
         button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(self, action: #selector(didTapGoogleButton), for: .touchUpInside)
+        
         return button
     }()
     
@@ -127,20 +141,16 @@ class CreateAccountController: UIViewController {
         let attributedString = NSMutableAttributedString(string: string)
         let range = (string as NSString).range(of: "Login")
         attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: range)
-        //attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
         alreadyLabel.attributedText = attributedString
+        alreadyLabel.textAlignment = .center
         alreadyLabel.translatesAutoresizingMaskIntoConstraints = false
         alreadyLabel.isUserInteractionEnabled = true
         alreadyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(loginTapped)))
         return alreadyLabel
     }()
     
-    //Обработка нажатия на кликабельную часть текса "Login"
-    @objc func loginTapped() {
-        // Handle login tap action here
-    }
-
-
+    
+    
     
     //Добавление изображения "Icon - Google"
     let googleIconImageView: UIImageView = {
@@ -156,12 +166,27 @@ class CreateAccountController: UIViewController {
         
         // Установка фона
         view.backgroundColor = UIColor(named: "violetColor")
+        
+        //Функция для проверки пользователя
+        checkCurrentUser()
+        
         setView()
         setConstraint()
+        
+    }
+    
+    // Функция для проверки пользователя, входил он в приложение ранее или нет
+    func checkCurrentUser() {
+        if Auth.auth().currentUser != nil {
+            let nextVC = TabBarController()
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
+
     }
     
     //Добавление в представление элементов пользовательского интерфейса
     func setView() {
+        
         whiteView.addSubview(emailLabel)
         whiteView.addSubview(emailTextField)
         whiteView.addSubview(buttonContinue)
@@ -176,13 +201,95 @@ class CreateAccountController: UIViewController {
         view.addSubview(whiteView)
     }
     
+    
+    @objc func tappedContinue() {
+        //проверка корректного ввода email
+        guard let email = emailTextField.text, isValidEmail(email) else {
+            // Выводим сообщение об ошибке, если email не корректный
+            let alert = UIAlertController(title: "Error", message: "Please enter a valid email address", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        //Запоминаем емайл
+        let user = User()
+        user.email = emailTextField.text
+        let defaults = UserDefaults.standard
+        defaults.set(user.email, forKey: "Email")
+        
+        // Если email корректный, то переходим на экран для создания аккаунта
+        let nextVC = AccountCreationController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+        
+    }
+
+
+
+    func isValidEmail(_ email: String) -> Bool {
+        // Регулярное выражение для проверки правильности ввода email
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        // Создаем NSPredicate на основе регулярного выражения
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+        
+        
+        return emailPredicate.evaluate(with: email)
+    }
+
+    
+    //Обработка нажатия кнопки "Continue with Google"
+    @objc func didTapGoogleButton() {
+        // Создаём объект конфигурации Google Sign-In
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) {[unowned self] result, error in
+            if let error = error {
+                print("Google Sign-In error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString
+            else {
+                print("Invalid Google Sign-In authentication")
+                return
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: user.accessToken.tokenString)
+            
+            Auth.auth().signIn(with: credential) { authResult, error in
+                // Работа с результатом аутентификации Firebase
+                if error == nil {
+                    // Аутентификация успешна, выполняем переход
+                    let homeVC = TabBarController()
+                    self.navigationController?.pushViewController(homeVC, animated: true)
+                } else {
+                    // error message
+                    print("Authentication failed: \(error!.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    // Обработчик нажатия на текст "login"
+    @objc func loginTapped() {
+        let nextVC = EntryViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+        
+    }
+    
+    
 }
 
 
-extension CreateAccountController {
+extension SignController {
     
     func setConstraint() {
-        NSLayoutConstraint.activate([
+        UIKit.NSLayoutConstraint.activate([
             
             //constraints для надписи "Create account"
             createAccountLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -237,21 +344,23 @@ extension CreateAccountController {
             continueLabel.centerXAnchor.constraint(equalTo: whiteView.centerXAnchor),
             
             //constraints для buttonGoogle
+            
             buttonGoogle.topAnchor.constraint(equalTo: continueLabel.bottomAnchor, constant: 32),
             buttonGoogle.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: 24),
             buttonGoogle.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -24),
             buttonGoogle.widthAnchor.constraint(equalToConstant: 327),
             buttonGoogle.heightAnchor.constraint(equalToConstant: 56),
             
-            //constraints для alreadyLabel
-            alreadyLabel.topAnchor.constraint(equalTo: whiteView.topAnchor, constant: 497),
-            alreadyLabel.centerXAnchor.constraint(equalTo: whiteView.centerXAnchor),
+            alreadyLabel.topAnchor.constraint(equalTo: buttonGoogle.bottomAnchor, constant: 24),
+            alreadyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             //constraints для googleIconImageView
+            
             googleIconImageView.leadingAnchor.constraint(equalTo: buttonGoogle.leadingAnchor, constant: 58.5),
             googleIconImageView.centerYAnchor.constraint(equalTo: buttonGoogle.centerYAnchor),
             googleIconImageView.widthAnchor.constraint(equalToConstant: 24),
             googleIconImageView.heightAnchor.constraint(equalToConstant: 24)
+            
         ])
     }
 }

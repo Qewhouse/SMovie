@@ -19,6 +19,7 @@ final class PlayView: UIView {
         let tableView = UITableView()
         tableView.rowHeight = 180
         tableView.layer.cornerRadius = 10
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView

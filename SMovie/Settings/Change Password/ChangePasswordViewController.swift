@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     
@@ -124,12 +125,72 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Objc Functions
     
     @objc func saveButtonPressed() {
-        print ("save password pressed")
+        update()
+        
+        // Добавляем эффект нажатия
+            UIButton.animate(withDuration: 0.2, animations: {
+                self.saveButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                UIButton.animate(withDuration: 0.2) {
+                    self.saveButton.transform = CGAffineTransform.identity
+                }
+            })
     }
     
     @objc func goBack() {
     navigationController?.popViewController(animated: true)
     }
+    
+    func update() {
+        let oldPassword = currentPasswordView.textField.text
+        let newPassword = newPasswordView.textField.text
+        let confirmPassword = confirmPasswordView.textField.text
+        
+        
+        guard let user = Auth.auth().currentUser else {
+            
+            return
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldPassword ?? "")
+        
+        // Повторная аутентификация пользователя со старым паролем перед обновлением пароля
+        user.reauthenticate(with: credential) { _, error in
+            if let error = error {
+                // Обработка ошибки если старый пароль введен не верно
+                self.showAlert(title: "Error", message: error.localizedDescription)
+            } else {
+                if oldPassword != newPassword {
+                    if newPassword == confirmPassword {
+                        // Обновляем пароль
+                        user.updatePassword(to: newPassword ?? "") { error in
+                            if let error = error {
+                                // Ошибка обновления пароля
+                                self.showAlert(title: "Error", message: error.localizedDescription)
+                            } else {
+                                // Успешное обновление пароля
+                                self.showAlert(title: "Success", message: "Your password has been successfully updated.")
+                            }
+                        }
+                    } else {
+                        // Обработка ошибки если новые пароли не совподают
+                        self.showAlert(title: "Error", message: "Passwords do not match.")
+                    }
+                } else {
+                    // Обработка ошибки если совпадают старый и новый пароль
+                    self.showAlert(title: "Error", message: "New password must be different from the old password.")
+                }
+            }
+        }
+    }
+        
+        //Уведомление
+        func showAlert(title: String, message: String) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
 }
 
 //MARK: - Set Constraints
