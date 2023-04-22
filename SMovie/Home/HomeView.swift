@@ -13,7 +13,8 @@ class HomeView : UIView {
     
     let topGreetView: UserInfoHeaderView = {
         let view = UserInfoHeaderView()
-        view.userNameLabel.text = "Hi, Andy"
+        let defaults = UserDefaults.standard
+        view.userNameLabel.text = "Hi, \(defaults.string(forKey: "firstName") ?? "User")"
         view.userMailLabel.text = "only streaming movie lovers"
         view.profileImageView.widthAnchor.constraint (equalToConstant: CGFloat(40)).isActive = true
         view.profileImageView.heightAnchor.constraint(equalToConstant: CGFloat(40)).isActive = true

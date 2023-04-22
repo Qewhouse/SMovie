@@ -43,7 +43,7 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        hideNavBars()
         media = networkService.media
         genres = networkService.genre
         localMedia = media
@@ -54,9 +54,12 @@ final class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        hideNavBars()
+    }
+    
+    func hideNavBars () {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.navigationController?.isNavigationBarHidden = true
-
     }
     
     private func setupViews() {
@@ -127,7 +130,15 @@ extension HomeViewController: UICollectionViewDelegate {
                 filterMedia(id: categoriesArray[5].id!, collection: collectionView, indexPath: indexPath)
                 
             case categoriesArray[6].name:
-                print ("others")
+                
+                localMedia = media.filter {
+                    $0.genreIds?.first != categoriesArray[2].id! &&
+                    $0.genreIds?.first != categoriesArray[3].id! &&
+                    $0.genreIds?.first != categoriesArray[4].id! &&
+                    $0.genreIds?.first != categoriesArray[5].id! &&
+                    $0.mediaType == .movie
+                }
+                reloadCollection(collectionView, indexPath)
                 
             default: break
                 

@@ -26,7 +26,8 @@ class ExampleCell: UICollectionViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Drifting Home"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = Theme.reversedAppColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -118,7 +119,6 @@ class ExampleCell: UICollectionViewCell {
         nameLabel.text = name
         minutesLabel.text = "\(minutes) Minutes"
         rankLabel.text = String(format: "%.1f", rank)
-        
     }
     
     func setConstraints () {
@@ -132,13 +132,14 @@ class ExampleCell: UICollectionViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            categoryLabel.topAnchor.constraint(equalTo: posterImageView.topAnchor, constant: 10),
             categoryLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
+            categoryLabel.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -10)
         ])
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
+            nameLabel.centerYAnchor.constraint(equalTo: posterImageView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
         
         NSLayoutConstraint.activate([

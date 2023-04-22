@@ -13,7 +13,7 @@ class ProfileViewController: UIViewController {
     //MARK: - Properties
     
     private var contentSize : CGSize {
-        CGSize(width: view.frame.width, height: view.frame.height+250)
+        CGSize(width: view.frame.width, height: view.frame.height*1.2)
     }
     
     lazy var scrollView: UIScrollView = {
@@ -53,9 +53,9 @@ class ProfileViewController: UIViewController {
     let emailInputView: TextInputView = {
         let defaults = UserDefaults.standard
         let input = TextInputView()
-        input.label.text            = "Email"
-        input.textField.text        = defaults.string(forKey: "Email")
-        input.textField.placeholder = "Enter email"
+        input.label.text             = "Email"
+        input.textField.text         = defaults.string(forKey: "Email")
+        input.textField.placeholder  = "Enter email"
         input.textField.keyboardType = .emailAddress
         return input
     }()
@@ -64,7 +64,7 @@ class ProfileViewController: UIViewController {
         let defaults = UserDefaults.standard
         let input = ProfileDateInputView()
         input.label.text             = "Date of Birth"
-        input.textField.text        = defaults.string(forKey: "dateOfBrith")
+        input.textField.text         = defaults.string(forKey: "dateOfBrith")
         input.textField.placeholder  = "Enter date of birth"
         return input
     }()
