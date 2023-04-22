@@ -15,6 +15,13 @@ class HomeView : UIView {
         let view = UserInfoHeaderView()
         let defaults = UserDefaults.standard
         view.userNameLabel.text = "Hi, \(defaults.string(forKey: "firstName") ?? "User")"
+        if let firstName = UserDefaults.standard.string(forKey: "firstName"),
+           let lastName = UserDefaults.standard.string(forKey: "lastName") {
+            view.userNameLabel.text = "\(firstName) \(lastName)"
+        } else {
+            view.userNameLabel.text = "Unknown User"
+        }
+      
         view.userMailLabel.text = "only streaming movie lovers"
         view.profileImageView.widthAnchor.constraint (equalToConstant: CGFloat(40)).isActive = true
         view.profileImageView.heightAnchor.constraint(equalToConstant: CGFloat(40)).isActive = true

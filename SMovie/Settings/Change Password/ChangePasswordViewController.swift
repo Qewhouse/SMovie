@@ -126,7 +126,15 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     
     @objc func saveButtonPressed() {
         update()
-        print ("save password pressed")
+        
+        // Добавляем эффект нажатия
+            UIButton.animate(withDuration: 0.2, animations: {
+                self.saveButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                UIButton.animate(withDuration: 0.2) {
+                    self.saveButton.transform = CGAffineTransform.identity
+                }
+            })
     }
     
     @objc func goBack() {
@@ -134,41 +142,47 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     }
     
     func update() {
-            let oldPassword = currentPasswordView.textField.text
-            let newPassword = newPasswordView.textField.text
-            let confirmPassword = confirmPasswordView.textField.text
+        let oldPassword = currentPasswordView.textField.text
+        let newPassword = newPasswordView.textField.text
+        let confirmPassword = confirmPasswordView.textField.text
+        
+        
+        guard let user = Auth.auth().currentUser else {
             
-            if oldPassword != newPassword {
-                if newPassword == confirmPassword {
-                    updatePassword(newPassword ?? "")
-                } else {
-                    // Handle password confirmation error
-                    showAlert(title: "Error", message: "Passwords do not match.")
-                }
+            return
+        }
+        
+        let credential = EmailAuthProvider.credential(withEmail: user.email!, password: oldPassword ?? "")
+        
+        // Повторная аутентификация пользователя со старым паролем перед обновлением пароля
+        user.reauthenticate(with: credential) { _, error in
+            if let error = error {
+                // Обработка ошибки если старый пароль введен не верно
+                self.showAlert(title: "Error", message: error.localizedDescription)
             } else {
-                // Handle old and new password match error
-                showAlert(title: "Erorr", message: "New password must be different from the old password.")
-            }
-        }
-        //Функция для отправки запроса в FireBase для изменения пароля
-        func updatePassword(_ newPassword: String) {
-            guard let user = Auth.auth().currentUser else {
-                // User is not authenticated
-                return
-            }
-            
-            user.updatePassword(to: newPassword) { error in
-                if let error = error {
-                    // Handle password update error
-                    self.showAlert(title: "Super", message: error.localizedDescription)
-                    
+                if oldPassword != newPassword {
+                    if newPassword == confirmPassword {
+                        // Обновляем пароль
+                        user.updatePassword(to: newPassword ?? "") { error in
+                            if let error = error {
+                                // Ошибка обновления пароля
+                                self.showAlert(title: "Error", message: error.localizedDescription)
+                            } else {
+                                // Успешное обновление пароля
+                                self.showAlert(title: "Success", message: "Your password has been successfully updated.")
+                            }
+                        }
+                    } else {
+                        // Обработка ошибки если новые пароли не совподают
+                        self.showAlert(title: "Error", message: "Passwords do not match.")
+                    }
                 } else {
-                    // Handle password update success
-                    self.showAlert(title: "Super", message: "Your password has been successfully updated")
-                    print("Password updated successfully")
+                    // Обработка ошибки если совпадают старый и новый пароль
+                    self.showAlert(title: "Error", message: "New password must be different from the old password.")
                 }
             }
         }
+    }
         
         //Уведомление
         func showAlert(title: String, message: String) {

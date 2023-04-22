@@ -90,6 +90,8 @@
 		F6AC3FD929E2B14C008437B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC3FD829E2B14C008437B0 /* DetailViewController.swift */; };
 		F6AC3FDB29E2B169008437B0 /* CastAndCrewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC3FDA29E2B169008437B0 /* CastAndCrewCell.swift */; };
 		F6AC3FDD29E2BA0E008437B0 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC3FDC29E2BA0E008437B0 /* URLSession+Extensions.swift */; };
+		F6D90E6729F3FB3000A6CE09 /* YouTubeIdVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D90E6629F3FB3000A6CE09 /* YouTubeIdVideo.swift */; };
+		F6D90E6929F3FF4600A6CE09 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D90E6829F3FF4600A6CE09 /* WebViewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +173,8 @@
 		F6AC3FD829E2B14C008437B0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F6AC3FDA29E2B169008437B0 /* CastAndCrewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastAndCrewCell.swift; sourceTree = "<group>"; };
 		F6AC3FDC29E2BA0E008437B0 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
+		F6D90E6629F3FB3000A6CE09 /* YouTubeIdVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeIdVideo.swift; sourceTree = "<group>"; };
+		F6D90E6829F3FF4600A6CE09 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,6 +474,7 @@
 				F636615029E71B88004A7E3C /* Media.swift */,
 				F636615229E73E6D004A7E3C /* MediaResult.swift */,
 				F64DEB2129E9B95800E69440 /* CreditsResult.swift */,
+				F6D90E6629F3FB3000A6CE09 /* YouTubeIdVideo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 			children = (
 				F6AC3FD829E2B14C008437B0 /* DetailViewController.swift */,
 				F6AC3FDA29E2B169008437B0 /* CastAndCrewCell.swift */,
+				F6D90E6829F3FF4600A6CE09 /* WebViewViewController.swift */,
 			);
 			path = DetailViewController;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6D90E6729F3FB3000A6CE09 /* YouTubeIdVideo.swift in Sources */,
 				806F3CD029F1A79D0072800D /* SeeAllView.swift in Sources */,
 				F636614F29E6B0AC004A7E3C /* GenreResult.swift in Sources */,
 				8020BC2329E1F72300284430 /* ProfileImageView.swift in Sources */,
@@ -590,6 +597,7 @@
 				F636613C29E57D8B004A7E3C /* NetworkService.swift in Sources */,
 				8020BC2829E1F72300284430 /* ProfileDateInputView.swift in Sources */,
 				8020BC1C29E1F72300284430 /* SettingsModel.swift in Sources */,
+				F6D90E6929F3FF4600A6CE09 /* WebViewViewController.swift in Sources */,
 				8020BC4A29E7203A00284430 /* HeaderSupplementaryView.swift in Sources */,
 				6DCCD1D129E02B6E0012549E /* CustomTableViewCell.swift in Sources */,
 				806F3CCB29F0BF710072800D /* HeaderSeeAllView.swift in Sources */,

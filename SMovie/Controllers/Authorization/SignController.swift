@@ -202,7 +202,6 @@ class SignController: UIViewController {
     }
     
     
-    //Обработка нажатия, для перехода на экран для создания аккаунта
     @objc func tappedContinue() {
         //проверка корректного ввода email
         guard let email = emailTextField.text, isValidEmail(email) else {
@@ -222,7 +221,10 @@ class SignController: UIViewController {
         // Если email корректный, то переходим на экран для создания аккаунта
         let nextVC = AccountCreationController()
         self.navigationController?.pushViewController(nextVC, animated: true)
+        
     }
+
+
 
     func isValidEmail(_ email: String) -> Bool {
         // Регулярное выражение для проверки правильности ввода email

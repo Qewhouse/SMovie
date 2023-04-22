@@ -103,6 +103,15 @@ class ForgotPasswordViewController: UIViewController, UITextFieldDelegate {
     
     @objc func saveButtonPressed() {
         passwordReset()
+        
+        // Добавляем эффект нажатия
+            UIButton.animate(withDuration: 0.2, animations: {
+                self.continueButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                UIButton.animate(withDuration: 0.2) {
+                    self.continueButton.transform = CGAffineTransform.identity
+                }
+            })
         print ("Continue pressed")
     }
     
