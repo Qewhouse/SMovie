@@ -22,19 +22,33 @@ class UserInfoHeaderView : UIView {
     
     let userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Andy Lexsian"
+        
+        if let firstName = UserDefaults.standard.string(forKey: "firstName"),
+           let lastName = UserDefaults.standard.string(forKey: "lastName") {
+            label.text = "\(firstName) \(lastName)"
+        } else {
+            label.text = "Unknown User"
+        }
+        
         label.textColor = Theme.reversedAppColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     let userMailLabel: UILabel = {
         let label = UILabel()
-        label.text = "andylexsian@ios.com"
+        if let email = UserDefaults.standard.string(forKey: "Email") {
+            label.text = email
+        } else {
+            label.text = "No email found"
+        }
         label.textColor = #colorLiteral(red: 0.4746692777, green: 0.514767766, blue: 0.5520746112, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
+    
+
     
     //MARK: - Init
     

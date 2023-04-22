@@ -145,6 +145,16 @@ class ProfileViewController: UIViewController {
         defaults.set(user.lastName, forKey: "lastName")
         defaults.set(user.dateOfBrith, forKey: "dateOfBrith")
         
+        // Добавляем эффект нажатия
+            UIButton.animate(withDuration: 0.2, animations: {
+                self.saveButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                UIButton.animate(withDuration: 0.2) {
+                    self.saveButton.transform = CGAffineTransform.identity
+                }
+            })
+       
+        
         print ("save changes pressed")
     }
     
