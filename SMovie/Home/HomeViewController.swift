@@ -252,14 +252,12 @@ extension HomeViewController:UICollectionViewDataSource {
             let id = item.id!
             let rank  = item.popularity!/1000
             
-            
             networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
                 guard let self = self, let image = image else { return }
                 self.networkService.fetchDetail(id: id, mediaType: mediaType) { data in
                     
                     let minutes = mediaType == .movie ? data?.runtime ?? 120 : (data?.episodeRunTime?.first ?? 40)
 
-                    
                     cell.configureCell(id: id,
                                        image: image,
                                        category: self.getGenre(indexPath, data: self.localMedia),
@@ -440,7 +438,6 @@ extension HomeViewController {
 }
 
 //MARK: - GoToSeeAllProtocol
-
 
 extension HomeViewController: GoToSeeAllProtocol {
     func goToSeeAll() {
