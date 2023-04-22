@@ -11,13 +11,10 @@
 //present(navigationDetailViewController, animated: true)
 
 import UIKit
+import WebKit
 
 final class DetailViewController: UIViewController {
     let rating = 4
-    
-    let images = ["luck", "luck", "luck"]
-    let names = ["Jon Watts", "Chris McKenna", "Some Text"]
-    let vocabularys = ["Directors", "Writers", "Actor"]
     
     private let networkService = NetworkService.shared
     private let idMedia: Int
@@ -83,7 +80,7 @@ final class DetailViewController: UIViewController {
     }()
     
     private lazy var watchNowButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(didTapWatchButton), for: .touchUpInside)
         button.layer.cornerRadius = 24
         button.setTitle("Watch now", for: .normal)
@@ -124,6 +121,15 @@ final class DetailViewController: UIViewController {
     
     @objc private func didTapWatchButton() {
         print("Watch now")
+        networkService.fetchVideoIdYouTube(id: idMedia, mediaType: mediaType) { [weak self] youTubeId in
+            guard let self = self,
+                  let youTubeId = youTubeId?.key else { return self!.showAlert() }
+            
+            let detailViewController = WebViewViewController(idYouTube: youTubeId)
+            let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
+            navigationDetailViewController.modalPresentationStyle = .fullScreen
+            present(navigationDetailViewController, animated: true)
+        }
     }
     
     private func setupViews() {
@@ -200,7 +206,7 @@ final class DetailViewController: UIViewController {
     private func setupNavigationBar() {
         self.navigationItem.title = "Movie Detail"
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Arrow Back"), style: .plain, target: self, action: #selector(addTappedLeftNavButton))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ArrowBack"), style: .plain, target: self, action: #selector(addTappedLeftNavButton))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "Favorite"), style: .done, target: self, action: #selector(addTappedFavorite))
     }
     
@@ -225,10 +231,10 @@ final class DetailViewController: UIViewController {
             if let minute = data?.runtime {
                 minutes = minute
             } else if let minute = data?.episodeRunTime {
-                var sum = minute.reduce(0, +)
+                let sum = minute.reduce(0, +)
                 minutes = sum
             }
-
+            
             self.labelMovie.text = name
             self.releaseDateLabel.text = date
             let genreText = data?.genres?[0].name
@@ -241,6 +247,18 @@ final class DetailViewController: UIViewController {
                 self.imageView.image = image
             }
         }
+    }
+    
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Nothing to watch",
+            message: "This video does not have a trailer",
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "OK", style: .cancel)
+        alert.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
     
     private func addSubviews() {
@@ -322,15 +340,17 @@ extension DetailViewController: UICollectionViewDataSource {
         let id = self.credits[indexPath.row].id
         let name = self.credits[indexPath.row].name
         var jobs = ""
-
+        
         if let job = self.credits[indexPath.row].character {
             jobs = job
         } else if let job = self.credits[indexPath.row].job {
             jobs = job
         }
         
-        networkService.fetchImage(profilePath, id: id) { [weak self] (image) in
-            guard let self = self, let image = image else { return }
+        networkService.fetchImage(profilePath, id: id) { image in
+            guard let image = image else {
+                return cell.setupCell(withImage: nil, name: name, vocabulary: jobs)
+            }
             cell.setupCell(withImage: image, name: name, vocabulary: jobs)
         }
     }

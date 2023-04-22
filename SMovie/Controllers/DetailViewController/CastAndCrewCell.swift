@@ -55,7 +55,7 @@ final class CastAndCrewCell: UICollectionViewCell {
         addViewConstraints()
     }
     
-    func setupCell(withImage image: UIImage, name: String?, vocabulary: String) {
+    func setupCell(withImage image: UIImage?, name: String?, vocabulary: String) {
         imageCell.image = image
         nameLabel.text = name
         vocabularyLabel.text = vocabulary
