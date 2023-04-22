@@ -33,6 +33,7 @@ final class SettingsViewController: UIViewController {
     
     @objc func logOutButtonPressed() {
         
+        
         let auth = Auth.auth()
                 
                 do {
@@ -45,8 +46,6 @@ final class SettingsViewController: UIViewController {
                     print("Ошибка выхода из учетной записи: %@", signOutError)
                 }
 
-        print ("log out pressed")
-    
     }
     
     //MARK: - Init
