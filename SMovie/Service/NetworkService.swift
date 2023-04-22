@@ -125,6 +125,37 @@ final class NetworkService {
         task.resume()
     }
     
+    func fetchVideoIdYouTube(id: Int, mediaType: MediaType, completion: @escaping (ResultId?) -> ()) {
+        guard let url = URL(string: baseURL + "/3/\(mediaType)/\(id)/videos?api_key=\(apiKey)") else { return }
+        let request = URLRequest(url: url)
+        let session = URLSession.shared
+        let task = session.objectTask(for: request) { [weak self] (result: Swift.Result<YouTubeIdVideo, Error>) in
+            switch result {
+            case .success(let result):
+                completion(result.results?[0])
+            case .failure(let error):
+                assertionFailure("Error - \(error)")
+            }
+        }
+        task.resume()
+    }
+    
+    func fetchVideo(idVideo: String, completion: @escaping (Player?) -> ()) {
+        guard let url = URL(string: "https://youtube.googleapis.com/youtube/v3/videos?part=player&id=\(idVideo)&key=AIzaSyByMwOsBpFXvQbFuSVFjNMb-2QBfBmx3_4") else { return }
+        
+        let request = URLRequest(url: url)
+        let session = URLSession.shared
+        let task = session.objectTask(for: request) { (result: Swift.Result<videoYouTube, Error>) in
+            switch result {
+            case .success(let result):
+                completion(result.items?[0].player)
+            case .failure(let error):
+                assertionFailure("Error - \(error)")
+            }
+        }
+        task.resume()
+    }
+    
     private func makeRequest(_ page: Int, _ discover: String) -> URLRequest? {
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.path = "/3/discover/\(discover)"

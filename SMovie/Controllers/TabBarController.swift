@@ -52,7 +52,7 @@ extension TabBarController {
         let playVC = PlayViewController()
         let homeVC = HomeViewController()
         let favouriteVC = FavouriteViewController()
-        let personVC = SettingsViewController()
+        let personVC = PersonViewController()
 
         searchVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "Search"), selectedImage: UIImage(named: "Search_fill"))
         playVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "Play"), selectedImage: UIImage(named: "Play_fill"))
