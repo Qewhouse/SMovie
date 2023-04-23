@@ -265,7 +265,7 @@ class SignController: UIViewController {
                 // Работа с результатом аутентификации Firebase
                 if error == nil {
                     // Аутентификация успешна, выполняем переход
-                    let homeVC = TabBarController()
+                    let homeVC = HomeViewController()
                     self.navigationController?.pushViewController(homeVC, animated: true)
                 } else {
                     // error message
