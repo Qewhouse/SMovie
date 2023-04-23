@@ -12,6 +12,8 @@
 ### Technical stack
 - MVC, Auto Layout programmatically, CoreData, Light/Dark mode support
 - **Third Party Dependancies:** Firebase
+- Used API's: MovieDB, YouTube
+- Minimum deployment target - iOS13
 <details><summary><h3>Application Screens Samples</h3></summary>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/C069wz9/onboarding.png" alt="onboarding" border="0"></a>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/rpn8cY3/onboarding-dark.png" alt="onboarding dark" border="0"></a>
