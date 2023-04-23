@@ -10,7 +10,10 @@ import WebKit
 
 final class WebViewViewController: UIViewController {
     private var idYouTube = ""
-    private let webView = WKWebView()
+    lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        return webView
+    }()
     private let networkService = NetworkService.shared
     
     init(idYouTube: String) {
@@ -39,6 +42,11 @@ final class WebViewViewController: UIViewController {
             print(httpsEmbedHtml)
             self.webView.loadHTMLString("<!DOCTYPE html><html><body>\(httpsEmbedHtml)</body></html>", baseURL: nil)
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        webView.frame = view.bounds
     }
     
     private func addSubviews() {

@@ -91,7 +91,7 @@ extension HomeViewController: UICollectionViewDelegate {
         case 0 :
             print ("poster at \(indexPath.item) place")
             print (media[indexPath.item].id!)
-            
+            print (indexPath.row)
             let detailVC: DetailViewController = DetailViewController(id: media[indexPath.item].id!,
                                                                       mediaType: media[indexPath.item].mediaType!)
             self.navigationController?.pushViewController(detailVC, animated: true)

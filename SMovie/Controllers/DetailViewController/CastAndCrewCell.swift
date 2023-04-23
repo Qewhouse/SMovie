@@ -24,9 +24,11 @@ final class CastAndCrewCell: UICollectionViewCell {
     
     private let imageCell: UIImageView = {
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.layer.masksToBounds = true
+        imageView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        imageView.layer.cornerRadius = imageView.frame.height / 2.2
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -38,7 +40,7 @@ final class CastAndCrewCell: UICollectionViewCell {
     
     private let vocabularyLabel: UILabel = {
         let label = UILabel()
-         label.font = .systemFont(ofSize: 10)
+         label.font = .systemFont(ofSize: 14)
         label.textColor = Theme.grayColor
          return label
      }()
@@ -86,8 +88,8 @@ final class CastAndCrewCell: UICollectionViewCell {
             stackViewHorizontal.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackViewHorizontal.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            imageCell.heightAnchor.constraint(equalToConstant: 40),
-            imageCell.widthAnchor.constraint(equalToConstant: 40)
+            imageCell.heightAnchor.constraint(equalToConstant: 50),
+            imageCell.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

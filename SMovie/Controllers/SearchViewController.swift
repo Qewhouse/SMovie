@@ -26,11 +26,11 @@ final class SearchViewController: UIViewController {
     private func setUpView() {
         title = "Search"
         tabBarItem.title = nil
-        
+        self.view.backgroundColor = Theme.appColor
         view.addSubview(searchView)
         NSLayoutConstraint.activate([
             searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
@@ -106,7 +106,6 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout, UICollection
         }
         cell.layer.cornerRadius = 17
         cell.layer.borderWidth = 1
-        cell.backgroundColor = .secondarySystemBackground
         cell.configure(categoryText: categoriesArray[indexPath.row])
         return cell
     }

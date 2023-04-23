@@ -43,7 +43,7 @@ final class CustomTableViewCell: UIView {
     lazy var minutesLabel: UILabel = {
         let label = UILabel()
         label.text = "10.0"
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = Theme.lightGrayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -61,7 +61,7 @@ final class CustomTableViewCell: UIView {
     let dateLabel: UILabel = {
         let label = UILabel()
         label.text = "17 Sep 2021"
-        label.font = .systemFont(ofSize: 18)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = Theme.lightGrayText
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -79,6 +79,7 @@ final class CustomTableViewCell: UIView {
     private let movieAction: UIButton = {
         let button = UIButton()
         button.setTitle("Action", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
         button.backgroundColor = Theme.violetColor
         button.layer.cornerRadius = 7
         button.translatesAutoresizingMaskIntoConstraints = false

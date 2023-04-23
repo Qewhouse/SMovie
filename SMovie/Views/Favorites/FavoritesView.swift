@@ -7,6 +7,8 @@ final class FavoritesView: UIView {
         let tableView = UITableView()
         tableView.rowHeight = 180
         tableView.layer.cornerRadius = 10
+        tableView.backgroundColor = Theme.appColor
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -16,7 +18,7 @@ final class FavoritesView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = Theme.appColor
         tableView.register(FavoritesTableViewCell.self,
                            forCellReuseIdentifier: FavoritesTableViewCell.identifier)
         addConstraints()

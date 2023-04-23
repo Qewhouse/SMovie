@@ -28,7 +28,6 @@ class ProfileImageView: UIView, ChangePhotoProtocol {
         imageView.layer.cornerRadius = imageView.frame.size.height/2
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage (named: "profileImage")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     

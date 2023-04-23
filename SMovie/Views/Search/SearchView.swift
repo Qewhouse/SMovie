@@ -17,13 +17,16 @@ final class SearchView: UIView {
         searchBar.searchTextField.textColor = .label
         searchBar.searchTextField.layer.borderWidth = 1
         searchBar.searchTextField.layer.borderColor = Theme.violetColor.cgColor
-        searchBar.searchTextField.layer.cornerRadius = 15
+        searchBar.searchTextField.layer.cornerRadius = 17
         searchBar.searchTextField.clipsToBounds = true
         searchBar.barStyle = .default
         searchBar.placeholder = "Enter movie"
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
+        searchBar.barTintColor = Theme.appColor
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
         return searchBar
     }()
     
@@ -32,7 +35,7 @@ final class SearchView: UIView {
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: layout)
-        cv.backgroundColor = .systemBackground
+        cv.backgroundColor = Theme.appColor
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
@@ -50,6 +53,7 @@ final class SearchView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = 180
+        tableView.separatorStyle = .none
         tableView.layer.cornerRadius = 10
         tableView.showsVerticalScrollIndicator = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,8 +83,9 @@ final class SearchView: UIView {
         searchBar.addSubview(filterButton)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            searchBar.heightAnchor.constraint(equalToConstant: 60),
             
             filterButton.centerYAnchor.constraint(equalTo: searchBar.searchTextField.centerYAnchor),
             filterButton.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor, constant: -15),
@@ -88,14 +93,14 @@ final class SearchView: UIView {
             filterButton.heightAnchor.constraint(equalToConstant: 25),
             
             collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 1),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant:25),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             collectionView.heightAnchor.constraint(equalToConstant: 60),
             
             tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 1),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
         ])
     }
     
