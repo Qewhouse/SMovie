@@ -30,7 +30,7 @@ final class PlayViewController: UIViewController {
     private func setUpView() {
         title = "Recent Watch"
         tabBarItem.title = nil
-        
+        self.view.backgroundColor = Theme.appColor
         view.addSubview(playView)
         NSLayoutConstraint.activate([
             playView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -77,12 +77,11 @@ extension PlayViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlayCollectionViewCell.identifier, for: indexPath) as? PlayCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCollectionViewCell.identifier, for: indexPath) as? SearchCollectionViewCell else {
             fatalError("Unable to dequeue SearchCollectionViewCell.")
         }
         cell.layer.cornerRadius = 17
         cell.layer.borderWidth = 1
-        cell.backgroundColor = .secondarySystemBackground
         cell.configure(categoryText: categoriesArray[indexPath.row])
         return cell
     }

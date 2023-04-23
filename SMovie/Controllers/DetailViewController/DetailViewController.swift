@@ -47,16 +47,16 @@ final class DetailViewController: UIViewController {
     
     private let storyLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 18)
         label.text = "Story Line"
         return label
     }()
     
     private let storyLineLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
-        label.textColor = Theme.grayColor
+        label.textColor = Theme.reversedAppColor
         label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
         return label
     }()
@@ -70,12 +70,13 @@ final class DetailViewController: UIViewController {
     
     lazy var castAndCrewViews: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 150, height: 45)
+        layout.itemSize = CGSize(width: 150, height: 55)
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero,
                                               collectionViewLayout: layout)
         collectionView.register(CastAndCrewCell.self, forCellWithReuseIdentifier: String(describing: CastAndCrewCell.self))
         collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -128,7 +129,7 @@ final class DetailViewController: UIViewController {
             let detailViewController = WebViewViewController(idYouTube: youTubeId)
             let navigationDetailViewController = UINavigationController(rootViewController: detailViewController)
             navigationDetailViewController.modalPresentationStyle = .fullScreen
-            present(navigationDetailViewController, animated: true)
+            self.present(navigationDetailViewController, animated: true)
         }
     }
     
@@ -136,7 +137,7 @@ final class DetailViewController: UIViewController {
         self.view.backgroundColor = Theme.appColor
         
         aboutStack.distribution = .fillEqually
-        aboutStack.spacing = 24
+        aboutStack.spacing = 10
         
         ratingStack.spacing = 6
         
@@ -183,7 +184,7 @@ final class DetailViewController: UIViewController {
         _ label: UILabel,
         text: String = "",
         image: String = "",
-        font: UIFont? = .systemFont(ofSize: 12, weight: .bold),
+        font: UIFont? = .systemFont(ofSize: 14, weight: .bold),
         textColor: UIColor = Theme.grayColor,
         textAlignment: NSTextAlignment = .left,
         numberOfLines: Int = 1
@@ -251,7 +252,7 @@ final class DetailViewController: UIViewController {
             self.releaseDateLabel.text = date
             let genreText = data?.genres?[0].name
             self.styleForLabel(releaseDate: date, timeInt: minutes, genreText: genreText ?? "")
-            
+            self.storyLineLabel.text = data?.overview
             let posterPath = data?.posterPath
             let id = data?.id
             self.networkService.fetchImage(posterPath, id: id) { [weak self] (image) in
@@ -292,10 +293,10 @@ final class DetailViewController: UIViewController {
     
     private func addViewConstraints() {
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 75),
-            imageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,constant: -75),
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 300),
+            imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width*0.5),
             
             labelMovie.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 24),
             labelMovie.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -314,13 +315,13 @@ final class DetailViewController: UIViewController {
             storyLineLabel.topAnchor.constraint(equalTo: storyLabel.bottomAnchor, constant: 16),
             storyLineLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             storyLineLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            storyLineLabel.bottomAnchor.constraint(equalTo: castAndCrewLabel.topAnchor, constant: -24),
+            storyLineLabel.bottomAnchor.constraint(equalTo: castAndCrewLabel.topAnchor, constant: 0),
             
             castAndCrewLabel.bottomAnchor.constraint(equalTo: castAndCrewViews.topAnchor, constant: -24),
             castAndCrewLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             
             castAndCrewViews.bottomAnchor.constraint(equalTo: watchNowButton.topAnchor, constant: -23),
-            castAndCrewViews.heightAnchor.constraint(equalToConstant: 45),
+            castAndCrewViews.heightAnchor.constraint(equalToConstant: 55),
             castAndCrewViews.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             castAndCrewViews.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             

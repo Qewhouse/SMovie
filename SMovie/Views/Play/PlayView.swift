@@ -8,10 +8,9 @@ final class PlayView: UIView {
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero,
                                   collectionViewLayout: layout)
-        cv.backgroundColor = .systemBackground
+        cv.backgroundColor = Theme.appColor
         cv.showsHorizontalScrollIndicator = false
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return cv
     }()
     
@@ -29,9 +28,9 @@ final class PlayView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         
-        self.backgroundColor = .systemBackground
-        collectionView.register(PlayCollectionViewCell.self, forCellWithReuseIdentifier:
-                                    PlayCollectionViewCell.identifier)
+        self.backgroundColor = Theme.appColor
+        collectionView.register(SearchCollectionViewCell.self,
+                                forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         tableView.register(PlayTableViewCell.self,
                            forCellReuseIdentifier: PlayTableViewCell.identifier)
         addConstraints()

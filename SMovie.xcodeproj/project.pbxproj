@@ -18,7 +18,6 @@
 		37A4E30629D8B6CD00AD2B3E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */; };
 		37A4E30829D8B71900AD2B3E /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30729D8B71900AD2B3E /* PlayViewController.swift */; };
 		37A4E30A29D8B73700AD2B3E /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30929D8B73700AD2B3E /* FavouriteViewController.swift */; };
-		37A4E30C29D8B75400AD2B3E /* PersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */; };
 		37A4E30F29D8B7E500AD2B3E /* UIViewController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E30E29D8B7E500AD2B3E /* UIViewController+Utilities.swift */; };
 		37A4E31129D8BFA000AD2B3E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */; };
 		37A4E31729E1697800AD2B3E /* OnboardingScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */; };
@@ -108,7 +107,6 @@
 		37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		37A4E30729D8B71900AD2B3E /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		37A4E30929D8B73700AD2B3E /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
-		37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewController.swift; sourceTree = "<group>"; };
 		37A4E30E29D8B7E500AD2B3E /* UIViewController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utilities.swift"; sourceTree = "<group>"; };
 		37A4E31029D8BFA000AD2B3E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		37A4E31629E1697800AD2B3E /* OnboardingScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreens.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				37A4E30529D8B6CD00AD2B3E /* SearchViewController.swift */,
 				37A4E30729D8B71900AD2B3E /* PlayViewController.swift */,
 				37A4E30929D8B73700AD2B3E /* FavouriteViewController.swift */,
-				37A4E30B29D8B75400AD2B3E /* PersonViewController.swift */,
 				37A4E31D29E2C78500AD2B3E /* MainDetailsViewController.swift */,
 			);
 			path = Controllers;
@@ -625,7 +622,6 @@
 				37A4E32429E4AC5500AD2B3E /* PageControlIndicator.swift in Sources */,
 				6DD59DB329DC10A1001D33BC /* UILabel.swift in Sources */,
 				6D03485B29E987D800801CED /* MovieCoreDataModel.swift in Sources */,
-				37A4E30C29D8B75400AD2B3E /* PersonViewController.swift in Sources */,
 				37A4E32629E4AC8300AD2B3E /* OnboardingButton.swift in Sources */,
 				8020BC2129E1F72300284430 /* ProfileGenderInputView.swift in Sources */,
 				37A4E2E929D8A97800AD2B3E /* AppDelegate.swift in Sources */,
