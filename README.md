@@ -11,7 +11,7 @@
 
 ### Technical stack
 - MVC, Auto Layout programmatically, CoreData, Light/Dark mode support
-- **Third Party Dependancies:** Firebase
+- **Third Party Dependancies:** Firebase, SnapKit
 - Used API's: MovieDB, YouTube
 - Minimum deployment target - iOS13
 <details><summary><h3>Application Screens Samples</h3></summary>
