@@ -1,8 +1,6 @@
 # SMovie
 ![GitHub repo size](https://img.shields.io/github/repo-size/qewhouse/SMovie)  ![GitHub contributors](https://img.shields.io/github/contributors/qewhouse/SMovie)   ![GitHub last commit](https://img.shields.io/github/last-commit/qewhouse/SMovie) ![][ios] ![][swift] ![][uikit] 
 
-
-
 ### The application was created as part of the Swift Marathon 6.0 project (https://t.me/swiftmarathon).
 
 ![vecteezy_cinema-background-concept-movie-theater-object-on-red_5502524](https://user-images.githubusercontent.com/31271156/232252814-424beb32-678d-426e-88b8-e3cda8d8a0e8.jpg)
